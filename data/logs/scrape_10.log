@@ -1,0 +1,65 @@
+Loaded catalog: 223 municipalities
+[Province 10 - Cáceres] 0/223 already completed
+[Cáceres 1/223] ABADÍA
+  OK: no data
+[Cáceres 2/223] ABERTURA
+  WARNING: Failed to download boletin 17432652 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 16843887 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15948392 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15073539 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 14217870 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 13387993 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12908754 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12503228 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11924704 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11494734 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 16144790 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 14497228 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12970480 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12053252 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11126588 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10194730 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 9489843 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 8087273 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 7347731 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 6675679 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  OK: no data
+[Cáceres 3/223] ACEBO
+  WARNING: Failed to download boletin 11675986 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10832728 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15585910 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 13811768 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12827085 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10832724 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11866135 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  OK: no data
+[Cáceres 4/223] ACEHÚCHE
+  WARNING: Failed to download boletin 17177251 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 16377851 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15620406 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15481529 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 13645741 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12741514 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12236758 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11240613 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10597669 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10246547 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 15887644 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 14649414 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 12939871 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11913844 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 11149072 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10348945 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 10067891 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 9713852 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 8585907 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 7597417 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 17348414 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 17221598 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 17323560 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 17093176 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  WARNING: Failed to download boletin 16934024 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  OK: no data
+[Cáceres 5/223] ACEITUNA
+  OK: no data
+[Cáceres 6/223] AHIGAL
