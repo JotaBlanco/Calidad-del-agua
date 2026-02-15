@@ -42,6 +42,7 @@ from scrape import (
     get_distribution_networks,
     get_boletins,
     download_pdf,
+    get_boletin_detail,
     parse_pdf,
     sanitize_filename,
 )
@@ -76,11 +77,19 @@ def save_progress(progress, provincia_code):
 
 
 def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
-                              session=None, save_pdfs=True, max_retries=3):
+                              session=None, save_pdfs=True, max_retries=3,
+                              use_html=False):
     """Scrape a municipality with retry logic. Returns (records, municipio_name, error_msg).
 
     If session is provided, reuses it (skips session setup). Falls back to a
     fresh session on retry.
+
+    When use_html=False (default), tries PDF download first for each network.
+    If PDF fails, falls back to HTML for the rest of that network's boletins,
+    then retries PDF on the next network.
+
+    When use_html=True, skips PDF entirely (saves time when PDF is known to
+    be down).
     """
     for attempt in range(max_retries):
         try:
@@ -106,35 +115,58 @@ def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
                     municipio_name, network_id,
                 )
 
+                # Per-network: try PDF for first boletin, fall back to HTML
+                network_use_html = use_html
+
                 for boletin in boletins:
                     bid = boletin["boletin_id"]
                     date_str = boletin["date"]
                     analysis_type = boletin["analysis_type"]
 
-                    pdf_bytes = download_pdf(
-                        session, provincia_code, municipio_code,
-                        municipio_name, network_id, network_name, bid,
-                    )
+                    metadata = {}
+                    parameters = []
+                    source = "html"
 
-                    if pdf_bytes is None:
-                        continue
+                    if not network_use_html:
+                        pdf_bytes = download_pdf(
+                            session, provincia_code, municipio_code,
+                            municipio_name, network_id, network_name, bid,
+                        )
+                        if pdf_bytes is not None:
+                            source = "pdf"
+                            if save_pdfs:
+                                date_clean = date_str.split(" ")[0]
+                                try:
+                                    parts = date_clean.split("/")
+                                    date_prefix = f"{parts[2]}{parts[1]}{parts[0]}"
+                                except (IndexError, ValueError):
+                                    date_prefix = date_clean.replace("/", "")
 
-                    if save_pdfs:
-                        date_clean = date_str.split(" ")[0]
-                        try:
-                            parts = date_clean.split("/")
-                            date_prefix = f"{parts[2]}{parts[1]}{parts[0]}"
-                        except (IndexError, ValueError):
-                            date_prefix = date_clean.replace("/", "")
+                                safe_municipio = sanitize_filename(municipio_name)
+                                safe_network = sanitize_filename(network_name)
+                                pdf_filename = f"{date_prefix}_{safe_municipio}_{safe_network}_{analysis_type}.pdf"
+                                pdf_path = PDF_DIR / pdf_filename
+                                pdf_path.parent.mkdir(parents=True, exist_ok=True)
+                                pdf_path.write_bytes(pdf_bytes)
 
-                        safe_municipio = sanitize_filename(municipio_name)
-                        safe_network = sanitize_filename(network_name)
-                        pdf_filename = f"{date_prefix}_{safe_municipio}_{safe_network}_{analysis_type}.pdf"
-                        pdf_path = PDF_DIR / pdf_filename
-                        pdf_path.parent.mkdir(parents=True, exist_ok=True)
-                        pdf_path.write_bytes(pdf_bytes)
+                            metadata, parameters = parse_pdf(pdf_bytes)
+                        else:
+                            # PDF failed — use HTML for this network's boletins
+                            network_use_html = True
+                            print("    Switching to HTML for this network (PDF unavailable)")
 
-                    metadata, parameters = parse_pdf(pdf_bytes)
+                    if network_use_html:
+                        # Re-navigate to network detail page, then fetch
+                        # the boletin as HTML
+                        get_boletins(
+                            session, provincia_code, municipio_code,
+                            municipio_name, network_id,
+                        )
+                        metadata, parameters = get_boletin_detail(
+                            session, provincia_code, municipio_code,
+                            municipio_name, network_id, network_name, bid,
+                        )
+                        source = "html"
 
                     for param in parameters:
                         all_records.append({
@@ -154,6 +186,7 @@ def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
                             "parametro": param["parametro"],
                             "valor": param["valor"],
                             "unidad": param["unidad"],
+                            "source": source,
                         })
 
                     time.sleep(0.15)
@@ -172,7 +205,8 @@ def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
     return [], None, "Max retries exceeded"
 
 
-def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False):
+def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False,
+                    use_html=False):
     """Scrape all municipalities in a single province."""
     prov_catalog = catalog[catalog["provincia_code"] == int(prov_code)]
     prov_name = prov_catalog.iloc[0]["provincia_name"] if len(prov_catalog) > 0 else prov_code
@@ -188,7 +222,8 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False):
     already_done = sum(1 for _, row in prov_catalog.iterrows()
                        if str(row["municipio_code"]) in completed_set)
 
-    print(f"[Province {prov_code} - {prov_name}] {already_done}/{total} already completed")
+    mode = "HTML" if use_html else "PDF"
+    print(f"[Province {prov_code} - {prov_name}] {already_done}/{total} already completed ({mode} mode)")
 
     CSV_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -210,6 +245,7 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False):
             ccaa_code, prov_code, muni_code,
             session=session,
             save_pdfs=not skip_pdfs,
+            use_html=use_html,
         )
 
         if error:
@@ -229,8 +265,14 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False):
                 csv_path = CSV_DIR / f"{prov_code}_{muni_code}_{safe_name}.csv"
                 df = pd.DataFrame(records)
                 df.to_csv(csv_path, index=False)
-                print(f"  OK: {len(records)} records")
+
+                # Track source: if any record used HTML, mark municipality
+                sources = set(r["source"] for r in records)
+                source_label = "pdf" if sources == {"pdf"} else "html"
+                print(f"  OK: {len(records)} records ({source_label})")
                 progress["stats"]["total_records"] += len(records)
+                if source_label == "html":
+                    progress.setdefault("html_municipalities", []).append(muni_code)
             else:
                 print(f"  OK: no data")
 
@@ -245,7 +287,7 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False):
 
 
 def run_province_subprocess(prov_code, prov_name, script, venv_python, log_dir,
-                            skip_pdfs=False, reset=False):
+                            skip_pdfs=False, reset=False, use_html=False):
     """Run a single province scraper as a subprocess. Used as a pool worker."""
     log_file = log_dir / f"scrape_{prov_code}.log"
 
@@ -254,6 +296,8 @@ def run_province_subprocess(prov_code, prov_name, script, venv_python, log_dir,
         cmd.append("--skip-pdfs")
     if reset:
         cmd.append("--reset")
+    if use_html:
+        cmd.append("--use-html")
 
     print(f"  START  province {prov_code} ({prov_name})")
 
@@ -268,7 +312,7 @@ def run_province_subprocess(prov_code, prov_name, script, venv_python, log_dir,
 
 
 def launch_parallel(catalog, provinces, skip_pdfs=False, reset=False,
-                    max_workers=4):
+                    max_workers=4, use_html=False):
     """Launch province scrapers using a thread pool — workers pick the next
     province from the queue as soon as they finish, so no idle waiting."""
     script = Path(__file__).resolve()
@@ -282,7 +326,8 @@ def launch_parallel(catalog, provinces, skip_pdfs=False, reset=False,
         for pc in provinces
     }
 
-    print(f"Queued {len(provinces)} provinces with {max_workers} workers.")
+    mode = "HTML" if use_html else "PDF (with HTML fallback)"
+    print(f"Queued {len(provinces)} provinces with {max_workers} workers. Mode: {mode}")
     print(f"Monitor progress with:")
     print(f"  python scrape_all.py --status")
     print(f"  tail -f data/logs/scrape_*.log")
@@ -295,7 +340,7 @@ def launch_parallel(catalog, provinces, skip_pdfs=False, reset=False,
                 pool.submit(
                     run_province_subprocess,
                     pc, prov_names[pc], script, venv_python, log_dir,
-                    skip_pdfs, reset,
+                    skip_pdfs, reset, use_html,
                 ): pc
                 for pc in provinces
             }
@@ -318,12 +363,13 @@ def show_status(catalog):
     total_completed = 0
     total_failed = 0
     total_records = 0
+    total_html = 0
     total_munis = len(catalog)
 
     provinces = sorted(catalog["provincia_code"].unique())
 
-    print(f"{'Province':<30} {'Done':>6} {'Total':>6} {'Failed':>6} {'Records':>10}")
-    print("-" * 70)
+    print(f"{'Province':<30} {'Done':>6} {'Total':>6} {'Failed':>6} {'HTML':>6} {'Records':>10}")
+    print("-" * 78)
 
     for prov_code in provinces:
         prov_catalog = catalog[catalog["provincia_code"] == prov_code]
@@ -334,18 +380,52 @@ def show_status(catalog):
         done = len(progress["completed"])
         failed = len(progress["failed"])
         records = progress["stats"]["total_records"]
+        html_count = len(progress.get("html_municipalities", []))
 
         total_completed += done
         total_failed += failed
         total_records += records
+        total_html += html_count
 
         if done > 0 or failed > 0:
             pct = done / prov_total * 100
-            print(f"{prov_name:<30} {done:>6} {prov_total:>6} {failed:>6} {records:>10}  ({pct:.0f}%)")
+            html_str = str(html_count) if html_count > 0 else ""
+            print(f"{prov_name:<30} {done:>6} {prov_total:>6} {failed:>6} {html_str:>6} {records:>10}  ({pct:.0f}%)")
 
-    print("-" * 70)
+    print("-" * 78)
     pct = total_completed / total_munis * 100 if total_munis else 0
-    print(f"{'TOTAL':<30} {total_completed:>6} {total_munis:>6} {total_failed:>6} {total_records:>10}  ({pct:.0f}%)")
+    print(f"{'TOTAL':<30} {total_completed:>6} {total_munis:>6} {total_failed:>6} {total_html:>6} {total_records:>10}  ({pct:.0f}%)")
+    if total_html > 0:
+        print(f"\n{total_html} municipalities scraped via HTML. "
+              f"Run with --retry-html to re-scrape them with PDF when available.")
+
+
+def _reset_html_municipalities(catalog, provincia_filter=None):
+    """Remove HTML-scraped municipalities from progress so they can be re-scraped."""
+    PROGRESS_DIR.mkdir(parents=True, exist_ok=True)
+    total_reset = 0
+
+    provinces = sorted(catalog["provincia_code"].unique())
+    if provincia_filter:
+        provinces = [p for p in provinces if p == provincia_filter]
+
+    for prov_code in provinces:
+        progress = load_progress(str(prov_code))
+        html_munis = set(progress.get("html_municipalities", []))
+
+        if not html_munis:
+            continue
+
+        # Remove HTML municipalities from completed list
+        progress["completed"] = [m for m in progress["completed"] if m not in html_munis]
+        progress["html_municipalities"] = []
+        save_progress(progress, str(prov_code))
+
+        prov_name = catalog[catalog["provincia_code"] == prov_code].iloc[0]["provincia_name"]
+        print(f"  Reset {len(html_munis)} HTML municipalities in {prov_name}")
+        total_reset += len(html_munis)
+
+    print(f"\nReset {total_reset} municipalities for re-scraping with PDF.")
 
 
 def main():
@@ -359,6 +439,12 @@ def main():
     parser.add_argument("--status", action="store_true", help="Show progress across all provinces")
     parser.add_argument("--max-parallel", type=int, default=4,
                         help="Max parallel processes (default: 4)")
+    parser.add_argument("--use-html", action="store_true",
+                        help="Parse boletin HTML pages instead of downloading PDFs "
+                             "(use when SINAC PDF service is down)")
+    parser.add_argument("--retry-html", action="store_true",
+                        help="Re-scrape municipalities that were scraped via HTML "
+                             "(use when PDF service is back to get PDF-quality data)")
     args = parser.parse_args()
 
     if not CATALOG_FILE.exists():
@@ -371,6 +457,11 @@ def main():
     if args.status:
         show_status(catalog)
         return
+
+    # Retry-html: remove HTML municipalities from progress so they get re-scraped
+    if args.retry_html:
+        _reset_html_municipalities(catalog, args.provincia)
+        # Fall through to normal scraping (which will now pick up the reset ones)
 
     # Apply filters
     if args.ccaa:
@@ -393,17 +484,19 @@ def main():
 
         print(f"Queuing {len(provinces)} provinces with up to {args.max_parallel} workers...\n")
         launch_parallel(catalog, provinces, args.skip_pdfs, args.reset,
-                        max_workers=args.max_parallel)
+                        max_workers=args.max_parallel, use_html=args.use_html)
 
     else:
         # Single province mode
         if args.provincia:
-            scrape_province(catalog, str(args.provincia), args.skip_pdfs, args.reset)
+            scrape_province(catalog, str(args.provincia), args.skip_pdfs,
+                            args.reset, use_html=args.use_html)
         else:
             # Sequential: iterate all provinces
             provinces = sorted(catalog["provincia_code"].unique())
             for prov_code in provinces:
-                scrape_province(catalog, str(prov_code), args.skip_pdfs, args.reset)
+                scrape_province(catalog, str(prov_code), args.skip_pdfs,
+                                args.reset, use_html=args.use_html)
 
 
 if __name__ == "__main__":

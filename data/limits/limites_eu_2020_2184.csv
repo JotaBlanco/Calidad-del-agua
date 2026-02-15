@@ -1,0 +1,57 @@
+numero,parametro,parte,tipo,valor_parametrico,unidad,notas
+1,Enterococos intestinales,A,microbiológico,0,número/100 ml,Para agua envasada: número/250 ml
+2,Escherichia coli (E. coli),A,microbiológico,0,número/100 ml,Para agua envasada: número/250 ml
+3,Acrilamida,B,químico,0.10,µg/l,Concentración monomérica residual calculada según migración máxima del polímero
+4,Antimonio,B,químico,10,µg/l,
+5,Arsénico,B,químico,10,µg/l,
+6,Benceno,B,químico,1.0,µg/l,
+7,Benzo(a)pireno,B,químico,0.010,µg/l,
+8,Bisfenol A,B,químico,2.5,µg/l,
+9,Boro,B,químico,1.5,mg/l,"VP de 2,4 mg/l si agua desalinizada o condiciones geológicas con boro elevado"
+10,Bromato,B,químico,10,µg/l,
+11,Cadmio,B,químico,5.0,µg/l,
+12,Clorato,B,químico,0.25,mg/l,"VP de 0,7 mg/l si se usa dióxido de cloro u otro método que genere clorato"
+13,Clorito,B,químico,0.25,mg/l,"VP de 0,70 mg/l si se usa dióxido de cloro u otro método que genere clorito"
+14,Cromo,B,químico,25,µg/l,VP de 50 µg/l hasta 12 enero 2036
+15,Cobre,B,químico,2.0,mg/l,
+16,Cianuro,B,químico,50,µg/l,
+17,1-2-dicloroetano,B,químico,3.0,µg/l,
+18,Epiclorhidrina,B,químico,0.10,µg/l,Concentración monomérica residual calculada según migración máxima del polímero
+19,Fluoruro,B,químico,1.5,mg/l,
+20,Ácidos haloacéticos (AHA),B,químico (sumatorio),60,µg/l,"Suma de 5 sustancias: ácido monocloroacético, dicloroacético, tricloroacético, monobromoacético y dibromoacético"
+21,Plomo,B,químico,5,µg/l,VP de 10 µg/l hasta 12 enero 2036
+22,Mercurio,B,químico,1.0,µg/l,
+23,Microcistina-LR,B,químico,1.0,µg/l,Solo en caso de posibles proliferaciones de cianobacterias
+24,Níquel,B,químico,20,µg/l,
+25,Nitrato,B,químico,50,mg/l,"Condición: [nitrato]/50 + [nitrito]/3 ≤ 1"
+26,Nitrito,B,químico,0.50,mg/l,"VP de 0,10 mg/l a salida de tratamiento. Condición: [nitrato]/50 + [nitrito]/3 ≤ 1"
+27,Plaguicidas (individual),B,químico,0.10,µg/l,"Para aldrina, dieldrina, heptacloro y heptaclorepóxido: 0,030 µg/l"
+28,Total de plaguicidas,B,químico (sumatorio),0.50,µg/l,Suma de todos los plaguicidas detectados y cuantificados
+29,Total de PFAS,B,químico (sumatorio),0.50,µg/l,Totalidad de sustancias perfluoroalquiladas y polifluoroalquiladas
+30,Suma de PFAS,B,químico (sumatorio),0.10,µg/l,"Subconjunto de PFAS con fracción perfluoroalquilada ≥3 carbonos (–CnF2n–, n≥3)"
+31,Hidrocarburos aromáticos policíclicos (HAP),B,químico (sumatorio),0.10,µg/l,"Suma de: benzo(b)fluoranteno, benzo(k)fluoranteno, benzo(ghi)perileno e indeno(1,2,3-cd)pireno"
+32,Selenio,B,químico,20,µg/l,VP de 30 µg/l si condiciones geológicas con selenio elevado en aguas subterráneas
+33,Tetracloroeteno y tricloroeteno,B,químico (sumatorio),10,µg/l,Suma de concentraciones de ambos
+34,Total de trihalometanos (THM),B,químico (sumatorio),100,µg/l,"Suma de: cloroformo, bromoformo, dibromoclorometano y bromodiclorometano"
+35,Uranio,B,químico,30,µg/l,
+36,Cloruro de vinilo,B,químico,0.50,µg/l,Concentración monomérica residual calculada según migración máxima del polímero
+37,Aluminio,C,indicador,200,µg/l,
+38,Amonio,C,indicador,0.50,mg/l,
+39,Cloruro,C,indicador,250,mg/l,
+40,Clostridium perfringens (incluidas esporas),C,indicador,0,número/100 ml,Se mide si la evaluación de riesgos lo indica
+41,Conductividad,C,indicador,2500,µS/cm a 20 °C,El agua no debe ser agresiva
+42,Concentración en iones hidrógeno (pH),C,indicador,≥ 6.5 y ≤ 9.5,unidades pH,"El agua no debe ser agresiva. Para agua sin gas envasada, mínimo 4,5"
+43,Hierro,C,indicador,200,µg/l,
+44,Manganeso,C,indicador,50,µg/l,
+45,Color,C,indicador,Aceptable para los consumidores y sin cambios anómalos,,
+46,Olor,C,indicador,Aceptable para los consumidores y sin cambios anómalos,,
+47,Oxidabilidad,C,indicador,5.0,mg/l O2,No necesario si se analiza COT
+48,Sulfato,C,indicador,250,mg/l,
+49,Sodio,C,indicador,200,mg/l,
+50,Sabor,C,indicador,Aceptable para los consumidores y sin cambios anómalos,,
+51,Recuento de colonias a 22 °C,C,indicador,Sin cambios anómalos,,
+52,Bacterias coliformes,C,indicador,0,número/100 ml,Para agua envasada: número/250 ml
+53,Carbono orgánico total (COT),C,indicador,Sin cambios anómalos,,
+54,Turbidez,C,indicador,Aceptable para los consumidores y sin cambios anómalos,,
+55,Legionella,D,distribución domiciliaria,< 1000,UFC/l,Pueden tomarse medidas incluso por debajo del VP en caso de infecciones o brotes
+56,Plomo,D,distribución domiciliaria,10,µg/l,Los Estados miembros tratarán de alcanzar 5 µg/l a más tardar el 12 enero 2036

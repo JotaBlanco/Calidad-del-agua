@@ -1,213 +1,380 @@
 Loaded catalog: 221 municipalities
-[Province 17 - Girona] 213/221 already completed
+[Province 17 - Girona] 33/221 already completed (HTML mode)
+[Girona 34/221] CAMPDEVÀNOL
+  OK: 848 records (html)
+[Girona 35/221] CAMPELLES
+  OK: 25 records (html)
+[Girona 36/221] CAMPLLONG
+  OK: 1001 records (html)
+[Girona 37/221] CAMPRODON
+  OK: 2842 records (html)
+[Girona 38/221] CANET D'ADRI
+  OK: 1130 records (html)
+[Girona 39/221] CANTALLOPS
+  OK: 878 records (html)
+[Girona 40/221] CAPMANY
+  OK: 803 records (html)
+[Girona 41/221] CASSÀ DE LA SELVA
+  OK: 2378 records (html)
+[Girona 42/221] CASTELLFOLLIT DE LA ROCA
+  OK: 1151 records (html)
+[Girona 43/221] CASTELLÓ D'EMPÚRIES
+  OK: 1953 records (html)
+[Girona 44/221] CASTELL-PLATJA D'ARO
+  OK: 1370 records (html)
+[Girona 45/221] CELLERA DE TER (LA)
+  OK: 977 records (html)
+[Girona 46/221] CELRÀ
+  OK: 986 records (html)
+[Girona 47/221] CERVIÀ DE TER
+  OK: 863 records (html)
+[Girona 48/221] CISTELLA
+  OK: 1555 records (html)
+[Girona 49/221] COLERA
+  OK: 1081 records (html)
+[Girona 50/221] COLOMERS
+  OK: 757 records (html)
+[Girona 51/221] CORÇÀ
+  OK: 362 records (html)
+[Girona 52/221] CORNELLÀ DEL TERRI
+  OK: 1855 records (html)
+[Girona 53/221] CRESPIÀ
+  OK: 459 records (html)
+[Girona 54/221] CRUÏLLES, MONELLS I SANT SADURNÍ DE L'HEURA
+  OK: 401 records (html)
+[Girona 55/221] DARNIUS
+  OK: 1290 records (html)
+[Girona 56/221] DAS
+  OK: 538 records (html)
+[Girona 57/221] ESCALA (L')
+  OK: 1412 records (html)
+[Girona 58/221] ESPINELVES
+  OK: no data
+[Girona 59/221] ESPOLLA
+  OK: 1104 records (html)
+[Girona 60/221] ESPONELLÀ
+  OK: 1341 records (html)
+[Girona 61/221] FAR D'EMPORDÀ (EL)
+  OK: 690 records (html)
+[Girona 62/221] FIGUERES
+  OK: 1269 records (html)
+[Girona 63/221] FLAÇÀ
+  OK: 921 records (html)
+[Girona 64/221] FOIXÀ
+  OK: 564 records (html)
+[Girona 65/221] FONTANALS DE CERDANYA
+  OK: 3229 records (html)
+[Girona 66/221] FONTANILLES
+  OK: 1539 records (html)
+[Girona 67/221] FONTCOBERTA
+  OK: 1684 records (html)
+[Girona 68/221] FORALLAC
+  OK: 37 records (html)
+[Girona 69/221] FORNELLS DE LA SELVA
+  OK: 985 records (html)
+[Girona 70/221] FORTIÀ
+  OK: 894 records (html)
+[Girona 71/221] GARRIGÀS
+  OK: 1050 records (html)
+[Girona 72/221] GARRIGOLES
+  OK: 568 records (html)
+[Girona 73/221] GARRIGUELLA
+  OK: no data
+[Girona 74/221] GER
+  OK: 1803 records (html)
+[Girona 75/221] GIRONA
+  OK: 1318 records (html)
+[Girona 76/221] GOMBRÈN
+  OK: 558 records (html)
+[Girona 77/221] GUALTA
+  OK: 1164 records (html)
+[Girona 78/221] GUILS DE CERDANYA
+  OK: 985 records (html)
+[Girona 79/221] HOSTALRIC
+  OK: 1304 records (html)
+[Girona 80/221] ISÒVOL
+  OK: 1014 records (html)
+[Girona 81/221] JAFRE
+  OK: 637 records (html)
+[Girona 82/221] JONQUERA (LA)
+  OK: 1038 records (html)
+[Girona 83/221] JUIÀ
+  OK: 568 records (html)
+[Girona 84/221] LLADÓ
+  OK: 1257 records (html)
+[Girona 85/221] LLAGOSTERA
+  OK: 3264 records (html)
+[Girona 86/221] LLAMBILLES
+  OK: 135 records (html)
+[Girona 87/221] LLANARS
+  OK: 2055 records (html)
+[Girona 88/221] LLANÇÀ
+  OK: 2902 records (html)
+[Girona 89/221] LLERS
+  OK: 1045 records (html)
+[Girona 90/221] LLÍVIA
+  OK: 1679 records (html)
+[Girona 91/221] LLORET DE MAR
+  OK: 3441 records (html)
+[Girona 92/221] LLOSSES (LES)
+  OK: 192 records (html)
+[Girona 93/221] MAÇANET DE CABRENYS
+  OK: 1868 records (html)
+[Girona 94/221] MAÇANET DE LA SELVA
+  OK: 1908 records (html)
+[Girona 95/221] MADREMANYA
+  OK: 368 records (html)
+[Girona 96/221] MAIÀ DE MONTCAL
+  OK: 923 records (html)
+[Girona 97/221] MASARAC
+  OK: 1496 records (html)
+[Girona 98/221] MASSANES
+  OK: 1705 records (html)
+[Girona 99/221] MERANGES
+  OK: 365 records (html)
+[Girona 100/221] MIERES
+  OK: 682 records (html)
+[Girona 101/221] MOLLET DE PERALADA
+  OK: 748 records (html)
+[Girona 102/221] MOLLÓ
+  OK: 2673 records (html)
+[Girona 103/221] MONTAGUT I OIX
+  OK: 1973 records (html)
+[Girona 104/221] MONT-RAS
+  OK: 1119 records (html)
+[Girona 105/221] NAVATA
+  OK: 995 records (html)
+[Girona 106/221] OGASSA
+  OK: 1656 records (html)
+[Girona 107/221] OLOT
+  OK: 1184 records (html)
+[Girona 108/221] ORDIS
+  OK: 1051 records (html)
+[Girona 109/221] OSOR
+  OK: 617 records (html)
+[Girona 110/221] PALAFRUGELL
+  OK: 1330 records (html)
+[Girona 111/221] PALAMÓS
+  OK: 1239 records (html)
+[Girona 112/221] PALAU DE SANTA EULÀLIA
+  OK: 1016 records (html)
+[Girona 113/221] PALAU-SATOR
+  OK: 1179 records (html)
+[Girona 114/221] PALAU-SAVERDERA
+  OK: 933 records (html)
+[Girona 115/221] PALOL DE REVARDIT
+  OK: 1054 records (html)
+[Girona 116/221] PALS
+  OK: 52 records (html)
+[Girona 117/221] PARDINES
+  OK: 229 records (html)
+[Girona 118/221] PARLAVÀ
+  OK: 1128 records (html)
+[Girona 119/221] PAU
+  OK: 454 records (html)
+[Girona 120/221] PEDRET I MARZÀ
+  OK: 122 records (html)
+[Girona 121/221] PERA (LA)
+  OK: 1149 records (html)
+[Girona 122/221] PERALADA
+  OK: 2288 records (html)
+[Girona 123/221] PLANES D'HOSTOLES (LES)
+  OK: 809 records (html)
+[Girona 124/221] PLANOLES
+  OK: 154 records (html)
+[Girona 125/221] PONT DE MOLINS
+  OK: 969 records (html)
+[Girona 126/221] PONTÓS
+  OK: 553 records (html)
+[Girona 127/221] PORQUERES
+  OK: 1568 records (html)
+[Girona 128/221] PORT DE LA SELVA (EL)
+  OK: 1218 records (html)
+[Girona 129/221] PORTBOU
+  OK: 1220 records (html)
+[Girona 130/221] PRESES (LES)
+  OK: 2290 records (html)
+[Girona 131/221] PUIGCERDÀ
+  OK: 2301 records (html)
+[Girona 132/221] QUART
+  OK: 937 records (html)
+[Girona 133/221] QUERALBS
+  OK: 285 records (html)
+[Girona 134/221] RABÓS
+  OK: 831 records (html)
+[Girona 135/221] REGENCÓS
+  OK: 39 records (html)
+[Girona 136/221] RIBES DE FRESER
+  OK: 906 records (html)
+[Girona 137/221] RIELLS I VIABREA
+  OK: 2125 records (html)
+[Girona 138/221] RIPOLL
+  OK: 1462 records (html)
+[Girona 139/221] RIUDARENES
+  OK: 2724 records (html)
+[Girona 140/221] RIUDAURA
+  OK: 833 records (html)
+[Girona 141/221] RIUDELLOTS DE LA SELVA
+  OK: 1002 records (html)
+[Girona 142/221] RIUMORS
+  OK: 624 records (html)
+[Girona 143/221] ROSES
+  OK: 1453 records (html)
+[Girona 144/221] RUPIÀ
+  OK: 194 records (html)
+[Girona 145/221] SALES DE LLIERCA
+  OK: 444 records (html)
+[Girona 146/221] SALT
+  OK: 1227 records (html)
+[Girona 147/221] SANT ANDREU SALOU
+  OK: no data
+[Girona 148/221] SANT ANIOL DE FINESTRES
+  OK: 507 records (html)
+[Girona 149/221] SANT CLIMENT SESCEBES
+  OK: 354 records (html)
+[Girona 150/221] SANT FELIU DE BUIXALLEU
+  OK: 1445 records (html)
+[Girona 151/221] SANT FELIU DE GUÍXOLS
+  OK: 1235 records (html)
+[Girona 152/221] SANT FELIU DE PALLEROLS
+  OK: 726 records (html)
+[Girona 153/221] SANT FERRIOL
+  OK: 22 records (html)
+[Girona 154/221] SANT GREGORI
+  OK: 3037 records (html)
+[Girona 155/221] SANT HILARI SACALM
+  OK: 1896 records (html)
+[Girona 156/221] SANT JAUME DE LLIERCA
+  OK: 1101 records (html)
+[Girona 157/221] SANT JOAN DE LES ABADESSES
+  OK: 1112 records (html)
+[Girona 158/221] SANT JOAN DE MOLLET
+  OK: 955 records (html)
+[Girona 159/221] SANT JOAN LES FONTS
+  OK: 1714 records (html)
+[Girona 160/221] SANT JORDI DESVALLS
+  OK: 856 records (html)
+[Girona 161/221] SANT JULIÀ DE RAMIS
+  OK: 1180 records (html)
+[Girona 162/221] SANT JULIÀ DEL LLOR I BONMATÍ
+  OK: 2022 records (html)
+[Girona 163/221] SANT LLORENÇ DE LA MUGA
+  OK: 700 records (html)
+[Girona 164/221] SANT MARTÍ DE LLÉMENA
+  OK: 1275 records (html)
+[Girona 165/221] SANT MARTÍ VELL
+  OK: 749 records (html)
+[Girona 166/221] SANT MIQUEL DE CAMPMAJOR
+  OK: 562 records (html)
+[Girona 167/221] SANT MIQUEL DE FLUVIÀ
+  OK: 743 records (html)
+[Girona 168/221] SANT MORI
+  OK: 877 records (html)
+[Girona 169/221] SANT PAU DE SEGÚRIES
+  OK: 1618 records (html)
+[Girona 170/221] SANT PERE PESCADOR
+  OK: 1164 records (html)
+[Girona 171/221] SANTA COLOMA DE FARNERS
+  OK: 2222 records (html)
+[Girona 172/221] SANTA CRISTINA D'ARO
+  OK: 3828 records (html)
+[Girona 173/221] SANTA LLOGAIA D'ÀLGUEMA
+  OK: 1068 records (html)
+[Girona 174/221] SANTA PAU
+  OK: 3259 records (html)
+[Girona 175/221] SARRIÀ DE TER
+  OK: 916 records (html)
+[Girona 176/221] SAUS, CAMALLERA I LLAMPAIES
+  OK: 2746 records (html)
+[Girona 177/221] SELVA DE MAR (LA)
+  OK: no data
+[Girona 178/221] SERINYÀ
+  OK: 996 records (html)
+[Girona 179/221] SERRA DE DARÓ
+  OK: 753 records (html)
+[Girona 180/221] SETCASES
+  OK: 886 records (html)
+[Girona 181/221] SILS
+  OK: 4083 records (html)
+[Girona 182/221] SIURANA
+  OK: 778 records (html)
+[Girona 183/221] SUSQUEDA
+  OK: 2076 records (html)
+[Girona 184/221] TALLADA D'EMPORDÀ (LA)
+  OK: 2225 records (html)
+[Girona 185/221] TERRADES
+  OK: 1077 records (html)
+[Girona 186/221] TORRENT
+  OK: 167 records (html)
+[Girona 187/221] TORROELLA DE FLUVIÀ
+  OK: 1069 records (html)
+[Girona 188/221] TORROELLA DE MONTGRÍ
+  OK: 1196 records (html)
+[Girona 189/221] TORTELLÀ
+  OK: 987 records (html)
+[Girona 190/221] TOSES
+  OK: 2747 records (html)
+[Girona 191/221] TOSSA DE MAR
+  OK: 3422 records (html)
+[Girona 192/221] ULLÀ
+  OK: 1200 records (html)
+[Girona 193/221] ULLASTRET
+  OK: 792 records (html)
+[Girona 194/221] ULTRAMORT
+  OK: 565 records (html)
+[Girona 195/221] URÚS
+  OK: 953 records (html)
+[Girona 196/221] VAJOL (LA)
+  OK: 692 records (html)
+[Girona 197/221] VALL DE BIANYA (LA)
+  OK: 1093 records (html)
+[Girona 198/221] VALL D'EN BAS (LA)
+  OK: 3820 records (html)
+[Girona 199/221] VALLFOGONA DE RIPOLLÈS
+  OK: 1443 records (html)
+[Girona 200/221] VALL-LLOBREGA
+  OK: 1691 records (html)
+[Girona 201/221] VENTALLÓ
+  OK: 2710 records (html)
+[Girona 202/221] VERGES
+  OK: 1302 records (html)
+[Girona 203/221] VIDRÀ
+  OK: 1174 records (html)
+[Girona 204/221] VIDRERES
+  OK: 2985 records (html)
+[Girona 205/221] VILABERTRAN
+  OK: 974 records (html)
+[Girona 206/221] VILABLAREIX
+  OK: 136 records (html)
+[Girona 207/221] VILADAMAT
+  OK: 1071 records (html)
+[Girona 208/221] VILADASENS
+  OK: 771 records (html)
+[Girona 209/221] VILADEMULS
+  OK: 5440 records (html)
+[Girona 210/221] VILADRAU
+  OK: 829 records (html)
+[Girona 211/221] VILAFANT
+  OK: 780 records (html)
+[Girona 212/221] VILAJUÏGA
+  OK: 221 records (html)
+[Girona 213/221] VILALLONGA DE TER
+  OK: 2256 records (html)
 [Girona 214/221] VILAMACOLUM
-  WARNING: Failed to download boletin 15876848 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16712183 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17208887 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14831730 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15509084 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14269233 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12869660 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13564779 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13303839 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12744900 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16325748 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14679720 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13152670 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10237777 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11195654 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10244070 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12180214 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9216662 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12838756 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7928497 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7959811 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 1076 records (html)
 [Girona 215/221] VILAMALLA
-  WARNING: Failed to download boletin 16072305 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15877112 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16896334 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15171607 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14153606 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14363774 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13481441 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12876114 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12941278 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12171431 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16525226 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14725674 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13359008 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12662138 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11765998 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10536734 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 6491674 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8799923 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9529691 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11451579 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10650708 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 5861940 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 1309 records (html)
 [Girona 216/221] VILAMANISCLE
-  WARNING: Failed to download boletin 15888122 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14669681 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16390423 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12911995 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13187008 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14011147 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12136554 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12544091 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12633328 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11851278 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13663265 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15507843 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17275547 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9869407 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8710498 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 698 records (html)
 [Girona 217/221] VILANANT
-  WARNING: Failed to download boletin 17078275 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13283498 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12560223 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12180142 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17135846 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16636279 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15509026 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15923547 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14929050 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13555574 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14022709 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13303830 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12873406 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12744895 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12180216 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17636826 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14679721 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11093885 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10212504 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11195656 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10197886 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9216593 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12838755 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9216661 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7345485 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 1053 records (html)
 [Girona 218/221] VILA-SACRA
-  WARNING: Failed to download boletin 16377793 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17223673 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17624706 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15965302 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15442541 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14669696 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14234975 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13841165 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12900134 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12736879 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13466851 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16978390 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15061729 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 564 records (html)
 [Girona 219/221] VILAÜR
-  WARNING: Failed to download boletin 16697510 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15922746 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14856155 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12915892 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13384463 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14181357 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12873399 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12873379 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12745096 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12745038 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10197869 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10197887 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13634146 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9200138 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17636770 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9216936 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 3683568 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 674 records (html)
 [Girona 220/221] VILOBÍ D'ONYAR
-  WARNING: Failed to download boletin 14670284 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17078727 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16463318 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12522851 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12744966 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13152833 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11690085 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11478684 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11311793 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10643644 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 4364355 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 1960702 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7510186 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16832727 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 1297559 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 782466 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16711640 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15802176 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15579114 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14946205 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13480699 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11941496 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12522855 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11478680 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10767249 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12219796 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16546839 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13152854 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11195628 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10206458 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9228814 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 6103648 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8392258 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 6802406 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 5434899 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 1371 records (html)
 [Girona 221/221] VILOPRIU
-  WARNING: Failed to download boletin 13359407 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15848144 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14013154 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12609820 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12325746 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12885192 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11991150 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11766088 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11294826 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10650732 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17203798 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15531952 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9867116 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13841402 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17605507 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17336997 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15848137 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14929160 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13360081 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14013221 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11001587 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12325757 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12609835 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11889874 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11766089 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15520797 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16809519 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9867051 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13841517 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16209757 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14952010 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14013542 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13390026 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12906404 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12654355 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12087570 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12325723 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11001596 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11865255 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11766106 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13841499 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17194118 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9867050 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15537794 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11001626 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 2067 records (html)
 
-[Girona] DONE! 221/221 completed, 0 failed, 0 records
+[Girona] DONE! 221/221 completed, 0 failed, 278346 records

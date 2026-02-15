@@ -1,179 +1,164 @@
 Loaded catalog: 80 municipalities
-[Province 21 - Huelva] 0/80 already completed
+[Province 21 - Huelva] 0/80 already completed (HTML mode)
 [Huelva 1/80] ALÁJAR
-  WARNING: Failed to download boletin 16832800 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17183146 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16492695 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15490416 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16036771 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15029584 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14274040 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13035608 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14637838 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12994218 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15351922 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16662639 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14837889 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11840146 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13386529 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11290693 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10574103 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9607326 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16074411 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8725828 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12597686 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14669378 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7857993 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11518013 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12106947 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11066016 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9927394 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9426575 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10335473 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8988599 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12373071 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15350623 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17106448 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16945442 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16505685 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11626413 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14638096 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13065055 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11364967 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12597683 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12106967 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11517965 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11066006 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10320441 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9927383 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16761495 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16426240 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15009615 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14633118 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13534969 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13064334 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12597672 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12106945 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11517916 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11065990 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16310652 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 5010080 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 3942467 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16867385 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 3267976 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 1980069 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13297976 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15080369 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12994227 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12477481 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12005489 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11408084 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10349217 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10962247 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9927386 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16945435 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16169310 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15871675 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14716074 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13448666 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12993919 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12891410 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12789180 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12477485 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12341951 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16327217 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 2773 records (html)
 [Huelva 2/80] ALJARAQUE
-  WARNING: Failed to download boletin 17667372 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17189645 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16937430 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16861037 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16310846 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16036876 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15736780 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15442743 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15132731 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14968079 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15266229 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13509150 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16994332 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11285563 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10136096 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10244187 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7668837 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9141352 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8236501 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11598500 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17045021 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 6988987 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16673908 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15994346 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16426175 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15536816 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14270263 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14855575 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15080123 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13325253 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13547907 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13002944 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16201776 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14480345 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11840126 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11074426 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10432241 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9378114 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8656000 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7982331 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17182454 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17093396 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 2150577 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17044893 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16937419 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15961737 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15530497 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14665307 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')  WARNING: Failed to download boletin 15009658 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-
-  WARNING: Failed to download boletin 14362206 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13162406 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16827138 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13162365 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14837011 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10088318 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9506164 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11624870 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8888694 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8052483 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17189659 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7174533 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17027804 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 6446188 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16426170 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15900902 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15442745 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14968076 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14635159 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14148443 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13405194 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12993992 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16961647 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15266249 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 17156032 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 10603077 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 11676929 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 13141361 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9492110 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 9415288 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 8793948 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 7669470 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  OK: no data
+  OK: 4199 records (html)
 [Huelva 3/80] ALMENDRO (EL)
-  WARNING: Failed to download boletin 17074459 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 15384567 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 16534962 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 14716026 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12994419 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12994212 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12891354 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')  WARNING: Failed to download boletin 12891470 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+  OK: 1067 records (html)
+[Huelva 4/80] ALMONASTER LA REAL
+  OK: 11409 records (html)
+[Huelva 5/80] ALMONTE
+  OK: 4524 records (html)
+[Huelva 6/80] ALOSNO
+  OK: 2127 records (html)
+[Huelva 7/80] ARACENA
+  OK: 5524 records (html)
+[Huelva 8/80] AROCHE
+  OK: 3862 records (html)
+[Huelva 9/80] ARROYOMOLINOS DE LEÓN
+  OK: 1339 records (html)
+[Huelva 10/80] AYAMONTE
+  OK: 4854 records (html)
+[Huelva 11/80] BEAS
+  OK: 3608 records (html)
+[Huelva 12/80] BERROCAL
+  OK: 459 records (html)
+[Huelva 13/80] BOLLULLOS PAR DEL CONDADO
+  OK: 1216 records (html)
+[Huelva 14/80] BONARES
+  OK: 1115 records (html)
+[Huelva 15/80] CABEZAS RUBIAS
+  OK: 1067 records (html)
+[Huelva 16/80] CALA
+  OK: 1008 records (html)
+[Huelva 17/80] CALAÑAS
+  OK: 3378 records (html)
+[Huelva 18/80] CAMPILLO (EL)
+  OK: 1063 records (html)
+[Huelva 19/80] CAMPOFRÍO
+  OK: 1362 records (html)
+[Huelva 20/80] CAÑAVERAL DE LEÓN
+  OK: 965 records (html)
+[Huelva 21/80] CARTAYA
+  OK: 4004 records (html)
+[Huelva 22/80] CASTAÑO DEL ROBLEDO
+  OK: 1001 records (html)
+[Huelva 23/80] CERRO DE ANDÉVALO (EL)
+  OK: 1536 records (html)
+[Huelva 24/80] CHUCENA
+  OK: 1070 records (html)
+[Huelva 25/80] CORTECONCEPCIÓN
+  OK: 811 records (html)
+[Huelva 26/80] CORTEGANA
+  OK: 3796 records (html)
+[Huelva 27/80] CORTELAZOR
+  OK: 1038 records (html)
+[Huelva 28/80] CUMBRES DE ENMEDIO
+  OK: 921 records (html)
+[Huelva 29/80] CUMBRES DE SAN BARTOLOMÉ
+  OK: 744 records (html)
+[Huelva 30/80] CUMBRES MAYORES
+  OK: 1035 records (html)
+[Huelva 31/80] ENCINASOLA
+  OK: 948 records (html)
+[Huelva 32/80] ESCACENA DEL CAMPO
+  OK: 1049 records (html)
+[Huelva 33/80] FUENTEHERIDOS
+  OK: 999 records (html)
+[Huelva 34/80] GALAROZA
+  OK: 2055 records (html)
+[Huelva 35/80] GIBRALEÓN
+  OK: 1007 records (html)
+[Huelva 36/80] GRANADA DE RÍO-TINTO (LA)
+  OK: 756 records (html)
+[Huelva 37/80] GRANADO (EL)
+  OK: 1046 records (html)
+[Huelva 38/80] HIGUERA DE LA SIERRA
+  OK: 1018 records (html)
+[Huelva 39/80] HINOJALES
+  OK: 945 records (html)
+[Huelva 40/80] HINOJOS
+  OK: 1480 records (html)
+[Huelva 41/80] HUELVA
+  OK: 1299 records (html)
+[Huelva 42/80] ISLA CRISTINA
+  OK: 4566 records (html)
+[Huelva 43/80] JABUGO
+  OK: 3091 records (html)
+[Huelva 44/80] LEPE
+  OK: 7018 records (html)
+[Huelva 45/80] LINARES DE LA SIERRA
+  OK: 970 records (html)
+[Huelva 46/80] LUCENA DEL PUERTO
+  OK: 1568 records (html)
+[Huelva 47/80] MANZANILLA
+  OK: 1098 records (html)
+[Huelva 48/80] MARINES (LOS)
+  OK: 1023 records (html)
+[Huelva 49/80] MINAS DE RIOTINTO
+  OK: 1781 records (html)
+[Huelva 50/80] MOGUER
+  OK: 5411 records (html)
+[Huelva 51/80] NAVA (LA)
+  OK: 480 records (html)
+[Huelva 52/80] NERVA
+  OK: 1240 records (html)
+[Huelva 53/80] NIEBLA
+  OK: 2568 records (html)
+[Huelva 54/80] PALMA DEL CONDADO (LA)
+  OK: 1128 records (html)
+[Huelva 55/80] PALOS DE LA FRONTERA
+  OK: 1718 records (html)
+[Huelva 56/80] PATERNA DEL CAMPO
+  OK: 1104 records (html)
+[Huelva 57/80] PAYMOGO
+  OK: 1054 records (html)
+[Huelva 58/80] PUEBLA DE GUZMÁN
+  OK: 1415 records (html)
+[Huelva 59/80] PUERTO MORAL
+  OK: 965 records (html)
+[Huelva 60/80] PUNTA UMBRÍA
+  OK: 2771 records (html)
+[Huelva 61/80] ROCIANA DEL CONDADO
+  OK: 1208 records (html)
+[Huelva 62/80] ROSAL DE LA FRONTERA
+  OK: 1078 records (html)
+[Huelva 63/80] SAN BARTOLOMÉ DE LA TORRE
+  OK: 1068 records (html)
+[Huelva 64/80] SAN JUAN DEL PUERTO
+  OK: 1167 records (html)
+[Huelva 65/80] SAN SILVESTRE DE GUZMÁN
+  OK: 1007 records (html)
+[Huelva 66/80] SANLÚCAR DE GUADIANA
+  OK: 925 records (html)
+[Huelva 67/80] SANTA ANA LA REAL
+  OK: 1942 records (html)
+[Huelva 68/80] SANTA BÁRBARA DE CASA
+  OK: 947 records (html)
+[Huelva 69/80] SANTA OLALLA DEL CALA
+  OK: 1152 records (html)
+[Huelva 70/80] TRIGUEROS
+  OK: 1279 records (html)
+[Huelva 71/80] VALDELARCO
+  OK: 933 records (html)
+[Huelva 72/80] VALVERDE DEL CAMINO
+  OK: 2343 records (html)
+[Huelva 73/80] VILLABLANCA
+  OK: 1070 records (html)
+[Huelva 74/80] VILLALBA DEL ALCOR
+  OK: 1092 records (html)
+[Huelva 75/80] VILLANUEVA DE LAS CRUCES
+  OK: 282 records (html)
+[Huelva 76/80] VILLANUEVA DE LOS CASTILLEJOS
+  OK: 2697 records (html)
+[Huelva 77/80] VILLARRASA
+  OK: 1077 records (html)
+[Huelva 78/80] ZALAMEA LA REAL
+  OK: 4083 records (html)
+[Huelva 79/80] ZARZA-PERRUNAL (LA)
+  OK: no data
+[Huelva 80/80] ZUFRE
+  OK: 1054 records (html)
 
-  WARNING: Failed to download boletin 12732793 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
-  WARNING: Failed to download boletin 12574600 (status=200, first bytes=b'\r\n\r\n\r\n\r\n<!DOCTYPE ht')
+[Huelva] DONE! 80/80 completed, 0 failed, 152850 records

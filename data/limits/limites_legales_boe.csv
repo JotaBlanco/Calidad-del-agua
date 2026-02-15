@@ -1,0 +1,83 @@
+numero,parametro,cas,parte,tabla,tipo,valor_parametrico,unidad,valor_no_aptitud,notas
+1,Escherichia coli,,A,1,microbiológico,0,UFC o NMP en 100 ml,,
+2,Enterococo intestinal,,A,1,microbiológico,0,UFC o NMP en 100 ml,,
+3,Clostridium perfringens (incluidas las esporas),,A,1,microbiológico,0,UFC en 100 ml,,1
+4,Legionella spp.,,A,1,microbiológico,100,UFC en 1 L,,"2, 3"
+5,Acrilamida,79-06-01,B,2,químico,0.10,µg/L,,1
+6,Antimonio,,B,2,químico,10,µg/L,,
+7,Arsénico,,B,2,químico,10,µg/L,,
+8,Benceno,71-43-2,B,2,químico,1.0,µg/L,,
+9,Benzo(a)pireno,50-32-8,B,2,químico,0.010,µg/L,,
+10,Bisfenol A,80-05-7,B,2,químico,2.5,µg/L,,
+11,Boro,,B,2,químico,1.5,mg/L,,2
+12,Bromato,,B,2,químico,10,µg/L,,
+13,Cadmio,,B,2,químico,5.0,µg/L,,
+14,Cianuro total,,B,2,químico,50,µg/L,,
+15,Clorato,,B,2,químico,0.25,mg/L,,3
+16,Clorito,,B,2,químico,0.25,mg/L,,3
+17,Cloruro de vinilo,75-01-4,B,2,químico,0.50,µg/L,,1
+18,Cobre,,B,2,químico,2.0,mg/L,,
+19,Cromo total,,B,2,químico,25,µg/L,,4
+20,1-2-Dicloroetano,107-06-2,B,2,químico,3.0,µg/L,,
+21,Epiclorhidrina,106-89-8,B,2,químico,0.10,µg/L,,1
+22,Fluoruro,,B,2,químico,1.5,mg/L,,
+23,Mercurio,,B,2,químico,1.0,µg/L,,
+24,Microcistina-LR,,B,2,químico,1.0,µg/L,,5
+25,Níquel,,B,2,químico,20,µg/L,,
+26,Nitrato,,B,2,químico,50,mg/L,,6
+27,Nitritos,,B,2,químico,0.50,mg/L,,"6, 7"
+28,Plaguicida individual,,B,2,químico,0.10,µg/L,,"8, 9"
+29,Plomo,,B,2,químico,5.0,µg/L,,10
+30,Selenio,,B,2,químico,20,µg/L,,11
+31,Uranio,,B,2,químico,30,µg/L,,
+32,∑5 Ácidos Haloacéticos (HAH),,B,2,químico (sumatorio),60,µg/L,,12
+33,∑4 Hidrocarburos Policíclicos Aromáticos (HPA),,B,2,químico (sumatorio),0.10,µg/L,,13
+34,∑20 PFAS,,B,2,químico (sumatorio),0.10,µg/L,,"14, 15"
+35,∑n Plaguicidas totales,,B,2,químico (sumatorio),0.50,µg/L,,16
+36,∑2 Tricloroeteno + Tetracloroeteno,,B,2,químico (sumatorio),10,µg/L,,17
+37,∑4 Trihalometanos (THM),,B,2,químico (sumatorio),100,µg/L,,18
+38,Bacterias coliformes,,C,3,indicador,0,UFC o NMP / 100 ml,100,1
+39,Recuento de colonias a 22 ºC,,C,3,indicador,100,UFC / 1 ml,1000,2
+40,Colífagos somáticos,,C,3,indicador,0,UFP / 100 ml,,3
+41,Aluminio,,C,3,indicador,200,µg/L,600,4
+42,Amonio,,C,3,indicador,0.50,mg/L,1.00,5
+43,Carbono Orgánico total,,C,3,indicador,5.0,mg/L,7.0,6
+44,Cloro combinado residual,,C,3,indicador,2.0,mg/L,3.0,7
+45,Cloro libre residual,,C,3,indicador,1.0,mg/L,5.0,8
+46,Cloruro,,C,3,indicador,250,mg/L,,9
+47,Conductividad,,C,3,indicador,2500,µS/cm a 20 ºC,4000,10
+48,Hierro,,C,3,indicador,200,µg/L,600,11
+49,Manganeso,,C,3,indicador,50,µg/L,80,12
+50,Oxidabilidad,,C,3,indicador,5.0,mg/L,7.0,13
+51,pH,,C,3,indicador,6.5 a 9.5,Unidades pH,<4.5 o >10.0,14
+52,Sodio,,C,3,indicador,200,mg/L,600,15
+53,Sulfato,,C,3,indicador,250,mg/L,750,16
+54,Turbidez,,C,3,indicador,4.0,UNF,6.0,17
+55,Índice de Langelier,,C,3,indicador,+/- 0.5,Unidades de pH,,18
+56,Color,,D,4,organoléptico,15,mg/L Pt/Co,,1
+57,Olor,,D,4,organoléptico,3,Índice dilución,,1
+58,Sabor,,D,4,organoléptico,3,Índice dilución,,1
+59,Actividad alfa total,,E,5,radiactivo,0.1,Bq/L,,1
+60,Actividad beta resto,,E,5,radiactivo,1.0,Bq/L,,1
+61,Radón,,E,5,radiactivo,500,Bq/L,,"2, 3"
+62,Tritio,,E,5,radiactivo,100,Bq/L,,4
+63,Dosis Indicativa (DI),,E,5,radiactivo,0.10,mSv,,"5, 6"
+U-238,U 238,,E,6,radionucleido (natural),3.0,Bq/L,,
+U-234,U 234,,E,6,radionucleido (natural),2.8,Bq/L,,
+Ra-226,Ra 226,,E,6,radionucleido (natural),0.5,Bq/L,,
+Ra-228,Ra 228,,E,6,radionucleido (natural),0.2,Bq/L,,
+Pb-210,Pb 210,,E,6,radionucleido (natural),0.2,Bq/L,,
+Po-210,Po 210,,E,6,radionucleido (natural),0.1,Bq/L,,
+C-14,C 14,,E,6,radionucleido (artificial),240,Bq/L,,
+Sr-90,Sr 90,,E,6,radionucleido (artificial),4.9,Bq/L,,
+Pu-239,Pu 239,,E,6,radionucleido (artificial),0.6,Bq/L,,
+Pu-240,Pu 240,,E,6,radionucleido (artificial),0.6,Bq/L,,
+Am-241,Am 241,,E,6,radionucleido (artificial),0.7,Bq/L,,
+Co-60,Co 60,,E,6,radionucleido (artificial),40,Bq/L,,
+Cs-134,Cs 134,,E,6,radionucleido (artificial),7.2,Bq/L,,
+Cs-137,Cs 137,,E,6,radionucleido (artificial),11,Bq/L,,
+I-131,I 131,,E,6,radionucleido (artificial),6.2,Bq/L,,
+64,Calcio,,F,7,caracterización,100,mg/L,,
+65,Dureza total,,F,7,caracterización,500,mg/L CaCO3,,1
+66,Magnesio,,F,7,caracterización,30,mg/L,,
+67,Potasio,,F,7,caracterización,10,mg/L,,

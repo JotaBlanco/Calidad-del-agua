@@ -176,6 +176,94 @@ def download_pdf(session, provincia_code, municipio_code, municipio_name,
         return None
 
 
+def get_boletin_detail(session, provincia_code, municipio_code, municipio_name,
+                       network_id, network_name, boletin_id):
+    """Fetch boletin detail as HTML and parse metadata + parameters.
+
+    Fallback for when PDF downloads are unavailable.  Returns the same
+    (metadata, parameters) tuple as parse_pdf().
+    """
+    r = session.post(f"{BASE_URL}/detalleBoletin.do", data={
+        "codMunicipio": str(municipio_code),
+        "codProvincia": str(provincia_code),
+        "idBoletin": str(boletin_id),
+        "idRed": str(network_id),
+        "denMunicipio": municipio_name,
+        "denRed": network_name,
+        "denProvincia": "",
+        "denComunidad": "",
+        "provinciaMapa": "",
+    })
+
+    if r.status_code != 200:
+        print(f"  WARNING: detalleBoletin returned status {r.status_code}")
+        return {}, []
+
+    soup = BeautifulSoup(r.text, "html.parser")
+
+    # Check for server error page
+    if "problema técnico" in r.text:
+        print(f"  WARNING: detalleBoletin returned error page for {boletin_id}")
+        return {}, []
+
+    metadata = {}
+    parameters = []
+
+    # --- Parse metadata from the 2-column header table ---
+    header_map = {
+        "Red": "red",
+        "Punto de muestreo": "punto_muestreo",
+        "Municipio": "municipio",
+        "Zona abastecimiento": "zona_abastecimiento",
+        "Fecha de toma": "fecha_toma",
+        "Tipo de Boletin": "tipo_boletin",
+        "Tipo de analisis": "tipo_analisis",
+        "Laboratorio/s": "laboratorio",
+    }
+
+    for table in soup.find_all("table"):
+        rows = table.find_all("tr")
+        for row in rows:
+            cells = [td.get_text(strip=True) for td in row.find_all(["td", "th"])]
+            if len(cells) == 2:
+                for label_prefix, field_key in header_map.items():
+                    if cells[0].startswith(label_prefix):
+                        metadata[field_key] = cells[1]
+                        break
+
+    # --- Parse calificacion (qualification) ---
+    # It appears as a standalone label like "AGUA APTA PARA EL CONSUMO"
+    for label in soup.find_all("label"):
+        text = label.get_text(strip=True)
+        if "AGUA" in text and ("APTA" in text or "NO APTA" in text):
+            metadata["calificacion"] = text
+
+    # --- Parse parameter tables ---
+    # Each <table class="tablaCss"> inside a fieldset has a header row
+    # ["Parámetro", "Valor cuantificado", "Unidad"] followed by data rows.
+    # Each data row's first 3 cells are one parameter (name, value, unit).
+    for table in soup.find_all("table", class_="tablaCss"):
+        rows = table.find_all("tr")
+        if not rows:
+            continue
+
+        # Check this is a parameter table
+        header_cells = [th.get_text(strip=True) for th in rows[0].find_all(["td", "th"])]
+        if "Parámetro" not in header_cells:
+            continue
+
+        for row in rows[1:]:  # Skip header row
+            cells = [td.get_text(strip=True) for td in row.find_all("td")]
+            if len(cells) >= 3:
+                parameters.append({
+                    "parametro": cells[0],
+                    "valor": cells[1],
+                    "unidad": cells[2],
+                })
+
+    return metadata, parameters
+
+
 def parse_pdf(pdf_bytes):
     """Extract structured data from a boletin PDF.
 
