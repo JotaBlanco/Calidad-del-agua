@@ -123,20 +123,27 @@ def geocode_cartociudad(query: str) -> tuple[float, float] | None:
 
 
 def geocode_cartociudad_candidates(query: str) -> tuple[float, float] | None:
-    """Geocodifica con CartoCiudad candidates endpoint (más flexible)."""
+    """Geocodifica con CartoCiudad candidates endpoint.
+
+    NOTE: This endpoint often returns lat=0.0, lng=0.0 (no real coordinates).
+    We filter those out. The `find` endpoint is generally more reliable.
+    """
     url = (
         "https://www.cartociudad.es/geocoder/api/geocoder/candidates?"
-        + urllib.parse.urlencode({"q": query, "limit": "1"})
+        + urllib.parse.urlencode({"q": query, "limit": "5"})
     )
     time.sleep(0.3)
     data = _http_get_json(url)
     if not data or not isinstance(data, list) or len(data) == 0:
         return None
-    item = data[0]
-    lat = item.get("lat")
-    lng = item.get("lng")
-    if lat and lng and float(lat) != 0.0:
-        return (float(lat), float(lng))
+    # candidates often returns lat=0.0 — find first item with real coords
+    for item in data:
+        lat = item.get("lat")
+        lng = item.get("lng")
+        if lat is not None and lng is not None:
+            flat, flng = float(lat), float(lng)
+            if flat != 0.0 and flng != 0.0:
+                return (flat, flng)
     return None
 
 
@@ -239,9 +246,22 @@ def _try_providers(
     geolocator: Nominatim,
     queries: list[str],
     centroid: tuple[float, float],
+    carto_queries: list[str] | None = None,
 ) -> tuple[float, float, str] | None:
-    """Try all providers with the given query list. Returns (lat, lon, provider) or None."""
-    # 1. Nominatim
+    """Try all providers with the given query list. Returns (lat, lon, provider) or None.
+
+    carto_queries: separate queries for CartoCiudad (without "España",
+    since CartoCiudad is Spain-only and chokes on it).
+    """
+    # 1. Photon (best performer: 64% at full clean)
+    for query in queries:
+        coords = geocode_photon(query)
+        if coords:
+            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
+            if dist <= MAX_DISTANCE_KM:
+                return (coords[0], coords[1], "photon")
+
+    # 2. Nominatim (23% at full clean)
     for query in queries:
         coords = geocode_nominatim(geolocator, query)
         if coords:
@@ -249,27 +269,14 @@ def _try_providers(
             if dist <= MAX_DISTANCE_KM:
                 return (coords[0], coords[1], "nominatim")
 
-    # 2. CartoCiudad (find + candidates)
-    for query in queries:
+    # 3. CartoCiudad (find only — candidates endpoint returns lat=0)
+    #    Uses carto_queries (no "España") or falls back to standard queries
+    for query in (carto_queries or queries):
         coords = geocode_cartociudad(query)
         if coords:
             dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
             if dist <= MAX_DISTANCE_KM:
                 return (coords[0], coords[1], "cartociudad")
-    for query in queries:
-        coords = geocode_cartociudad_candidates(query)
-        if coords:
-            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-            if dist <= MAX_DISTANCE_KM:
-                return (coords[0], coords[1], "cartociudad_cand")
-
-    # 3. Photon
-    for query in queries:
-        coords = geocode_photon(query)
-        if coords:
-            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-            if dist <= MAX_DISTANCE_KM:
-                return (coords[0], coords[1], "photon")
 
     # 4-6. Optional API-key providers
     for query in queries:
@@ -292,16 +299,18 @@ def _try_providers(
 
 def geocode_multi(
     geolocator: Nominatim,
-    levels: list[tuple[str, list[str]]],
+    levels: list[tuple[str, list[str], list[str]]],
     centroid: tuple[float, float],
 ) -> tuple[float, float, str, str] | None:
     """
-    Intenta geocodificar usando múltiples niveles de limpieza (A→B→C),
+    Intenta geocodificar usando múltiples niveles de limpieza,
     cada uno probando todos los proveedores antes de pasar al siguiente nivel.
+
+    levels: list of (level_name, queries, carto_queries) tuples.
     Devuelve (lat, lon, provider_name, level_name) o None si todos fallan.
     """
-    for level_name, queries in levels:
-        result = _try_providers(geolocator, queries, centroid)
+    for level_name, queries, carto_queries in levels:
+        result = _try_providers(geolocator, queries, centroid, carto_queries)
         if result:
             return (result[0], result[1], result[2], level_name)
 
@@ -314,11 +323,16 @@ def _strip_accents(s: str) -> str:
     return "".join(c for c in nfkd if unicodedata.category(c) != "Mn")
 
 
-def extract_location_hint(punto: str, municipio: str) -> str | None:
+def extract_location_hint(
+    punto: str, municipio: str, remove_municipio: bool = True
+) -> str | None:
     """
     Extrae una pista de ubicación del nombre del punto de muestreo.
     Busca calles, plazas, barrios u otros topónimos útiles para geocodificar.
     Devuelve None si no se encuentra nada útil.
+
+    remove_municipio: if False, keep the municipality name in the output
+    (matrix tests showed removing it hurts all geocoding providers).
     """
     if not isinstance(punto, str) or not punto.strip():
         return None
@@ -391,7 +405,7 @@ def extract_location_hint(punto: str, municipio: str) -> str | None:
         r"\(.*?(RED|ABASTECIMIENTO|DISTRIBUC).*?\)", "", punto, flags=re.IGNORECASE
     ).strip()
 
-    # --- Eliminar nombre del municipio (accent-insensitive) ---
+    # --- Municipio patterns (always needed for RED {municipio} removal) ---
     muni_norm = _strip_accents(municipio)
     muni_pat = re.escape(muni_norm)
 
@@ -420,10 +434,12 @@ def extract_location_hint(punto: str, municipio: str) -> str | None:
                 text = text[:m2.start()] + text[m2.end():]
         return text.strip()
 
-    punto = _remove_muni(punto)
+    # Only remove municipality name if requested (matrix tests showed it hurts)
+    if remove_municipio:
+        punto = _remove_muni(punto)
 
-    # --- RED handling (after municipality removal for better results) ---
-    # Remove "RED {municipio}" pattern (common in AQN entries)
+    # --- RED handling ---
+    # Remove "RED {municipio}" pattern (common in AQN entries) — always do this
     punto_norm = _strip_accents(punto)
     for mp in muni_patterns:
         m_red_muni = re.search(
@@ -446,7 +462,8 @@ def extract_location_hint(punto: str, municipio: str) -> str | None:
     punto = re.sub(r"\bRED\b", "", punto, flags=re.IGNORECASE).strip()
 
     # Second pass municipality removal (after RED stripping may expose it)
-    punto = _remove_muni(punto)
+    if remove_municipio:
+        punto = _remove_muni(punto)
 
     # --- Noise prefixes (before real address) ---
     # "SALIDA (DE) (FUENTE)" prefix
@@ -550,8 +567,8 @@ def extract_location_hint(punto: str, municipio: str) -> str | None:
     if len(punto) < 3:
         return None
 
-    # Accent-insensitive municipio comparison
-    if _strip_accents(punto).upper() == _strip_accents(municipio).upper():
+    # Accent-insensitive municipio comparison (only when municipio was removed)
+    if remove_municipio and _strip_accents(punto).upper() == _strip_accents(municipio).upper():
         return None
 
     # Palabras que solas no sirven para geocodificar
@@ -638,49 +655,58 @@ def _clean_light(punto: str) -> str:
     return punto
 
 
-def _format_queries(text: str, municipio: str, provincia: str) -> list[str]:
-    """Format a cleaned text into geocoding queries with geographic context."""
+def _format_queries(
+    text: str, municipio: str, provincia: str
+) -> tuple[list[str], list[str]]:
+    """Format cleaned text into queries for standard providers and CartoCiudad.
+
+    Returns (standard_queries, carto_queries) where:
+      - standard_queries: for Photon/Nominatim (include "España")
+      - carto_queries: for CartoCiudad (NO "España", NO provincia — it chokes on them)
+    """
     if not text or len(text) < 3:
-        return []
-    queries = []
-    queries.append(f"{text}, {municipio}, España")
+        return [], []
+    std = [f"{text}, {municipio}, España"]
     if provincia:
-        queries.append(f"{text}, {municipio}, {provincia}, España")
-    return queries
+        std.append(f"{text}, {municipio}, {provincia}, España")
+    carto = [f"{text}, {municipio}", text]
+    return std, carto
 
 
 def build_query_levels(
     punto: str, municipio: str, provincia: str
-) -> list[tuple[str, list[str]]]:
+) -> list[tuple[str, list[str], list[str]]]:
     """
-    Build three levels of geocoding queries:
-      A — raw punto name (underscores normalised, basic trim only)
-      B — light cleanup (strip PM/RED/company prefixes, province suffixes)
-      C — deep cleanup (full extract_location_hint)
-    Returns list of (level_name, queries) tuples.  Empty levels are omitted.
-    """
-    levels: list[tuple[str, list[str]]] = []
+    Build query levels with incremental cleaning (matrix-validated).
 
-    # --- Level A: raw ---
+    Based on matrix test results:
+    - All cleaning steps help EXCEPT municipio removal (hurts all providers)
+    - Biggest impact steps: RED removal, PM removal, FUENTE removal
+
+    Returns list of (level_name, standard_queries, carto_queries) tuples.
+    """
+    levels: list[tuple[str, list[str], list[str]]] = []
+
+    # --- Level A: raw (just normalize underscores/whitespace) ---
     raw = punto.replace("_", " ").strip()
     raw = re.sub(r"\s{2,}", " ", raw)
-    a_queries = _format_queries(raw, municipio, provincia)
-    if a_queries:
-        levels.append(("A", a_queries))
+    std_a, carto_a = _format_queries(raw, municipio, provincia)
+    if std_a:
+        levels.append(("A", std_a, carto_a))
 
-    # --- Level B: light clean ---
+    # --- Level B: light clean (strip prefixes/suffixes, keep municipio) ---
     light = _clean_light(punto)
     if light and light.upper() != raw.upper():
-        b_queries = _format_queries(light, municipio, provincia)
-        if b_queries:
-            levels.append(("B", b_queries))
+        std_b, carto_b = _format_queries(light, municipio, provincia)
+        if std_b:
+            levels.append(("B", std_b, carto_b))
 
-    # --- Level C: deep clean (current extract_location_hint) ---
-    deep = extract_location_hint(punto, municipio)
+    # --- Level C: deep clean (all steps EXCEPT municipio removal) ---
+    deep = extract_location_hint(punto, municipio, remove_municipio=False)
     if deep and deep.upper() != light.upper():
-        c_queries = _format_queries(deep, municipio, provincia)
-        if c_queries:
-            levels.append(("C", c_queries))
+        std_c, carto_c = _format_queries(deep, municipio, provincia)
+        if std_c:
+            levels.append(("C", std_c, carto_c))
 
     return levels
 
