@@ -17,12 +17,31 @@ Summation compliance (``aptitud_suma``):
   For parameters with ``contributes_to`` (THM, HAA, HPA, ∑2, PFAS),
   groups rows by measurement ID + parent sum parameter, sums the
   individual component values, and compares against the parent's VP.
+
+Also adds:
+  - ``pct_valor_vp``       — percentage of VP consumed (valor / VP * 100)
+  - ``parte_boe``          — descriptive BOE annex part label (e.g. "B – Químicos")
+  - ``es_plaguicida``      — True if the parameter is an individual pesticide
+  - ``es_componente_suma`` — True if the parameter contributes to a sum limit
 """
 
 from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+
+from .s1_normalization import is_pesticide
+
+
+# ── BOE part descriptive labels ──────────────────────────────────────
+PARTE_BOE_LABELS: dict[str, str] = {
+    "A": "A – Microbiológicos",
+    "B": "B – Químicos",
+    "C": "C – Indicadores",
+    "D": "D – Organolépticos",
+    "E": "E – Radiactivos",
+    "F": "F – Caracterización",
+}
 
 
 # ── Measurement-ID columns ────────────────────────────────────────────
@@ -205,5 +224,12 @@ def add_compliance(df: pd.DataFrame) -> pd.DataFrame:
     valor = _parse_valor(df["valor"])
     vp = _parse_valor(df["valor_parametrico"])
     df["pct_valor_vp"] = (valor / vp * 100).round(2)
+
+    # BOE part with descriptive label
+    df["parte_boe"] = df["parte_parametro"].map(PARTE_BOE_LABELS)
+
+    # Boolean flags
+    df["es_plaguicida"] = df["parametro"].map(is_pesticide)
+    df["es_componente_suma"] = df["contributes_to"].notna()
 
     return df

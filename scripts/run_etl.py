@@ -55,6 +55,15 @@ def run_diagnostics(df: pd.DataFrame, merged: pd.DataFrame) -> None:
     print(f"Unique parameters  : {n_unique:,}")
     print()
 
+    # Step 0: type cleaning
+    if "año" in df.columns:
+        year_range = f"{int(df['año'].min())}–{int(df['año'].max())}"
+        n_trimestres = df["trimestre"].nunique()
+        print(f"Step 0 — Type cleaning")
+        print(f"  Year range       : {year_range}")
+        print(f"  Unique quarters  : {n_trimestres}")
+        print()
+
     print("Step 1 — Normalization")
     print(f"  Direct BOE match : {direct} params")
     print(f"  After rename     : {after_rename} params (+{after_rename - direct})")
@@ -104,6 +113,19 @@ def run_diagnostics(df: pd.DataFrame, merged: pd.DataFrame) -> None:
             for label in ["apta", "no_apta"]:
                 n = sum_counts.get(label, 0)
                 print(f"    {label:14s} : {n:,}")
+        print()
+
+    # Step 4b: new classification columns
+    if "parte_boe" in merged.columns:
+        print("Step 4b — Classification columns")
+        n_parte = merged["parte_boe"].notna().sum()
+        print(f"  parte_boe filled : {n_parte:,} ({_pct(n_parte, total_rows)})")
+        for label, cnt in merged["parte_boe"].value_counts().items():
+            print(f"    {label:30s} : {cnt:,}")
+        n_pest = merged["es_plaguicida"].sum()
+        n_comp = merged["es_componente_suma"].sum()
+        print(f"  es_plaguicida    : {n_pest:,} ({_pct(n_pest, total_rows)})")
+        print(f"  es_componente_suma: {n_comp:,} ({_pct(n_comp, total_rows)})")
         print()
 
     # Step 5: latest tags

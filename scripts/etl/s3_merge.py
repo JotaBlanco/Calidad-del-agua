@@ -20,8 +20,8 @@ def merge_with_limits(
     """Merge water quality data with (expanded) BOE legal limits.
 
     Adds columns: ``parametro_boe``, ``valor_parametrico``, ``unidad_limite``,
-    ``tipo_parametro``, ``valor_no_aptitud``, ``source_limite``,
-    ``contributes_to``, ``unidad_norm``.
+    ``tipo_parametro``, ``parte_parametro``, ``valor_no_aptitud``,
+    ``source_limite``, ``contributes_to``, ``unidad_norm``.
 
     Parameters
     ----------
@@ -42,12 +42,13 @@ def merge_with_limits(
         df["unidad_norm"] = df["unidad"].map(normalize_unidad)
 
     limit_cols = limits[
-        ["parametro", "valor_parametrico", "unidad", "tipo",
+        ["parametro", "valor_parametrico", "unidad", "tipo", "parte",
          "valor_no_aptitud", "source", "contributes_to"]
     ].rename(columns={
         "parametro": "parametro_boe",
         "unidad": "unidad_limite",
         "tipo": "tipo_parametro",
+        "parte": "parte_parametro",
         "source": "source_limite",
     })
 

@@ -51,7 +51,7 @@ def tag_latest(df: pd.DataFrame) -> pd.DataFrame:
     if "fecha" in df.columns and pd.api.types.is_datetime64_any_dtype(df["fecha"]):
         fecha = df["fecha"]
     else:
-        fecha = pd.to_datetime(df[DATE_COL], format=DATE_FMT, errors="coerce")
+        fecha = pd.to_datetime(df[DATE_COL], format="mixed", dayfirst=True, errors="coerce")
 
     # Latest analysis per sampling point + analysis type
     max_analisis = fecha.groupby(
