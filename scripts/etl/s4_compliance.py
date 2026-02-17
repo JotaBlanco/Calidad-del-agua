@@ -102,7 +102,7 @@ def classify_individual(df: pd.DataFrame) -> pd.Series:
     general = ~is_ph & ~is_lang & df["valor_parametrico"].notna()
     idx = df.index[general]
 
-    val = _parse_valor(df.loc[idx, "valor"])
+    val = _parse_valor(df.loc[idx, "valor"]).fillna(0)
     vp = _parse_valor(df.loc[idx, "valor_parametrico"])
     vna = _parse_valor(df.loc[idx, "valor_no_aptitud"])
 
@@ -144,7 +144,7 @@ def classify_summation(df: pd.DataFrame) -> pd.Series:
         return aptitud_suma
 
     sub = df.loc[has_sum].copy()
-    sub["valor_num"] = _parse_valor(sub["valor"])
+    sub["valor_num"] = _parse_valor(sub["valor"]).fillna(0)
 
     group_cols = MEASUREMENT_ID_COLS + ["contributes_to"]
 
@@ -196,4 +196,9 @@ def add_compliance(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df["aptitud"] = classify_individual(df)
     df["aptitud_suma"] = classify_summation(df)
+
+    # For summation components (no individual VP), use the sum-level result
+    fill_mask = df["aptitud"].isna() & df["aptitud_suma"].notna()
+    df.loc[fill_mask, "aptitud"] = df.loc[fill_mask, "aptitud_suma"]
+
     return df

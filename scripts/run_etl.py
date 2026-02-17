@@ -17,6 +17,7 @@ from scripts.etl import (
     build_expanded_limits,
     merge_with_limits,
     add_compliance,
+    tag_latest,
     normalize_parametro,
     is_pesticide,
     COMPONENT_TO_SUM_MAP,
@@ -103,6 +104,15 @@ def run_diagnostics(df: pd.DataFrame, merged: pd.DataFrame) -> None:
                 print(f"    {label:14s} : {n:,}")
         print()
 
+    # Step 5: latest tags
+    if "es_ultimo_analisis" in merged.columns:
+        n_analisis = merged["es_ultimo_analisis"].sum()
+        n_medicion = merged["es_ultima_medicion"].sum()
+        print("Step 5 — Latest tags")
+        print(f"  es_ultimo_analisis : {n_analisis:,} ({_pct(n_analisis, total_rows)})")
+        print(f"  es_ultima_medicion : {n_medicion:,} ({_pct(n_medicion, total_rows)})")
+        print()
+
     print("=" * 60)
 
 
@@ -123,6 +133,9 @@ def run(diag_only: bool = False) -> pd.DataFrame:
 
     print("Checking compliance …")
     merged = add_compliance(merged)
+
+    print("Tagging latest measurements …")
+    merged = tag_latest(merged)
 
     run_diagnostics(df, merged)
 
