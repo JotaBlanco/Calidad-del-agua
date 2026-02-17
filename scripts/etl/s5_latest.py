@@ -7,6 +7,8 @@ Adds two boolean columns:
   date for the sampling-point + analysis-type group.
 - ``es_ultima_medicion``  — True when ``fecha_toma`` equals the most recent
   date for the sampling-point + analysis-type + parameter group.
+- ``antiguedad_dias``     — Days elapsed since the measurement was taken
+  (relative to the most recent date in the entire dataset).
 
 Grouping keys:
     analisis:  [ccaa_code, provincia_code, municipio_code, red,
@@ -19,6 +21,7 @@ Grouping keys:
 
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 LATEST_GROUP_COLS: list[str] = [
@@ -44,7 +47,11 @@ def tag_latest(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.copy()
 
-    fecha = pd.to_datetime(df[DATE_COL], format=DATE_FMT, errors="coerce")
+    # Use pre-parsed fecha from s0 if available, otherwise parse here
+    if "fecha" in df.columns and pd.api.types.is_datetime64_any_dtype(df["fecha"]):
+        fecha = df["fecha"]
+    else:
+        fecha = pd.to_datetime(df[DATE_COL], format=DATE_FMT, errors="coerce")
 
     # Latest analysis per sampling point + analysis type
     max_analisis = fecha.groupby(
@@ -57,5 +64,9 @@ def tag_latest(df: pd.DataFrame) -> pd.DataFrame:
         [df[c] for c in LATEST_GROUP_COLS] + [df["parametro"]]
     ).transform("max")
     df["es_ultima_medicion"] = fecha == max_medicion
+
+    # Days since measurement (relative to newest date in the dataset)
+    ref_date = fecha.max()
+    df["antiguedad_dias"] = (ref_date - fecha).dt.days
 
     return df

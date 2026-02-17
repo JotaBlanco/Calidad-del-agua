@@ -201,4 +201,9 @@ def add_compliance(df: pd.DataFrame) -> pd.DataFrame:
     fill_mask = df["aptitud"].isna() & df["aptitud_suma"].notna()
     df.loc[fill_mask, "aptitud"] = df.loc[fill_mask, "aptitud_suma"]
 
+    # Percentage of legal limit consumed (valor / VP * 100)
+    valor = _parse_valor(df["valor"])
+    vp = _parse_valor(df["valor_parametrico"])
+    df["pct_valor_vp"] = (valor / vp * 100).round(2)
+
     return df

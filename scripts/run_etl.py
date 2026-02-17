@@ -14,6 +14,7 @@ import pandas as pd
 
 from scripts.etl import (
     ALL_DATA_FILE,
+    clean_types,
     build_expanded_limits,
     merge_with_limits,
     add_compliance,
@@ -130,6 +131,9 @@ def run(diag_only: bool = False) -> pd.DataFrame:
 
     print("Loading data …")
     df = pd.read_csv(ALL_DATA_FILE, low_memory=False)
+
+    print("Cleaning types …")
+    df = clean_types(df)
 
     print("Building expanded limits …")
     limits = build_expanded_limits(

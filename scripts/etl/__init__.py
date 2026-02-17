@@ -2,6 +2,7 @@
 ETL package for water quality data normalization and enrichment.
 
 Modules:
+    s0_clean              — Basic type cleaning (valor_num, fecha)
     s1_normalization      — Parameter name and unit normalization
     s2_limits_expansion   — Expanded BOE limits (+ pesticides, + sum components)
     s3_merge              — Merge water quality data with legal limits
@@ -31,6 +32,7 @@ BOE_LIMITS_FILE = LIMITS_DIR / "limites_legales_boe.csv"
 # ---------------------------------------------------------------------------
 # Re-exports for convenience
 # ---------------------------------------------------------------------------
+from .s0_clean import clean_types  # noqa: E402
 from .s1_normalization import (  # noqa: E402
     PARAM_RENAME_MAP,
     PESTICIDE_PREFIXES,
