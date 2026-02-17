@@ -7,6 +7,7 @@ Modules:
     s3_merge              — Merge water quality data with legal limits
     s4_compliance         — Compliance checking (aptitud / aptitud_suma)
     s5_latest             — Tag latest measurement per sampling point
+    s6_geo                — Enrich with municipality geolocation
 
 Usage:
     from scripts.etl import normalize_parametro, build_expanded_limits, merge_with_limits
@@ -46,3 +47,4 @@ from .s2_limits_expansion import (  # noqa: E402
 from .s3_merge import merge_with_limits  # noqa: E402
 from .s4_compliance import add_compliance, MEASUREMENT_ID_COLS  # noqa: E402
 from .s5_latest import tag_latest, LATEST_GROUP_COLS  # noqa: E402
+from .s6_geo import add_geo  # noqa: E402

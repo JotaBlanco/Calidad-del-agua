@@ -18,6 +18,7 @@ from scripts.etl import (
     merge_with_limits,
     add_compliance,
     tag_latest,
+    add_geo,
     normalize_parametro,
     is_pesticide,
     COMPONENT_TO_SUM_MAP,
@@ -113,6 +114,13 @@ def run_diagnostics(df: pd.DataFrame, merged: pd.DataFrame) -> None:
         print(f"  es_ultima_medicion : {n_medicion:,} ({_pct(n_medicion, total_rows)})")
         print()
 
+    # Step 6: geolocation
+    if "lat_municipio" in merged.columns:
+        n_geo = merged["lat_municipio"].notna().sum()
+        print("Step 6 — Geolocation")
+        print(f"  Rows geocoded    : {n_geo:,} / {total_rows:,} ({_pct(n_geo, total_rows)})")
+        print()
+
     print("=" * 60)
 
 
@@ -136,6 +144,9 @@ def run(diag_only: bool = False) -> pd.DataFrame:
 
     print("Tagging latest measurements …")
     merged = tag_latest(merged)
+
+    print("Adding geolocation …")
+    merged = add_geo(merged)
 
     run_diagnostics(df, merged)
 
