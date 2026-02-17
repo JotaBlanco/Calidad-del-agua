@@ -10,6 +10,7 @@ Usage:
 
 import argparse
 import io
+import random
 import re
 import time
 from pathlib import Path
@@ -457,7 +458,7 @@ def scrape_municipality(ccaa_code, provincia_code, municipio_code):
             print(f"    Saved CSV: {csv_filename} ({len(parameters)} parameters)")
 
             # Be polite to the server
-            time.sleep(0.5)
+            time.sleep(1.0 + random.uniform(0, 1.0))
 
     # Save combined CSV for the municipality
     if all_records:

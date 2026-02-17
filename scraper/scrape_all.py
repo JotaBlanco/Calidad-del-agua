@@ -19,6 +19,7 @@ import argparse
 import io
 import json
 import os
+import random
 import re
 import subprocess
 import sys
@@ -189,7 +190,7 @@ def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
                             "source": source,
                         })
 
-                    time.sleep(0.15)
+                    time.sleep(1.0 + random.uniform(0, 1.0))
 
             return all_records, municipio_name, None
 
@@ -279,7 +280,7 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False,
         progress["completed"].append(muni_code)
         completed_set.add(muni_code)
         save_progress(progress, prov_code)
-        time.sleep(0.1)
+        time.sleep(1.5 + random.uniform(0, 1.0))
 
     print(f"\n[{prov_name}] DONE! {len(progress['completed'])}/{total} completed, "
           f"{len(progress['failed'])} failed, {progress['stats']['total_records']} records")
@@ -437,8 +438,8 @@ def main():
     parser.add_argument("--parallel", action="store_true",
                         help="Launch one process per province in parallel")
     parser.add_argument("--status", action="store_true", help="Show progress across all provinces")
-    parser.add_argument("--max-parallel", type=int, default=4,
-                        help="Max parallel processes (default: 4)")
+    parser.add_argument("--max-parallel", type=int, default=2,
+                        help="Max parallel processes (default: 2)")
     parser.add_argument("--use-html", action="store_true",
                         help="Parse boletin HTML pages instead of downloading PDFs "
                              "(use when SINAC PDF service is down)")
