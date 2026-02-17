@@ -609,6 +609,8 @@ def _clean_light(punto: str) -> str:
     suffixes and ZA/parenthetical noise.  Keep municipality name, FUENTE, and
     all locality/address words intact.
     """
+    if not isinstance(punto, str) or not punto.strip():
+        return ""
     punto = punto.replace("_", " ")
     # PM, PM1, E-PM, M-PM, PTMF, CP
     punto = re.sub(r"^(E-|M-)?PM\w?\d*\s*[-–.]?\s*", "", punto, flags=re.IGNORECASE).strip()
@@ -686,6 +688,9 @@ def build_query_levels(
     Returns list of (level_name, standard_queries, carto_queries) tuples.
     """
     levels: list[tuple[str, list[str], list[str]]] = []
+
+    if not isinstance(punto, str) or not punto.strip():
+        return levels
 
     # --- Level A: raw (just normalize underscores/whitespace) ---
     raw = punto.replace("_", " ").strip()
