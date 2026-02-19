@@ -9,6 +9,7 @@ Modules:
     s4_compliance         — Compliance checking (aptitud / aptitud_suma)
     s5_latest             — Tag latest measurement per sampling point
     s6_geo                — Enrich with municipality geolocation
+    s7_aggregates         — Aggregated metrics at multiple geographic levels
 
 Usage:
     from scripts.etl import normalize_parametro, build_expanded_limits, merge_with_limits
@@ -50,3 +51,4 @@ from .s3_merge import merge_with_limits  # noqa: E402
 from .s4_compliance import add_compliance, MEASUREMENT_ID_COLS, PARTE_BOE_LABELS  # noqa: E402
 from .s5_latest import tag_latest, LATEST_GROUP_COLS  # noqa: E402
 from .s6_geo import add_geo  # noqa: E402
+from .s7_aggregates import build_aggregates  # noqa: E402

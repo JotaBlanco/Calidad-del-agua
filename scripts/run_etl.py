@@ -20,6 +20,7 @@ from scripts.etl import (
     add_compliance,
     tag_latest,
     add_geo,
+    build_aggregates,
     normalize_parametro,
     is_pesticide,
     COMPONENT_TO_SUM_MAP,
@@ -180,6 +181,9 @@ def run(diag_only: bool = False) -> pd.DataFrame:
         out = ALL_DATA_FILE.parent / "all_data_enriched.csv"
         merged.to_csv(out, index=False)
         print(f"\nSaved → {out}")
+
+        print("\nBuilding aggregates …")
+        build_aggregates(merged)
 
     return merged
 

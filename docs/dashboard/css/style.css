@@ -1,0 +1,607 @@
+/* ── Reset & base ─────────────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    color: #333;
+    background: #f5f6f8;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+header .subtitle {
+    font-size: 12px;
+    color: #8899aa;
+}
+
+/* ── Summary stats (in header) ───────────────────────────────── */
+#summary-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.stat-badge.ok {
+    background: rgba(46, 125, 50, 0.2);
+    color: #81c784;
+}
+
+.stat-badge.warning {
+    background: rgba(245, 127, 23, 0.2);
+    color: #ffb74d;
+}
+
+.stat-badge.danger {
+    background: rgba(198, 40, 40, 0.2);
+    color: #ef9a9a;
+}
+
+.stat-total {
+    font-size: 12px;
+    color: #8899aa;
+    margin-left: 4px;
+}
+
+/* ── Main layout ─────────────────────────────────────────────── */
+main {
+    display: flex;
+    height: calc(100vh - 48px);
+    overflow: hidden;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────── */
+#sidebar {
+    width: 280px;
+    min-width: 280px;
+    background: #fff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* ── Filters ─────────────────────────────────────────────────── */
+#filters {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-group {
+    margin-bottom: 8px;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.filter-group select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 12px;
+    background: #fff;
+    color: #333;
+}
+
+.filter-group select:disabled {
+    background: #f5f5f5;
+    color: #999;
+}
+
+.filter-group select option.has-danger {
+    color: #c0392b;
+    font-weight: 600;
+}
+
+.filter-group select option.has-warning {
+    color: #d4a017;
+}
+
+/* ── Selection tags ─────────────────────────────────────────── */
+#selection-tags {
+    padding: 8px 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+#selection-tags:empty {
+    display: none;
+}
+
+.selection-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    background: #e3f2fd;
+    color: #1565c0;
+    cursor: default;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selection-tag .tag-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-right: 2px;
+}
+
+.selection-tag .tag-remove {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.5;
+    margin-left: 2px;
+    flex-shrink: 0;
+}
+
+.selection-tag .tag-remove:hover {
+    opacity: 1;
+}
+
+/* ── Punto list (sidebar) ──────────────────────────────────── */
+#punto-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.punto-list-placeholder {
+    padding: 16px 12px;
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+}
+
+.punto-card.active {
+    background: #e3f2fd;
+    border-left: 3px solid #1976d2;
+}
+
+/* ── Map ─────────────────────────────────────────────────────── */
+#map-container {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+/* Override cluster marker styles for greyscale theme */
+.marker-cluster-ok {
+    background-color: rgba(46, 125, 50, 0.3);
+}
+.marker-cluster-ok div {
+    background-color: rgba(46, 125, 50, 0.6);
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.marker-cluster-warning {
+    background-color: rgba(245, 127, 23, 0.3);
+}
+.marker-cluster-warning div {
+    background-color: rgba(245, 127, 23, 0.6);
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.marker-cluster-danger {
+    background-color: rgba(198, 40, 40, 0.3);
+}
+.marker-cluster-danger div {
+    background-color: rgba(198, 40, 40, 0.6);
+    color: #fff;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Leaflet popup styling */
+.leaflet-popup-content {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 8px 12px;
+}
+
+.popup-title {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+.popup-municipio {
+    color: #666;
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.popup-status {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.popup-status.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.popup-status.warning {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.popup-status.danger {
+    background: #ffebee;
+    color: #c62828;
+}
+
+.popup-date {
+    font-size: 11px;
+    color: #888;
+    margin-left: 6px;
+}
+
+/* ── Detail panel (right side) ───────────────────────────────── */
+#detail-panel {
+    width: 38%;
+    min-width: 380px;
+    background: #fff;
+    border-left: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#detail-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.detail-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 32px;
+    color: #aaa;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* Detail header for selected punto */
+.detail-header {
+    padding: 14px 16px 10px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+}
+
+.detail-header h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 2px;
+}
+
+.detail-header .detail-sub {
+    font-size: 12px;
+    color: #888;
+}
+
+.detail-header .detail-status {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+}
+
+.detail-counts {
+    font-size: 12px;
+    color: #888;
+    margin-left: 8px;
+}
+
+.ok-summary {
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #eee;
+}
+
+.ok-summary.all-ok {
+    color: #2e7d32;
+    background: #f1f8e9;
+    text-align: center;
+    padding: 24px 16px;
+}
+
+.detail-status.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.detail-status.warning {
+    background: #fff8e1;
+    color: #f57f17;
+}
+
+.detail-status.danger {
+    background: #ffebee;
+    color: #c62828;
+}
+
+/* Measurement table */
+.table-scroll {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.params-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.params-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.params-table th {
+    background: #f5f6f8;
+    text-align: left;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border-bottom: 2px solid #e0e0e0;
+    white-space: nowrap;
+}
+
+.params-table th.num-col {
+    text-align: right;
+}
+
+.params-table td {
+    padding: 5px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.params-table td.num-col {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.params-table td.limite-cell {
+    color: #888;
+}
+
+/* Clickable rows */
+.param-row {
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.param-row:hover {
+    background: #f5f5f5 !important;
+}
+
+/* Row coloring by status */
+.param-row.row-danger {
+    background: #fff5f5;
+}
+
+.param-row.row-danger td {
+    color: #b71c1c;
+}
+
+.param-row.row-warning {
+    background: #fffbf0;
+}
+
+.param-row.row-warning td {
+    color: #e65100;
+}
+
+/* Aptitud cell */
+.params-table .aptitud-cell {
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.aptitud-apta {
+    color: #2e7d32;
+}
+
+.aptitud-incumple_vp {
+    color: #f57f17;
+}
+
+.aptitud-no_apta {
+    color: #c62828;
+}
+
+/* Chart expansion row */
+.chart-row td {
+    padding: 0 !important;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: #fafbfc;
+}
+
+.chart-container canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 12px;
+    color: #999;
+}
+
+.punto-card {
+    border-bottom: 1px solid #eee;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.punto-card:hover {
+    background: #f8f9fa;
+}
+
+.punto-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.punto-card-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.punto-card-muni {
+    font-size: 11px;
+    color: #888;
+}
+
+.punto-card-meta {
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    #detail-panel {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    #sidebar {
+        width: 100%;
+        min-width: 100%;
+        max-height: 30vh;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    #map-container {
+        height: 35vh;
+    }
+
+    #detail-panel {
+        width: 100%;
+        min-width: 100%;
+        height: 35vh;
+        border-left: none;
+        border-top: 1px solid #e0e0e0;
+    }
+}
