@@ -443,7 +443,7 @@ const App = {
     },
 
     async fetchJSON(path) {
-        const resp = await fetch(path);
+        const resp = await fetch(path + "?_=" + Date.now());
         if (!resp.ok) throw new Error("HTTP " + resp.status + " " + path);
         return resp.json();
     },
