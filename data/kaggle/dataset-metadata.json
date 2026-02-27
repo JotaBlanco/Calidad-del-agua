@@ -1,0 +1,19 @@
+{
+  "title": "Calidad del Agua en España - SINAC",
+  "id": "INSERT_USERNAME/calidad-del-agua-espana",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0"
+    }
+  ],
+  "description": "Datos de calidad del agua de consumo en España extraídos del Sistema de Información Nacional de Agua de Consumo (SINAC). Incluye análisis microbiológicos, químicos e indicadores de más de 8.000 municipios, con evaluación de cumplimiento según el BOE (RD 3/2023).",
+  "keywords": [
+    "water quality",
+    "spain",
+    "sinac",
+    "drinking water",
+    "calidad del agua",
+    "agua potable"
+  ],
+  "resources": []
+}

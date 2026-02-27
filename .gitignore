@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 data/raw/
-data/processed/
+data/processed/*
+!data/processed/geocoded_municipalities.csv
+!data/processed/puntos_coordenadas.yaml
 data/logs/
 data/progress/

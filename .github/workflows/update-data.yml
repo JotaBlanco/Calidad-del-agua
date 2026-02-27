@@ -1,0 +1,101 @@
+name: Update Water Quality Data
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 3:00 UTC
+  workflow_dispatch:
+    inputs:
+      skip_scrape:
+        description: 'Skip scraping, only rebuild dashboard from cached data'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Restore cached scraper data from previous runs ──
+      - name: Restore scraper cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/raw/csvs/
+            data/progress/
+          key: scraper-data-${{ github.run_id }}
+          restore-keys: |
+            scraper-data-
+
+      # ── Scrape SINAC (with 4h timeout, resumable) ──
+      - name: Scrape SINAC
+        if: ${{ github.event_name == 'schedule' || !inputs.skip_scrape }}
+        run: |
+          mkdir -p data/raw/csvs data/progress data/logs
+          timeout --signal=INT 14400 \
+            python -u scraper/scrape_all.py \
+              --parallel --skip-pdfs --use-html --max-parallel 2 \
+            || echo "Scraper stopped (timeout or completed)"
+
+      # ── Save cache for next run ──
+      - name: Save scraper cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: |
+            data/raw/csvs/
+            data/progress/
+          key: scraper-data-${{ github.run_id }}
+
+      # ── Data pipeline ──
+      - name: Merge raw CSVs
+        run: python scripts/merge_csvs.py
+
+      - name: Run ETL pipeline
+        run: python -m scripts.run_etl
+
+      - name: Build dashboard JSON files
+        run: python -m scripts.build_dashboard_data
+
+      # ── Upload to Kaggle (only if secrets are configured) ──
+      - name: Upload to Kaggle
+        if: ${{ env.KAGGLE_USERNAME != '' }}
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: |
+          pip install kaggle
+          mkdir -p data/kaggle/files
+          cp data/processed/all_data_enriched.csv data/kaggle/files/
+          cp -r data/processed/aggregates/ data/kaggle/files/aggregates/
+          cd data/kaggle
+          kaggle datasets version -p files/ -m "Automated update $(date +%Y-%m-%d)" \
+            || kaggle datasets create -p files/
+
+      # ── Commit and push updated dashboard data ──
+      - name: Commit and push dashboard data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/dashboard/data/
+          if git diff --staged --quiet; then
+            echo "No changes to dashboard data"
+          else
+            git commit -m "chore: update dashboard data $(date +%Y-%m-%d)"
+            git pull --rebase
+            git push
+          fi
