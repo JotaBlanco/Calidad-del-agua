@@ -2,21 +2,51 @@ name: Update Water Quality Data
 
 on:
   schedule:
-    - cron: '0 3 * * 1'  # Every Monday at 3:00 UTC
+    # One province group per day at 1:00 AM UTC (timeout at 8:00 = 7h max)
+    - cron: '0 1 * * 1'  # Monday    → group 0
+    - cron: '0 1 * * 2'  # Tuesday   → group 1
+    - cron: '0 1 * * 3'  # Wednesday → group 2
+    - cron: '0 1 * * 4'  # Thursday  → group 3
+    - cron: '0 1 * * 5'  # Friday    → group 4
+    - cron: '0 1 * * 6'  # Saturday  → group 5
+    - cron: '0 1 * * 0'  # Sunday    → group 6
   workflow_dispatch:
     inputs:
       skip_scrape:
         description: 'Skip scraping, only rebuild dashboard from cached data'
         type: boolean
         default: false
+      group:
+        description: 'Province group to scrape (0-6, empty = auto by day of week)'
+        type: string
+        required: false
 
 permissions:
   contents: write
 
+# Province groups balanced by workload (~5000 each):
+# 0 Mon: 24,48,19,49,13,50 (León,Vizcaya,Guadalajara,Zamora,Ciudad Real,Zaragoza)
+# 1 Tue: 9,16,44,20,36,11,5 (Burgos,Cuenca,Teruel,Guipúzcoa,Pontevedra,Cádiz,Ávila)
+# 2 Wed: 29,25,46,30,14,12,26 (Málaga,Lleida,Valencia,Murcia,Córdoba,Castellón,La Rioja)
+# 3 Thu: 22,37,40,31,32,1,4,6 (Huesca,Salamanca,Segovia,Navarra,Ourense,Álava,Almería,Badajoz)
+# 4 Fri: 39,17,38,15,45,27,3,52 (Cantabria,Girona,Tenerife,Coruña,Toledo,Lugo,Alicante,Melilla)
+# 5 Sat: 33,34,43,42,41,10,8,51 (Asturias,Palencia,Tarragona,Soria,Sevilla,Cáceres,Barcelona,Ceuta)
+# 6 Sun: 18,47,28,35,23,21,2,7 (Granada,Valladolid,Madrid,Las Palmas,Jaén,Huelva,Albacete,Baleares)
+
+env:
+  PROVINCE_GROUPS: |
+    24 48 19 49 13 50
+    9 16 44 20 36 11 5
+    29 25 46 30 14 12 26
+    22 37 40 31 32 1 4 6
+    39 17 38 15 45 27 3 52
+    33 34 43 42 41 10 8 51
+    18 47 28 35 23 21 2 7
+
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 420  # 7 hours hard limit
 
     steps:
       - name: Checkout repository
@@ -30,6 +60,23 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # ── Determine which province group to scrape ──
+      - name: Determine province group
+        id: group
+        run: |
+          if [ -n "${{ inputs.group }}" ]; then
+            GROUP_IDX="${{ inputs.group }}"
+          else
+            # Map cron day-of-week to group index (Mon=0 ... Sun=6)
+            DOW=$(date -u +%u)  # 1=Monday ... 7=Sunday
+            GROUP_IDX=$(( (DOW % 7 == 0) ? 6 : DOW - 1 ))
+          fi
+          # Extract the province codes for this group
+          PROVINCES=$(echo "$PROVINCE_GROUPS" | sed -n "$((GROUP_IDX + 1))p")
+          echo "group_idx=$GROUP_IDX" >> "$GITHUB_OUTPUT"
+          echo "provinces=$PROVINCES" >> "$GITHUB_OUTPUT"
+          echo "Scraping group $GROUP_IDX: provinces $PROVINCES"
+
       # ── Restore cached scraper data from previous runs ──
       - name: Restore scraper cache
         uses: actions/cache/restore@v4
@@ -41,15 +88,18 @@ jobs:
           restore-keys: |
             scraper-data-
 
-      # ── Scrape SINAC (with 4h timeout, resumable) ──
+      # ── Scrape SINAC provinces for today's group (7h timeout) ──
       - name: Scrape SINAC
         if: ${{ github.event_name == 'schedule' || !inputs.skip_scrape }}
         run: |
           mkdir -p data/raw/csvs data/progress data/logs
-          timeout --signal=INT 14400 \
-            python -u scraper/scrape_all.py \
-              --parallel --skip-pdfs --use-html --max-parallel 2 \
-            || echo "Scraper stopped (timeout or completed)"
+          for PROV in ${{ steps.group.outputs.provinces }}; do
+            echo "========== Scraping province $PROV =========="
+            timeout --signal=INT 25200 \
+              python -u scraper/scrape_all.py \
+                --provincia "$PROV" --skip-pdfs --use-html \
+              || echo "Province $PROV: stopped (timeout or error)"
+          done
 
       # ── Save cache for next run ──
       - name: Save scraper cache
@@ -95,7 +145,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to dashboard data"
           else
-            git commit -m "chore: update dashboard data $(date +%Y-%m-%d)"
+            git commit -m "chore: update dashboard data $(date +%Y-%m-%d) [group ${{ steps.group.outputs.group_idx }}]"
             git pull --rebase
             git push
           fi
