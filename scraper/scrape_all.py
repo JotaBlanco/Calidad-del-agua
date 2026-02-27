@@ -207,7 +207,7 @@ def scrape_municipality_safe(ccaa_code, provincia_code, municipio_code,
 
 
 def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False,
-                    use_html=False):
+                    use_html=False, limit=0):
     """Scrape all municipalities in a single province."""
     prov_catalog = catalog[catalog["provincia_code"] == int(prov_code)]
     prov_name = prov_catalog.iloc[0]["provincia_name"] if len(prov_catalog) > 0 else prov_code
@@ -233,12 +233,18 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False,
     get_provinces(session, ccaa_code)
     get_municipalities(session, prov_code)
 
+    processed_count = 0
     for _, row in prov_catalog.iterrows():
         muni_code = str(row["municipio_code"])
 
         if muni_code in completed_set:
             continue
 
+        if limit and processed_count >= limit:
+            print(f"  Reached limit of {limit} municipalities, stopping.")
+            break
+
+        processed_count += 1
         already_done += 1
         print(f"[{prov_name} {already_done}/{total}] {row['municipio_name']}")
 
@@ -264,8 +270,30 @@ def scrape_province(catalog, prov_code, skip_pdfs=False, reset=False,
             if records:
                 safe_name = sanitize_filename(muni_name or row["municipio_name"])
                 csv_path = CSV_DIR / f"{prov_code}_{muni_code}_{safe_name}.csv"
-                df = pd.DataFrame(records)
-                df.to_csv(csv_path, index=False)
+                df_new = pd.DataFrame(records)
+
+                # Append to existing CSV if present, then deduplicate
+                if csv_path.exists():
+                    df_old = pd.read_csv(csv_path, dtype=str)
+                    df_combined = pd.concat([df_new, df_old], ignore_index=True)
+                    # Sort so "pdf" rows come first, then drop duplicates
+                    # on all columns except "source", keeping the first (pdf)
+                    df_combined["_sort"] = df_combined["source"].map(
+                        {"pdf": 0, "html": 1}
+                    ).fillna(2)
+                    df_combined = df_combined.sort_values("_sort")
+                    dedup_cols = [c for c in df_combined.columns
+                                  if c not in ("source", "_sort")]
+                    df_combined = df_combined.drop_duplicates(
+                        subset=dedup_cols, keep="first"
+                    )
+                    df_combined = df_combined.drop(columns=["_sort"])
+                    df_combined.to_csv(csv_path, index=False)
+                    n_old = len(df_old)
+                    n_final = len(df_combined)
+                    print(f"  Appended: {len(df_new)} new + {n_old} existing → {n_final} after dedup")
+                else:
+                    df_new.to_csv(csv_path, index=False)
 
                 # Track source: if any record used HTML, mark municipality
                 sources = set(r["source"] for r in records)
@@ -446,6 +474,9 @@ def main():
     parser.add_argument("--retry-html", action="store_true",
                         help="Re-scrape municipalities that were scraped via HTML "
                              "(use when PDF service is back to get PDF-quality data)")
+    parser.add_argument("--limit", type=int, default=0,
+                        help="Max municipalities to process per province (0 = all, "
+                             "useful for testing)")
     args = parser.parse_args()
 
     if not CATALOG_FILE.exists():
@@ -491,13 +522,15 @@ def main():
         # Single province mode
         if args.provincia:
             scrape_province(catalog, str(args.provincia), args.skip_pdfs,
-                            args.reset, use_html=args.use_html)
+                            args.reset, use_html=args.use_html,
+                            limit=args.limit)
         else:
             # Sequential: iterate all provinces
             provinces = sorted(catalog["provincia_code"].unique())
             for prov_code in provinces:
                 scrape_province(catalog, str(prov_code), args.skip_pdfs,
-                                args.reset, use_html=args.use_html)
+                                args.reset, use_html=args.use_html,
+                                limit=args.limit)
 
 
 if __name__ == "__main__":

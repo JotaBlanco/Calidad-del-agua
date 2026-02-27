@@ -81,11 +81,17 @@ const MapController = {
             },
         });
 
-        // When a cluster is clicked and can't zoom further, show all puntos
+        // Handle cluster clicks in both views
         this.clusterGroup.on("clusterclick", (e) => {
-            if (this._isNationalView) return; // Don't handle cluster clicks in national view
-            if (this._onClusterClick) {
-                this._onClusterClick(e.layer.getAllChildMarkers());
+            const markers = e.layer.getAllChildMarkers();
+            if (this._isNationalView) {
+                if (this._onNationalClusterClick) {
+                    this._onNationalClusterClick(markers);
+                }
+            } else {
+                if (this._onClusterClick) {
+                    this._onClusterClick(markers);
+                }
             }
         });
     },
@@ -100,11 +106,13 @@ const MapController = {
      * Display all national points on the map (initial load).
      * @param {Object} nationalData — { p: [[lat, lon, statusCode, provCode, muniCode, nombre], ...] }
      * @param {Function} onMarkerClick — callback({lat, lon, status, provCode, muniCode, nombre})
+     * @param {Function} onClusterClick — callback(markers[])
      */
-    showNational(nationalData, onMarkerClick) {
+    showNational(nationalData, onMarkerClick, onClusterClick) {
         this.clearMarkers();
         this._isNationalView = true;
         this._onNationalMarkerClick = onMarkerClick;
+        this._onNationalClusterClick = onClusterClick;
         this._onMarkerClick = null;
         this._onClusterClick = null;
 

@@ -60,8 +60,10 @@ const App = {
             this.renderStats(index.summary);
 
             // Show all points on map from the start
-            MapController.showNational(national, (pt) =>
-                this.onNationalMarkerClick(pt)
+            MapController.showNational(
+                national,
+                (pt) => this.onNationalMarkerClick(pt),
+                (markers) => this.onNationalClusterClick(markers)
             );
         } catch (err) {
             console.error("Failed to load initial data:", err);
@@ -108,8 +110,10 @@ const App = {
             this.state.currentPuntoNombre = null;
 
             // Return to national view
-            MapController.showNational(this.state.nationalData, (pt) =>
-                this.onNationalMarkerClick(pt)
+            MapController.showNational(
+                this.state.nationalData,
+                (pt) => this.onNationalMarkerClick(pt),
+                (markers) => this.onNationalClusterClick(markers)
             );
             Filters.resetMunicipios();
             PuntoList.showPlaceholder();
@@ -193,6 +197,30 @@ const App = {
 
     // ── Map interaction handlers ──────────────────────────────────
 
+    async onNationalClusterClick(markers) {
+        // Check if all markers in the cluster share the same provincia
+        const provCodes = new Set(markers.map((m) => m._nationalData.provCode));
+        if (provCodes.size === 1) {
+            const provCode = provCodes.values().next().value;
+            await this._selectProvincia(provCode);
+
+            // If they also share the same municipio, auto-select it
+            const muniCodes = new Set(
+                markers.map((m) => m._nationalData.muniCode)
+            );
+            if (muniCodes.size === 1) {
+                const muniCode = muniCodes.values().next().value;
+                const data = this.state.currentProvData;
+                if (data) {
+                    const muni = data.municipios.find(
+                        (m) => m.code === muniCode
+                    );
+                    if (muni) this._selectMunicipio(muniCode);
+                }
+            }
+        }
+    },
+
     onMarkerClick(punto, muni) {
         const data = this.state.currentProvData;
         if (!data) return;
@@ -230,6 +258,20 @@ const App = {
         }));
         const hist = this._getCachedHistory(this.state.currentProvCode);
 
+        // If all cluster points belong to the same municipio, sync dropdown
+        const muniCodes = new Set(markers.map((m) => m._muniData.code));
+        if (muniCodes.size === 1) {
+            const muniCode = muniCodes.values().next().value;
+            if (this.state.currentMuniCode !== muniCode) {
+                this.state.currentMuniCode = muniCode;
+                Filters.setMunicipioValue(muniCode);
+                const muni = data.municipios.find(
+                    (m) => m.code === muniCode
+                );
+                if (muni) Filters.populatePuntos(muni.puntos);
+            }
+        }
+
         // Show puntos in sidebar
         PuntoList.showPuntos(items, (punto, muni) => {
             MapController.highlightPunto(punto.nombre, muni.code);
@@ -238,6 +280,7 @@ const App = {
 
         // Show aggregated view in detail panel
         DetailPanel.showAggregated(items, data.dict, data.dates, hist);
+        this._updateTags();
     },
 
     // ── Internal selection helpers ────────────────────────────────
