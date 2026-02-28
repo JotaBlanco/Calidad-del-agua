@@ -123,11 +123,14 @@ jobs:
 
       # ── Upload to Kaggle (only if secrets are configured) ──
       - name: Upload to Kaggle
-        if: ${{ secrets.KAGGLE_USERNAME != '' }}
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         run: |
+          if [ -z "$KAGGLE_USERNAME" ]; then
+            echo "Kaggle secrets not configured, skipping upload"
+            exit 0
+          fi
           pip install kaggle
           mkdir -p data/kaggle/files
           gzip -c data/processed/all_data_enriched.csv > data/kaggle/files/all_data_enriched.csv.gz
