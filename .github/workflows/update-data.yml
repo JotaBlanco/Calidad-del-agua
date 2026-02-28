@@ -123,18 +123,17 @@ jobs:
 
       # ── Upload to Kaggle (only if secrets are configured) ──
       - name: Upload to Kaggle
-        if: ${{ env.KAGGLE_USERNAME != '' }}
+        if: ${{ secrets.KAGGLE_USERNAME != '' }}
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
         run: |
           pip install kaggle
           mkdir -p data/kaggle/files
-          cp data/processed/all_data_enriched.csv data/kaggle/files/
-          cp -r data/processed/aggregates/ data/kaggle/files/aggregates/
-          cd data/kaggle
-          kaggle datasets version -p files/ -m "Automated update $(date +%Y-%m-%d)" \
-            || kaggle datasets create -p files/
+          gzip -c data/processed/all_data_enriched.csv > data/kaggle/files/all_data_enriched.csv.gz
+          cp data/kaggle/dataset-metadata.json data/kaggle/files/dataset-metadata.json
+          kaggle datasets version -p data/kaggle/files/ -m "Update $(date +%Y-%m-%d) [group ${{ steps.group.outputs.group_idx }}]" \
+            || kaggle datasets create -p data/kaggle/files/
 
       # ── Commit and push updated dashboard data ──
       - name: Commit and push dashboard data
