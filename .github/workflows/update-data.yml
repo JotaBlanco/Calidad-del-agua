@@ -226,6 +226,65 @@ jobs:
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "CSVs in cache: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)" >> "$GITHUB_STEP_SUMMARY"
 
+      # ── Keep the schedule alive ──
+      #
+      # GitHub disables cron workflows after 60 days without *repository*
+      # activity, and workflow runs do not count — only commits do.  That is
+      # exactly what killed this workflow before (last commit 2026-02-28, last
+      # run 2026-04-29).  Since the nightly job commits nothing on its own,
+      # this step writes a small progress summary and commits it, which both
+      # resets the 60-day clock and gives a readable history of coverage.
+      #
+      # The timestamp guarantees the file always changes, so there is always a
+      # commit even on a night where no new municipality was completed.
+      - name: Commit progress summary
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib, csv, collections, datetime
+
+          with open("data/locations_catalog.csv", newline="", encoding="utf-8") as f:
+              catalog = list(csv.DictReader(f))
+          total = collections.Counter(int(r["provincia_code"]) for r in catalog)
+          names = {int(r["provincia_code"]): r["provincia_name"] for r in catalog}
+
+          provincias, grand = {}, 0
+          for p in sorted(total):
+              pf = pathlib.Path(f"data/progress/progress_{p}.json")
+              done = len(json.loads(pf.read_text())["completed"]) if pf.exists() else 0
+              grand += done
+              provincias[str(p)] = {
+                  "nombre": names[p], "completados": done, "total": total[p],
+              }
+
+          summary = {
+              "actualizado": datetime.datetime.now(datetime.timezone.utc)
+                                     .strftime("%Y-%m-%dT%H:%M:%SZ"),
+              "municipios_completados": grand,
+              "municipios_totales": sum(total.values()),
+              "csvs": len(list(pathlib.Path("data/raw/csvs").glob("*.csv"))),
+              "provincias": provincias,
+          }
+          pathlib.Path("data/progress_summary.json").write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+          )
+          print(f"{grand}/{sum(total.values())} municipios, {summary['csvs']} CSVs")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/progress_summary.json
+          if git diff --staged --quiet; then
+            echo "No change to commit"
+          else
+            git commit -m "chore: scrape progress $(date -u +%Y-%m-%d)"
+            for i in 1 2 3; do
+              git pull --rebase --quiet && git push && break
+              echo "Push attempt $i failed, retrying…"
+              sleep 5
+            done
+          fi
+
       # ── Data pipeline ──
       #
       # Opt-in only.  These steps load the full ~2.4 GB all_data.csv into a
