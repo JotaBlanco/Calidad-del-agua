@@ -1,19 +1,23 @@
 name: Update Water Quality Data
 
-# One province per day, rotating through all 52 on a 52-day cycle.
+# Two provinces per night, scraped concurrently — never more.  SINAC has
+# fallen over under heavier parallelism before, so the concurrency is capped
+# in three independent places: MAX_PARALLEL below, the `concurrency` group
+# (which queues overlapping runs instead of running them side by side), and
+# the per-request sleeps already built into the scraper.
 #
 # Hard constraint: GitHub-hosted runners kill any job at 6h, regardless of
 # `timeout-minutes`.  The previous version asked for 7h and every single run
-# was cancelled at 6h05m before reaching the data pipeline.  Everything below
-# is sized to finish comfortably inside that cap.
+# was cancelled at 6h05m before reaching the data pipeline.  The three limits
+# below are staggered: 4h scrape < 5h30 job < 6h runner.
 
 on:
   schedule:
-    - cron: '0 1 * * *'   # daily at 01:00 UTC — province = day-of-year % 52 + 1
+    - cron: '0 2 * * *'   # daily at 02:00 UTC (03:00 CET / 04:00 CEST)
   workflow_dispatch:
     inputs:
       provincia:
-        description: 'Province code 1-52 to scrape (empty = auto by day of year)'
+        description: 'Province code(s) to scrape, space or comma separated (empty = auto)'
         type: string
         required: false
       skip_scrape:
@@ -28,9 +32,18 @@ on:
 permissions:
   contents: write
 
+# Never let two runs scrape at the same time — a manual dispatch during the
+# nightly run would otherwise put four scrapers on SINAC at once.
+concurrency:
+  group: scrape-sinac
+  cancel-in-progress: false
+
 env:
   # 4h for scraping, leaving ~1.5h of headroom under the 6h runner cap.
   SCRAPE_TIMEOUT_SECONDS: 14400
+  # Hard ceiling on concurrent scrapers. Do not raise without testing:
+  # SINAC has gone down under heavier load.
+  MAX_PARALLEL: 2
 
 jobs:
   update:
@@ -60,24 +73,26 @@ jobs:
           restore-keys: |
             scraper-data-
 
-      # ── Pick today's province and decide resume-vs-refresh ──
+      # ── Pick tonight's provinces and decide resume-vs-refresh ──
       #
       # This is a work queue, not a calendar rotation.  A median province has
-      # 153 municipalities and does not fit in one 4h window, so if any
-      # province is mid-pass we finish that one before starting another —
-      # otherwise a half-scraped province would wait a full 52-day cycle for
-      # its next turn.  Only when everything is complete do we take the
-      # calendar slot and reset it, starting a fresh refresh pass.
+      # 153 municipalities and does not fit in one 4h window, so provinces
+      # already under way are picked first — otherwise a half-scraped province
+      # would wait a full cycle for its next turn.  Only once everything is
+      # complete do we take the next calendar slots and reset them, starting a
+      # fresh refresh pass.
       #
       # The reset matters: scrape_province() skips anything already in
       # `completed`, so re-running a finished province without --reset is a
       # no-op and the data would never refresh.
-      - name: Determine province
+      #
+      # Emits `plan` as "CODE:RESET CODE:RESET", e.g. "36:false 15:true".
+      - name: Determine provinces
         id: prov
         run: |
           mkdir -p data/progress
           python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, os, pathlib, datetime, csv, collections
+          import json, os, pathlib, datetime, csv, collections, re
 
           with open("data/locations_catalog.csv", newline="", encoding="utf-8") as f:
               catalog = list(csv.DictReader(f))
@@ -94,51 +109,79 @@ jobs:
               except (ValueError, KeyError):
                   return 0
 
+          n_slots = int(os.environ["MAX_PARALLEL"])
           override = os.environ.get("INPUT_PROVINCIA", "").strip()
+
           if override:
-              prov = int(override)
+              selected = [int(x) for x in re.split(r"[,\s]+", override) if x][:n_slots]
           else:
-              # Prefer finishing a province that is already under way; among
-              # those, the one closest to done.
-              unfinished = [
-                  p for p, total in total_by_prov.items() if completed(p) < total
-              ]
-              if unfinished:
-                  prov = max(unfinished, key=completed)
-              else:
+              # Finish what is already under way first, closest-to-done first.
+              selected = sorted(
+                  (p for p, total in total_by_prov.items() if completed(p) < total),
+                  key=completed,
+                  reverse=True,
+              )[:n_slots]
+
+              # Top up from the calendar rotation with fully-scraped provinces.
+              if len(selected) < n_slots:
                   doy = datetime.datetime.now(datetime.timezone.utc).timetuple().tm_yday
-                  prov = (doy % 52) + 1
+                  for i in range(52):
+                      if len(selected) >= n_slots:
+                          break
+                      p = ((doy * n_slots + i) % 52) + 1
+                      if p not in selected and p in total_by_prov:
+                          selected.append(p)
 
-          total = total_by_prov.get(prov, 0)
-          done = completed(prov)
-          reset = "true" if total and done >= total else "false"
+          plan, described = [], []
+          for p in selected:
+              total, done = total_by_prov.get(p, 0), completed(p)
+              reset = total and done >= total
+              plan.append(f"{p}:{'true' if reset else 'false'}")
+              described.append(
+                  f"{p} {name_by_prov.get(p, p)} ({done}/{total}"
+                  f"{', fresh pass' if reset else ', resuming'})"
+              )
 
-          print(f"code={prov}")
-          print(f"name={name_by_prov.get(prov, prov)}")
-          print(f"total={total}")
-          print(f"done={done}")
-          print(f"reset={reset}")
+          print("plan=" + " ".join(plan))
+          print("described=" + " | ".join(described))
           PY
         env:
           INPUT_PROVINCIA: ${{ inputs.provincia }}
 
+      # Exactly MAX_PARALLEL scrapers, launched as background jobs and waited
+      # on.  Each gets its own `timeout`, so one province stalling does not
+      # eat the other's budget.  Output is prefixed per province because the
+      # two logs interleave.
       - name: Scrape SINAC
         if: ${{ !inputs.skip_scrape }}
+        # `shell: bash` gives -eo pipefail.  pipefail is load-bearing: without
+        # it the pipeline's status is sed's, so a scraper cut off at 4h would
+        # look like a clean finish in the log.
+        shell: bash
         run: |
           mkdir -p data/raw/csvs data/progress data/logs
-          RESET=""
-          if [ "${{ steps.prov.outputs.reset }}" = "true" ]; then
-            RESET="--reset"
-            echo "Province is fully scraped — starting a fresh refresh pass."
-          else
-            echo "Resuming at ${{ steps.prov.outputs.done }}/${{ steps.prov.outputs.total }}."
-          fi
+          echo "Plan: ${{ steps.prov.outputs.described }}"
+          echo ""
 
-          timeout --signal=INT "$SCRAPE_TIMEOUT_SECONDS" \
-            python -u scraper/scrape_all.py \
-              --provincia "${{ steps.prov.outputs.code }}" \
-              --skip-pdfs --use-html $RESET \
-            || echo "Scrape stopped (timeout or error) — progress is saved, next run resumes."
+          PIDS=()
+          for ENTRY in ${{ steps.prov.outputs.plan }}; do
+            PROV="${ENTRY%%:*}"
+            RESET=""
+            [ "${ENTRY##*:}" = "true" ] && RESET="--reset"
+
+            (
+              timeout --signal=INT "$SCRAPE_TIMEOUT_SECONDS" \
+                python -u scraper/scrape_all.py \
+                  --provincia "$PROV" --skip-pdfs --use-html $RESET \
+                2>&1 | sed -u "s/^/[$PROV] /"
+            ) &
+            PIDS+=($!)
+          done
+
+          for PID in "${PIDS[@]}"; do
+            wait "$PID" \
+              || echo "A scraper stopped (timeout or error) — progress is saved, next run resumes."
+          done
 
       # Must run even when the scrape is interrupted, or the work is lost.
       - name: Save scraper cache
@@ -154,13 +197,34 @@ jobs:
         if: always()
         run: |
           {
-            echo "### Province ${{ steps.prov.outputs.code }} — ${{ steps.prov.outputs.name }}"
+            echo "### Scrape plan"
             echo ""
-            echo "- Municipalities: ${{ steps.prov.outputs.total }}"
-            echo "- Completed before this run: ${{ steps.prov.outputs.done }}"
-            echo "- Fresh refresh pass: ${{ steps.prov.outputs.reset }}"
-            echo "- CSVs in cache: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)"
+            echo "${{ steps.prov.outputs.described }}" | tr '|' '\n' | sed 's/^/- /'
+            echo ""
+            echo "### After this run"
+            echo ""
+            echo "| Province | Completed | Total |"
+            echo "|---|---:|---:|"
           } >> "$GITHUB_STEP_SUMMARY"
+
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json, pathlib, csv, collections
+          with open("data/locations_catalog.csv", newline="", encoding="utf-8") as f:
+              catalog = list(csv.DictReader(f))
+          total = collections.Counter(int(r["provincia_code"]) for r in catalog)
+          names = {int(r["provincia_code"]): r["provincia_name"] for r in catalog}
+          grand = 0
+          for p in sorted(total):
+              pf = pathlib.Path(f"data/progress/progress_{p}.json")
+              done = len(json.loads(pf.read_text())["completed"]) if pf.exists() else 0
+              grand += done
+              if done < total[p]:
+                  print(f"| {names[p]} | {done} | {total[p]} |")
+          print(f"| **All Spain** | **{grand}** | **{sum(total.values())}** |")
+          PY
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "CSVs in cache: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)" >> "$GITHUB_STEP_SUMMARY"
 
       # ── Data pipeline ──
       #
