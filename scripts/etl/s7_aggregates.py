@@ -2,8 +2,8 @@
 Step 7: Generate aggregated metric CSVs at multiple geographic levels.
 
 Produces one CSV per level, each containing compliance, risk, pesticide,
-freshness, and official-classification metrics computed on the latest
-measurements (``es_ultima_medicion == True``).
+freshness, and official-classification metrics computed on the rows returned
+by ``mediciones_vigentes()`` — the latest value of every parameter.
 
 Levels:
     ccaa, provincia, municipio, municipio+red, municipio+red+punto_muestreo
@@ -16,6 +16,7 @@ from __future__ import annotations
 import pandas as pd
 
 from . import DATA_DIR, PROCESSED_DIR
+from .s5_latest import mediciones_vigentes
 
 LOCATIONS_FILE = DATA_DIR / "locations_catalog.csv"
 OUTPUT_DIR = PROCESSED_DIR / "aggregates"
@@ -168,7 +169,7 @@ def build_aggregates(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
     df : DataFrame
         Fully enriched DataFrame (output of the main ETL pipeline).
     """
-    latest = df[df["es_ultima_medicion"]].copy()
+    latest = mediciones_vigentes(df).copy()
 
     # Pre-compute boolean helpers
     latest["_apta"] = latest["aptitud"] == "apta"

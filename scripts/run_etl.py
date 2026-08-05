@@ -19,6 +19,8 @@ from scripts.etl import (
     merge_with_limits,
     add_compliance,
     tag_latest,
+    mediciones_vigentes,
+    MAX_ANTIGUEDAD_DIAS,
     add_geo,
     build_aggregates,
     normalize_parametro,
@@ -130,12 +132,16 @@ def run_diagnostics(df: pd.DataFrame, merged: pd.DataFrame) -> None:
         print()
 
     # Step 5: latest tags
-    if "es_ultimo_analisis" in merged.columns:
-        n_analisis = merged["es_ultimo_analisis"].sum()
-        n_medicion = merged["es_ultima_medicion"].sum()
+    if "es_ultima_toma_del_tipo" in merged.columns:
+        n_toma = merged["es_ultima_toma_del_tipo"].sum()
+        n_valor = merged["es_ultimo_valor_del_parametro"].sum()
+        n_vigentes = len(mediciones_vigentes(merged))
         print("Step 5 — Latest tags")
-        print(f"  es_ultimo_analisis : {n_analisis:,} ({_pct(n_analisis, total_rows)})")
-        print(f"  es_ultima_medicion : {n_medicion:,} ({_pct(n_medicion, total_rows)})")
+        print(f"  es_ultima_toma_del_tipo       : {n_toma:,} ({_pct(n_toma, total_rows)})")
+        print(f"  es_ultimo_valor_del_parametro : {n_valor:,} ({_pct(n_valor, total_rows)})")
+        limite = MAX_ANTIGUEDAD_DIAS if MAX_ANTIGUEDAD_DIAS is not None else "sin límite"
+        print(f"  mediciones_vigentes           : {n_vigentes:,} "
+              f"({_pct(n_vigentes, total_rows)}, antigüedad máx: {limite})")
         print()
 
     # Step 6: geolocation

@@ -49,6 +49,14 @@ from .s2_limits_expansion import (  # noqa: E402
 )
 from .s3_merge import merge_with_limits  # noqa: E402
 from .s4_compliance import add_compliance, MEASUREMENT_ID_COLS, PARTE_BOE_LABELS  # noqa: E402
-from .s5_latest import tag_latest, LATEST_GROUP_COLS  # noqa: E402
+from .s5_latest import (  # noqa: E402
+    tag_latest,
+    mediciones_vigentes,
+    MAX_ANTIGUEDAD_DIAS,
+    DEPRECATED_FLAG_ALIASES,
+    ANALYSIS_GROUP_COLS,
+    PARAMETER_GROUP_COLS,
+    LATEST_GROUP_COLS,
+)
 from .s6_geo import add_geo  # noqa: E402
 from .s7_aggregates import build_aggregates  # noqa: E402

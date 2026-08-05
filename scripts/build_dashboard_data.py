@@ -29,6 +29,7 @@ from scripts.etl import (
     merge_with_limits,
     add_compliance,
     tag_latest,
+    mediciones_vigentes,
 )
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -414,10 +415,12 @@ def main() -> None:
     print("[5/9] Tagging latest measurements ...")
     df = tag_latest(df)
 
-    # Split: latest for main view, assessed for history
-    latest = df[df["es_ultimo_analisis"] == True].copy()  # noqa: E712
+    # Split: current state for the main view, everything assessed for history.
+    # Goes through mediciones_vigentes() so the map and the aggregate CSVs
+    # always answer the same question.
+    latest = mediciones_vigentes(df).copy()
     assessed = df[df["aptitud"].notna()].copy()
-    print(f"       {len(latest):,} rows in latest analyses")
+    print(f"       {len(latest):,} rows in the current-state view")
     print(f"       {len(assessed):,} rows with compliance assessment")
 
     # Step 2: Load coordinates and names
