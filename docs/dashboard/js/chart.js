@@ -259,37 +259,79 @@ const Chart = {
         }
     },
 
+    _statusColor(status) {
+        if (status === "danger") return "#e53935";
+        if (status === "warning") return "#fb8c00";
+        return "#1976d2";
+    },
+
+    /**
+     * Draw the series, splitting each segment wherever it crosses a limit.
+     *
+     * Colouring a whole segment by one of its endpoints makes the line
+     * disagree with the background zones: a segment falling from a valid
+     * value into the red band would stay blue all the way down. Instead we
+     * cut the segment at every threshold it crosses and colour each piece by
+     * the zone it actually lies in, so the colour changes exactly where the
+     * line crosses the dashed limit.
+     */
     _drawLine(ctx, points, limits, scaleX, scaleY) {
         if (points.length < 2) return;
+
+        // Every value at which the status can change.
+        const bounds = [
+            ...this._limitValues(limits.vp),
+            ...(limits.vna != null ? this._limitValues(limits.vna) : []),
+        ];
+
+        ctx.lineWidth = 2;
 
         for (let i = 0; i < points.length - 1; i++) {
             const p1 = points[i];
             const p2 = points[i + 1];
-            const status = this._isInRange(p1.value, limits.vp, limits.vna);
+            const t1 = p1.date.getTime();
+            const t2 = p2.date.getTime();
+            const v1 = p1.value;
+            const v2 = p2.value;
 
-            ctx.strokeStyle =
-                status === "danger"
-                    ? "#e53935"
-                    : status === "warning"
-                      ? "#fb8c00"
-                      : "#1976d2";
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(scaleX(p1.date.getTime()), scaleY(p1.value));
-            ctx.lineTo(scaleX(p2.date.getTime()), scaleY(p2.value));
-            ctx.stroke();
+            // Positions along the segment (0..1) where it crosses a limit.
+            const cuts = [0, 1];
+            if (v2 !== v1) {
+                for (const b of bounds) {
+                    const f = (b - v1) / (v2 - v1);
+                    if (f > 0 && f < 1 && !cuts.includes(f)) cuts.push(f);
+                }
+            }
+            cuts.sort((a, b) => a - b);
+
+            for (let k = 0; k < cuts.length - 1; k++) {
+                const fa = cuts[k];
+                const fb = cuts[k + 1];
+                // The midpoint sits strictly inside one zone, so it decides
+                // the colour without landing on a boundary.
+                const mid = v1 + (v2 - v1) * ((fa + fb) / 2);
+
+                ctx.strokeStyle = this._statusColor(
+                    this._isInRange(mid, limits.vp, limits.vna)
+                );
+                ctx.beginPath();
+                ctx.moveTo(
+                    scaleX(t1 + (t2 - t1) * fa),
+                    scaleY(v1 + (v2 - v1) * fa)
+                );
+                ctx.lineTo(
+                    scaleX(t1 + (t2 - t1) * fb),
+                    scaleY(v1 + (v2 - v1) * fb)
+                );
+                ctx.stroke();
+            }
         }
     },
 
     _drawPoints(ctx, points, limits, scaleX, scaleY) {
         for (const p of points) {
             const status = this._isInRange(p.value, limits.vp, limits.vna);
-            ctx.fillStyle =
-                status === "danger"
-                    ? "#e53935"
-                    : status === "warning"
-                      ? "#fb8c00"
-                      : "#1976d2";
+            ctx.fillStyle = this._statusColor(status);
             ctx.beginPath();
             ctx.arc(
                 scaleX(p.date.getTime()),
