@@ -1,52 +1,41 @@
 name: Update Water Quality Data
 
+# One province per day, rotating through all 52 on a 52-day cycle.
+#
+# Hard constraint: GitHub-hosted runners kill any job at 6h, regardless of
+# `timeout-minutes`.  The previous version asked for 7h and every single run
+# was cancelled at 6h05m before reaching the data pipeline.  Everything below
+# is sized to finish comfortably inside that cap.
+
 on:
   schedule:
-    # One province group per day at 1:00 AM UTC (timeout at 8:00 = 7h max)
-    - cron: '0 1 * * 1'  # Monday    → group 0
-    - cron: '0 1 * * 2'  # Tuesday   → group 1
-    - cron: '0 1 * * 3'  # Wednesday → group 2
-    - cron: '0 1 * * 4'  # Thursday  → group 3
-    - cron: '0 1 * * 5'  # Friday    → group 4
-    - cron: '0 1 * * 6'  # Saturday  → group 5
-    - cron: '0 1 * * 0'  # Sunday    → group 6
+    - cron: '0 1 * * *'   # daily at 01:00 UTC — province = day-of-year % 52 + 1
   workflow_dispatch:
     inputs:
-      skip_scrape:
-        description: 'Skip scraping, only rebuild dashboard from cached data'
-        type: boolean
-        default: false
-      group:
-        description: 'Province group to scrape (0-6, empty = auto by day of week)'
+      provincia:
+        description: 'Province code 1-52 to scrape (empty = auto by day of year)'
         type: string
         required: false
+      skip_scrape:
+        description: 'Skip scraping entirely'
+        type: boolean
+        default: false
+      rebuild:
+        description: 'Run merge + ETL + dashboard build (see note in the scrape step)'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
 
-# Province groups balanced by workload (~5000 each):
-# 0 Mon: 24,48,19,49,13,50 (León,Vizcaya,Guadalajara,Zamora,Ciudad Real,Zaragoza)
-# 1 Tue: 9,16,44,20,36,11,5 (Burgos,Cuenca,Teruel,Guipúzcoa,Pontevedra,Cádiz,Ávila)
-# 2 Wed: 29,25,46,30,14,12,26 (Málaga,Lleida,Valencia,Murcia,Córdoba,Castellón,La Rioja)
-# 3 Thu: 22,37,40,31,32,1,4,6 (Huesca,Salamanca,Segovia,Navarra,Ourense,Álava,Almería,Badajoz)
-# 4 Fri: 39,17,38,15,45,27,3,52 (Cantabria,Girona,Tenerife,Coruña,Toledo,Lugo,Alicante,Melilla)
-# 5 Sat: 33,34,43,42,41,10,8,51 (Asturias,Palencia,Tarragona,Soria,Sevilla,Cáceres,Barcelona,Ceuta)
-# 6 Sun: 18,47,28,35,23,21,2,7 (Granada,Valladolid,Madrid,Las Palmas,Jaén,Huelva,Albacete,Baleares)
-
 env:
-  PROVINCE_GROUPS: |
-    24 48 19 49 13 50
-    9 16 44 20 36 11 5
-    29 25 46 30 14 12 26
-    22 37 40 31 32 1 4 6
-    39 17 38 15 45 27 3 52
-    33 34 43 42 41 10 8 51
-    18 47 28 35 23 21 2 7
+  # 4h for scraping, leaving ~1.5h of headroom under the 6h runner cap.
+  SCRAPE_TIMEOUT_SECONDS: 14400
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 420  # 7 hours hard limit
+    timeout-minutes: 330   # 5h30 — must stay below the 6h hard cap
 
     steps:
       - name: Checkout repository
@@ -60,23 +49,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # ── Determine which province group to scrape ──
-      - name: Determine province group
-        id: group
-        run: |
-          if [ -n "${{ inputs.group }}" ]; then
-            GROUP_IDX="${{ inputs.group }}"
-          else
-            # Map cron day-of-week to group index (Mon=0 ... Sun=6)
-            DOW=$(date -u +%u)  # 1=Monday ... 7=Sunday
-            GROUP_IDX=$(( (DOW % 7 == 0) ? 6 : DOW - 1 ))
-          fi
-          # Extract the province codes for this group
-          PROVINCES=$(echo "$PROVINCE_GROUPS" | sed -n "$((GROUP_IDX + 1))p")
-          echo "group_idx=$GROUP_IDX" >> "$GITHUB_OUTPUT"
-          echo "provinces=$PROVINCES" >> "$GITHUB_OUTPUT"
-          echo "Scraping group $GROUP_IDX: provinces $PROVINCES"
-
       # ── Restore cached scraper data from previous runs ──
       - name: Restore scraper cache
         uses: actions/cache/restore@v4
@@ -88,20 +60,87 @@ jobs:
           restore-keys: |
             scraper-data-
 
-      # ── Scrape SINAC provinces for today's group (7h timeout) ──
+      # ── Pick today's province and decide resume-vs-refresh ──
+      #
+      # This is a work queue, not a calendar rotation.  A median province has
+      # 153 municipalities and does not fit in one 4h window, so if any
+      # province is mid-pass we finish that one before starting another —
+      # otherwise a half-scraped province would wait a full 52-day cycle for
+      # its next turn.  Only when everything is complete do we take the
+      # calendar slot and reset it, starting a fresh refresh pass.
+      #
+      # The reset matters: scrape_province() skips anything already in
+      # `completed`, so re-running a finished province without --reset is a
+      # no-op and the data would never refresh.
+      - name: Determine province
+        id: prov
+        run: |
+          mkdir -p data/progress
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os, pathlib, datetime, csv, collections
+
+          with open("data/locations_catalog.csv", newline="", encoding="utf-8") as f:
+              catalog = list(csv.DictReader(f))
+
+          total_by_prov = collections.Counter(int(r["provincia_code"]) for r in catalog)
+          name_by_prov = {int(r["provincia_code"]): r["provincia_name"] for r in catalog}
+
+          def completed(p):
+              pf = pathlib.Path(f"data/progress/progress_{p}.json")
+              if not pf.exists():
+                  return 0
+              try:
+                  return len(json.loads(pf.read_text())["completed"])
+              except (ValueError, KeyError):
+                  return 0
+
+          override = os.environ.get("INPUT_PROVINCIA", "").strip()
+          if override:
+              prov = int(override)
+          else:
+              # Prefer finishing a province that is already under way; among
+              # those, the one closest to done.
+              unfinished = [
+                  p for p, total in total_by_prov.items() if completed(p) < total
+              ]
+              if unfinished:
+                  prov = max(unfinished, key=completed)
+              else:
+                  doy = datetime.datetime.now(datetime.timezone.utc).timetuple().tm_yday
+                  prov = (doy % 52) + 1
+
+          total = total_by_prov.get(prov, 0)
+          done = completed(prov)
+          reset = "true" if total and done >= total else "false"
+
+          print(f"code={prov}")
+          print(f"name={name_by_prov.get(prov, prov)}")
+          print(f"total={total}")
+          print(f"done={done}")
+          print(f"reset={reset}")
+          PY
+        env:
+          INPUT_PROVINCIA: ${{ inputs.provincia }}
+
       - name: Scrape SINAC
-        if: ${{ github.event_name == 'schedule' || !inputs.skip_scrape }}
+        if: ${{ !inputs.skip_scrape }}
         run: |
           mkdir -p data/raw/csvs data/progress data/logs
-          for PROV in ${{ steps.group.outputs.provinces }}; do
-            echo "========== Scraping province $PROV =========="
-            timeout --signal=INT 25200 \
-              python -u scraper/scrape_all.py \
-                --provincia "$PROV" --skip-pdfs --use-html \
-              || echo "Province $PROV: stopped (timeout or error)"
-          done
+          RESET=""
+          if [ "${{ steps.prov.outputs.reset }}" = "true" ]; then
+            RESET="--reset"
+            echo "Province is fully scraped — starting a fresh refresh pass."
+          else
+            echo "Resuming at ${{ steps.prov.outputs.done }}/${{ steps.prov.outputs.total }}."
+          fi
 
-      # ── Save cache for next run ──
+          timeout --signal=INT "$SCRAPE_TIMEOUT_SECONDS" \
+            python -u scraper/scrape_all.py \
+              --provincia "${{ steps.prov.outputs.code }}" \
+              --skip-pdfs --use-html $RESET \
+            || echo "Scrape stopped (timeout or error) — progress is saved, next run resumes."
+
+      # Must run even when the scrape is interrupted, or the work is lost.
       - name: Save scraper cache
         uses: actions/cache/save@v4
         if: always()
@@ -111,18 +150,41 @@ jobs:
             data/progress/
           key: scraper-data-${{ github.run_id }}
 
+      - name: Report
+        if: always()
+        run: |
+          {
+            echo "### Province ${{ steps.prov.outputs.code }} — ${{ steps.prov.outputs.name }}"
+            echo ""
+            echo "- Municipalities: ${{ steps.prov.outputs.total }}"
+            echo "- Completed before this run: ${{ steps.prov.outputs.done }}"
+            echo "- Fresh refresh pass: ${{ steps.prov.outputs.reset }}"
+            echo "- CSVs in cache: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
       # ── Data pipeline ──
+      #
+      # Opt-in only.  These steps load the full ~2.4 GB all_data.csv into a
+      # pandas DataFrame and write a ~4 GB enriched copy; with 2.5 GB of cached
+      # CSVs on top, that does not fit a standard runner (16 GB RAM / 14 GB SSD).
+      # Until the ETL is chunked, run these locally:
+      #     python scripts/merge_csvs.py
+      #     python -m scripts.run_etl
+      #     python -m scripts.build_dashboard_data
       - name: Merge raw CSVs
+        if: ${{ inputs.rebuild }}
         run: python scripts/merge_csvs.py
 
       - name: Run ETL pipeline
+        if: ${{ inputs.rebuild }}
         run: python -m scripts.run_etl
 
       - name: Build dashboard JSON files
+        if: ${{ inputs.rebuild }}
         run: python -m scripts.build_dashboard_data
 
-      # ── Upload to Kaggle (only if secrets are configured) ──
       - name: Upload to Kaggle
+        if: ${{ inputs.rebuild }}
         env:
           KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
@@ -135,11 +197,11 @@ jobs:
           mkdir -p data/kaggle/files
           gzip -c data/processed/all_data_enriched.csv > data/kaggle/files/all_data_enriched.csv.gz
           cp data/kaggle/dataset-metadata.json data/kaggle/files/dataset-metadata.json
-          kaggle datasets version -p data/kaggle/files/ -m "Update $(date +%Y-%m-%d) [group ${{ steps.group.outputs.group_idx }}]" \
+          kaggle datasets version -p data/kaggle/files/ -m "Update $(date +%Y-%m-%d)" \
             || kaggle datasets create -p data/kaggle/files/
 
-      # ── Commit and push updated dashboard data ──
       - name: Commit and push dashboard data
+        if: ${{ inputs.rebuild }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -147,7 +209,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to dashboard data"
           else
-            git commit -m "chore: update dashboard data $(date +%Y-%m-%d) [group ${{ steps.group.outputs.group_idx }}]"
+            git commit -m "chore: update dashboard data $(date +%Y-%m-%d)"
             git pull --rebase
             git push
           fi

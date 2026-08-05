@@ -162,18 +162,17 @@ def classify_summation(df: pd.DataFrame) -> pd.Series:
     if not has_sum.any():
         return aptitud_suma
 
-    sub = df.loc[has_sum].copy()
-    sub["valor_num"] = _parse_valor(sub["valor"]).fillna(0)
+    sub = df.loc[has_sum]
+    valor_num = _parse_valor(sub["valor"]).fillna(0)
 
     group_cols = MEASUREMENT_ID_COLS + ["contributes_to"]
 
-    # Sum component values per measurement + parent sum
-    sums = (
-        sub.groupby(group_cols, dropna=False)["valor_num"]
-        .sum()
-        .reset_index()
-        .rename(columns={"valor_num": "suma_valor"})
-    )
+    # Sum component values per measurement + parent sum.  ``transform`` keeps
+    # the result aligned to ``sub``'s index — a merge here would reset it and
+    # write the verdicts onto the wrong rows.
+    suma_valor = valor_num.groupby(
+        [sub[c] for c in group_cols], dropna=False
+    ).transform("sum")
 
     # Look up the parent sum's VP from the limits already on the DataFrame.
     # The parent sum parameter itself appears in rows where parametro_boe == contributes_to.
@@ -181,21 +180,20 @@ def classify_summation(df: pd.DataFrame) -> pd.Series:
     parent_vp = (
         df.loc[df["parametro_boe"].isin(df["contributes_to"].dropna().unique())]
         .drop_duplicates(subset=["parametro_boe"])
-        [["parametro_boe", "valor_parametrico"]]
-        .rename(columns={"parametro_boe": "contributes_to",
-                         "valor_parametrico": "vp_suma"})
+        .set_index("parametro_boe")["valor_parametrico"]
     )
-    parent_vp["vp_suma"] = pd.to_numeric(parent_vp["vp_suma"], errors="coerce")
+    parent_vp = pd.to_numeric(parent_vp, errors="coerce")
 
-    sums = sums.merge(parent_vp, on="contributes_to", how="left")
-    sums["_aptitud_suma"] = np.where(
-        sums["suma_valor"] <= sums["vp_suma"], "apta", "no_apta"
+    vp_suma = sub["contributes_to"].map(parent_vp)
+
+    result = pd.Series(
+        np.where(suma_valor <= vp_suma, "apta", "no_apta"),
+        index=sub.index,
+        dtype="object",
     )
-    sums.loc[sums["vp_suma"].isna(), "_aptitud_suma"] = np.nan
+    result[vp_suma.isna()] = np.nan
 
-    # Map back to original rows
-    sub = sub.merge(sums[group_cols + ["_aptitud_suma"]], on=group_cols, how="left")
-    aptitud_suma.loc[sub.index] = sub["_aptitud_suma"].values
+    aptitud_suma.loc[sub.index] = result
 
     return aptitud_suma
 

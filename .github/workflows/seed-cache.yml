@@ -1,0 +1,42 @@
+name: Seed Scraper Cache
+
+# Run once to bootstrap the cache with local data uploaded as a GitHub Release.
+# After running successfully, this workflow can be deleted.
+#
+# Steps:
+#   1. Create a release: gh release create seed-data --title "Scraper seed data"
+#   2. Upload the tarball: gh release upload seed-data /tmp/scraper-seed.tar.gz
+#   3. Trigger this workflow manually from Actions tab
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download seed tarball from release
+        run: |
+          curl -L -o seed.tar.gz \
+            "https://github.com/${{ github.repository }}/releases/download/seed-data/scraper-seed.tar.gz"
+          ls -lh seed.tar.gz
+
+      - name: Extract seed data
+        run: |
+          mkdir -p data
+          tar xzf seed.tar.gz -C data/
+          echo "Files extracted:"
+          ls -la data/raw/csvs/ | tail -5
+          echo "Total CSVs: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)"
+          echo "Progress files: $(ls data/progress/ 2>/dev/null | wc -l)"
+
+      - name: Save to Actions cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/raw/csvs/
+            data/progress/
+          key: scraper-data-seed
