@@ -1,0 +1,268 @@
+{
+  "actualizado": "2026-08-06T09:25:11Z",
+  "municipios_completados": 7939,
+  "municipios_totales": 8131,
+  "csvs": 13062,
+  "provincias": {
+    "1": {
+      "nombre": "Alava",
+      "completados": 51,
+      "total": 51
+    },
+    "2": {
+      "nombre": "Albacete",
+      "completados": 87,
+      "total": 87
+    },
+    "3": {
+      "nombre": "Alicante/Alacant",
+      "completados": 141,
+      "total": 141
+    },
+    "4": {
+      "nombre": "Almería",
+      "completados": 103,
+      "total": 103
+    },
+    "5": {
+      "nombre": "Avila",
+      "completados": 248,
+      "total": 248
+    },
+    "6": {
+      "nombre": "Badajoz",
+      "completados": 165,
+      "total": 165
+    },
+    "7": {
+      "nombre": "Balears (Illes)",
+      "completados": 67,
+      "total": 67
+    },
+    "8": {
+      "nombre": "Barcelona",
+      "completados": 311,
+      "total": 311
+    },
+    "9": {
+      "nombre": "Burgos",
+      "completados": 371,
+      "total": 371
+    },
+    "10": {
+      "nombre": "Cáceres",
+      "completados": 223,
+      "total": 223
+    },
+    "11": {
+      "nombre": "Cádiz",
+      "completados": 45,
+      "total": 45
+    },
+    "12": {
+      "nombre": "Castellón/Castelló",
+      "completados": 135,
+      "total": 135
+    },
+    "13": {
+      "nombre": "Ciudad Real",
+      "completados": 102,
+      "total": 102
+    },
+    "14": {
+      "nombre": "Córdoba",
+      "completados": 77,
+      "total": 77
+    },
+    "15": {
+      "nombre": "Coruña (A)",
+      "completados": 93,
+      "total": 93
+    },
+    "16": {
+      "nombre": "Cuenca",
+      "completados": 238,
+      "total": 238
+    },
+    "17": {
+      "nombre": "Girona",
+      "completados": 221,
+      "total": 221
+    },
+    "18": {
+      "nombre": "Granada",
+      "completados": 174,
+      "total": 174
+    },
+    "19": {
+      "nombre": "Guadalajara",
+      "completados": 288,
+      "total": 288
+    },
+    "20": {
+      "nombre": "Guipúzcoa",
+      "completados": 88,
+      "total": 88
+    },
+    "21": {
+      "nombre": "Huelva",
+      "completados": 40,
+      "total": 80
+    },
+    "22": {
+      "nombre": "Huesca",
+      "completados": 50,
+      "total": 202
+    },
+    "23": {
+      "nombre": "Jaén",
+      "completados": 97,
+      "total": 97
+    },
+    "24": {
+      "nombre": "León",
+      "completados": 211,
+      "total": 211
+    },
+    "25": {
+      "nombre": "Lleida",
+      "completados": 231,
+      "total": 231
+    },
+    "26": {
+      "nombre": "Rioja (La)",
+      "completados": 174,
+      "total": 174
+    },
+    "27": {
+      "nombre": "Lugo",
+      "completados": 67,
+      "total": 67
+    },
+    "28": {
+      "nombre": "Madrid",
+      "completados": 179,
+      "total": 179
+    },
+    "29": {
+      "nombre": "Málaga",
+      "completados": 103,
+      "total": 103
+    },
+    "30": {
+      "nombre": "Murcia",
+      "completados": 45,
+      "total": 45
+    },
+    "31": {
+      "nombre": "Navarra",
+      "completados": 272,
+      "total": 272
+    },
+    "32": {
+      "nombre": "Ourense",
+      "completados": 92,
+      "total": 92
+    },
+    "33": {
+      "nombre": "Asturias",
+      "completados": 78,
+      "total": 78
+    },
+    "34": {
+      "nombre": "Palencia",
+      "completados": 191,
+      "total": 191
+    },
+    "35": {
+      "nombre": "Palmas (Las)",
+      "completados": 34,
+      "total": 34
+    },
+    "36": {
+      "nombre": "Pontevedra",
+      "completados": 61,
+      "total": 61
+    },
+    "37": {
+      "nombre": "Salamanca",
+      "completados": 362,
+      "total": 362
+    },
+    "38": {
+      "nombre": "Santa Cruz de Tenerife",
+      "completados": 54,
+      "total": 54
+    },
+    "39": {
+      "nombre": "Cantabria",
+      "completados": 102,
+      "total": 102
+    },
+    "40": {
+      "nombre": "Segovia",
+      "completados": 209,
+      "total": 209
+    },
+    "41": {
+      "nombre": "Sevilla",
+      "completados": 106,
+      "total": 106
+    },
+    "42": {
+      "nombre": "Soria",
+      "completados": 183,
+      "total": 183
+    },
+    "43": {
+      "nombre": "Tarragona",
+      "completados": 184,
+      "total": 184
+    },
+    "44": {
+      "nombre": "Teruel",
+      "completados": 236,
+      "total": 236
+    },
+    "45": {
+      "nombre": "Toledo",
+      "completados": 204,
+      "total": 204
+    },
+    "46": {
+      "nombre": "Valencia/València",
+      "completados": 266,
+      "total": 266
+    },
+    "47": {
+      "nombre": "Valladolid",
+      "completados": 225,
+      "total": 225
+    },
+    "48": {
+      "nombre": "Vizcaya",
+      "completados": 112,
+      "total": 112
+    },
+    "49": {
+      "nombre": "Zamora",
+      "completados": 248,
+      "total": 248
+    },
+    "50": {
+      "nombre": "Zaragoza",
+      "completados": 293,
+      "total": 293
+    },
+    "51": {
+      "nombre": "Ceuta",
+      "completados": 1,
+      "total": 1
+    },
+    "52": {
+      "nombre": "Melilla",
+      "completados": 1,
+      "total": 1
+    }
+  }
+}
