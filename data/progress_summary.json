@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-08-06T09:25:11Z",
-  "municipios_completados": 7939,
+  "actualizado": "2026-08-07T08:31:24Z",
+  "municipios_completados": 8032,
   "municipios_totales": 8131,
   "csvs": 13062,
   "provincias": {
@@ -106,12 +106,12 @@
     },
     "21": {
       "nombre": "Huelva",
-      "completados": 40,
+      "completados": 80,
       "total": 80
     },
     "22": {
       "nombre": "Huesca",
-      "completados": 50,
+      "completados": 103,
       "total": 202
     },
     "23": {
