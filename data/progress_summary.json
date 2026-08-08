@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-08-07T08:31:24Z",
-  "municipios_completados": 8032,
+  "actualizado": "2026-08-08T07:40:09Z",
+  "municipios_completados": 7929,
   "municipios_totales": 8131,
   "csvs": 13062,
   "provincias": {
@@ -111,7 +111,7 @@
     },
     "22": {
       "nombre": "Huesca",
-      "completados": 103,
+      "completados": 152,
       "total": 202
     },
     "23": {
@@ -126,7 +126,7 @@
     },
     "25": {
       "nombre": "Lleida",
-      "completados": 231,
+      "completados": 79,
       "total": 231
     },
     "26": {
