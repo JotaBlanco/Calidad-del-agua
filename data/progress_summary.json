@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-08-09T07:49:53Z",
-  "municipios_completados": 8048,
+  "actualizado": "2026-08-10T08:03:58Z",
+  "municipios_completados": 8025,
   "municipios_totales": 8131,
   "csvs": 13062,
   "provincias": {
@@ -126,7 +126,7 @@
     },
     "25": {
       "nombre": "Lleida",
-      "completados": 148,
+      "completados": 204,
       "total": 231
     },
     "26": {
@@ -146,7 +146,7 @@
     },
     "29": {
       "nombre": "Málaga",
-      "completados": 103,
+      "completados": 24,
       "total": 103
     },
     "30": {
