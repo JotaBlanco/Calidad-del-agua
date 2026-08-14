@@ -221,7 +221,11 @@ def main(argv: list[str] | None = None) -> int:
 
     codes = args.provincias
     if args.all:
-        codes = sorted({int(p.name.split("_")[0]) for p in CSV_DIR.glob("*.csv")})
+        # pathlib's glob matches dotfiles.  Untarring the macOS-built seed on
+        # Linux leaves an AppleDouble `._` twin beside every CSV, and
+        # int("._21".split("_")[0]) is a ValueError.
+        codes = sorted({int(p.name.split("_")[0]) for p in CSV_DIR.glob("*.csv")
+                        if not p.name.startswith(".")})
 
     if not codes and not args.index_only:
         parser.error("pass province codes, --all, or --index-only")

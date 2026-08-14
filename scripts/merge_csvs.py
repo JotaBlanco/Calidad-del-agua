@@ -32,7 +32,10 @@ OUTPUT_FILE = OUTPUT_DIR / "all_data.csv"
 
 def merge_all_csvs() -> pd.DataFrame:
     """Lee todos los CSVs y los concatena en un único DataFrame."""
-    files = sorted(CSV_DIR.glob("*.csv"))
+    # pathlib's glob matches dotfiles, and untarring the macOS-built seed on
+    # Linux leaves an AppleDouble `._` twin beside every CSV — 6531 small
+    # binary files that would go straight into read_csv().
+    files = sorted(p for p in CSV_DIR.glob("*.csv") if not p.name.startswith("."))
     if not files:
         print(f"ERROR: No se encontraron CSVs en {CSV_DIR}")
         sys.exit(1)

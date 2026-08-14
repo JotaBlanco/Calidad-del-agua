@@ -87,6 +87,16 @@ jobs:
           restore-keys: |
             scraper-data-
 
+      # The seed tarball was built on macOS, which stored each file's extended
+      # attributes as an AppleDouble member.  Extracting it on Linux turned
+      # those into real `._`-prefixed files: 6531 junk twins that inflated the
+      # reported CSV count to exactly double (13062), broke `--all`, and would
+      # have been handed to read_csv() by merge_csvs.py.  Deleting them here
+      # means the next cache save is clean.
+      - name: Drop AppleDouble junk
+        run: |
+          echo "removed: $(find data -name '._*' -print -delete 2>/dev/null | wc -l)"
+
       # Order and resume rules live in the script, not here — see its docstring.
       - name: Determine provinces
         id: prov
@@ -221,6 +231,16 @@ jobs:
           key: scraper-data-${{ github.run_id }}
           restore-keys: |
             scraper-data-
+
+      # The seed tarball was built on macOS, which stored each file's extended
+      # attributes as an AppleDouble member.  Extracting it on Linux turned
+      # those into real `._`-prefixed files: 6531 junk twins that inflated the
+      # reported CSV count to exactly double (13062), broke `--all`, and would
+      # have been handed to read_csv() by merge_csvs.py.  Deleting them here
+      # means the next cache save is clean.
+      - name: Drop AppleDouble junk
+        run: |
+          echo "removed: $(find data -name '._*' -print -delete 2>/dev/null | wc -l)"
 
       # Records the date of every pass that finished tonight, which is what
       # keeps the rotation moving to the next province.  Skipped when nothing
