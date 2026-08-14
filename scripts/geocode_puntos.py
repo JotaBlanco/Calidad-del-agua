@@ -37,6 +37,9 @@ import yaml
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import geo_validate
+
 # ---------------------------------------------------------------------------
 # Configuración
 # ---------------------------------------------------------------------------
@@ -52,9 +55,15 @@ OUTPUT_YAML = DATA_DIR / "processed" / "puntos_coordenadas.yaml"
 
 CATALOG_PATH = DATA_DIR / "locations_catalog.csv"
 
-MAX_DISTANCE_KM = 50  # distancia máxima aceptable del centroide
+MAX_DISTANCE_KM = 50  # distancia máxima del centroide; ya SÓLO se aplica a los
+                      # puntos de infraestructura hídrica exentos de la regla
+                      # del polígono (ver geo_validate.INFRA_EXEMPT_TERMS)
 NOMINATIM_DELAY = 1.1  # segundos entre peticiones (política de Nominatim)
 MAX_RETRIES = 3
+
+# Validación geométrica: sustituye la vieja regla plana de 50 km por la regla
+# escalonada contra el polígono del término municipal.
+MUNICIPAL_TERMS = geo_validate.MunicipalTerms()
 
 # Claves API opcionales (proveedores gratuitos con registro)
 LOCATIONIQ_KEY = ""  # https://locationiq.com (5000 req/día gratis)
@@ -242,41 +251,66 @@ def geocode_opencage(query: str) -> tuple[float, float] | None:
     return None
 
 
+def _accept(
+    coords: tuple[float, float],
+    mun_code: str,
+    centroid: tuple[float, float],
+    punto: str,
+) -> bool:
+    """Regla escalonada contra el término municipal (ver scripts/geo_validate.py).
+
+    Sustituye la vieja comprobación plana de `dist <= MAX_DISTANCE_KM`, que
+    era demasiado laxa: aceptaba coordenadas a 42 km fuera del término (y a
+    la vez etiquetaba como "geocodificado" resultados que caían justo encima
+    del centroide municipal).
+
+      1. dentro del término                        -> aceptar
+      2. fuera pero a <= 2 km del borde             -> aceptar
+      3. más lejos                                 -> rechazar y seguir la cascada
+      +  a <= 150 m del centroide                   -> rechazar (es el centroide
+         disfrazado de hit fino; si nada mejor aparece se etiqueta "centroide")
+      +  infraestructura hídrica (captación, embalse, pozo, depósito...)
+         -> EXENTA de la regla del polígono, mantiene el control de 50 km
+    """
+    ok, _verdict, _dist = geo_validate.validate_candidate(
+        coords[0], coords[1], mun_code, centroid, punto, MUNICIPAL_TERMS
+    )
+    return ok
+
+
 def _try_providers(
     geolocator: Nominatim,
     queries: list[str],
     centroid: tuple[float, float],
     carto_queries: list[str] | None = None,
+    mun_code: str = "",
+    punto: str = "",
 ) -> tuple[float, float, str] | None:
     """Try all providers with the given query list. Returns (lat, lon, provider) or None.
 
     carto_queries: separate queries for CartoCiudad (without "España",
     since CartoCiudad is Spain-only and chokes on it).
+
+    mun_code/punto: needed by the tiered geometric validation (_accept).
     """
     # 1. Photon (best performer: 64% at full clean)
     for query in queries:
         coords = geocode_photon(query)
-        if coords:
-            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-            if dist <= MAX_DISTANCE_KM:
-                return (coords[0], coords[1], "photon")
+        if coords and _accept(coords, mun_code, centroid, punto):
+            return (coords[0], coords[1], "photon")
 
     # 2. Nominatim (23% at full clean)
     for query in queries:
         coords = geocode_nominatim(geolocator, query)
-        if coords:
-            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-            if dist <= MAX_DISTANCE_KM:
-                return (coords[0], coords[1], "nominatim")
+        if coords and _accept(coords, mun_code, centroid, punto):
+            return (coords[0], coords[1], "nominatim")
 
     # 3. CartoCiudad (find only — candidates endpoint returns lat=0)
     #    Uses carto_queries (no "España") or falls back to standard queries
     for query in (carto_queries or queries):
         coords = geocode_cartociudad(query)
-        if coords:
-            dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-            if dist <= MAX_DISTANCE_KM:
-                return (coords[0], coords[1], "cartociudad")
+        if coords and _accept(coords, mun_code, centroid, punto):
+            return (coords[0], coords[1], "cartociudad")
 
     # 4-6. Optional API-key providers
     for query in queries:
@@ -289,10 +323,8 @@ def _try_providers(
                 coords = prov_fn(query)
             except Exception:
                 continue
-            if coords:
-                dist = haversine_km(centroid[0], centroid[1], coords[0], coords[1])
-                if dist <= MAX_DISTANCE_KM:
-                    return (coords[0], coords[1], prov_name)
+            if coords and _accept(coords, mun_code, centroid, punto):
+                return (coords[0], coords[1], prov_name)
 
     return None
 
@@ -301,6 +333,8 @@ def geocode_multi(
     geolocator: Nominatim,
     levels: list[tuple[str, list[str], list[str]]],
     centroid: tuple[float, float],
+    mun_code: str = "",
+    punto: str = "",
 ) -> tuple[float, float, str, str] | None:
     """
     Intenta geocodificar usando múltiples niveles de limpieza,
@@ -310,7 +344,8 @@ def geocode_multi(
     Devuelve (lat, lon, provider_name, level_name) o None si todos fallan.
     """
     for level_name, queries, carto_queries in levels:
-        result = _try_providers(geolocator, queries, centroid, carto_queries)
+        result = _try_providers(geolocator, queries, centroid, carto_queries,
+                                mun_code=mun_code, punto=punto)
         if result:
             return (result[0], result[1], result[2], level_name)
 
@@ -571,8 +606,17 @@ def extract_location_hint(
     if remove_municipio and _strip_accents(punto).upper() == _strip_accents(municipio).upper():
         return None
 
-    # Palabras que solas no sirven para geocodificar
-    GENERIC_HINTS = {
+    if punto.upper().strip() in GENERIC_HINTS:
+        return None
+
+    return punto
+
+
+# Palabras que solas no sirven para geocodificar.
+# Definido a nivel de módulo para que lo reutilicen otros scripts
+# (scripts/resolve_centroid_puntos.py lo usa como lista negra al emparejar
+# tokens contra el nomenclátor).
+GENERIC_HINTS = {
         "AYUNTAMIENTO", "AYTO", "AYUNYAMIENTO",
         "FUENTE", "FUENTE PÚBLICA", "FUENTE PUBLICA",
         "OFICINAS", "OFICINA",
@@ -596,11 +640,7 @@ def extract_location_hint(
         "FUENTE PARQUE", "FUENTE PARQUE INFANTIL",
         "PARQUE INFANTIL", "PARQUE",
         "IGLESIA", "NAVE", "NAVE INDUSTRIAL",
-    }
-    if punto.upper().strip() in GENERIC_HINTS:
-        return None
-
-    return punto
+}
 
 
 def _clean_light(punto: str) -> str:
@@ -858,17 +898,22 @@ def geocode_punto(
     municipio: str,
     provincia: str,
     centroid: tuple[float, float],
+    mun_code: str = "",
 ) -> dict:
     """
     Intenta geocodificar un punto de muestreo con múltiples niveles de
     limpieza (A→B→C), cada uno probando todos los proveedores.
     Devuelve un dict con lat, lon, source.
+
+    mun_code: código INE de municipio (5 díg.), necesario para la validación
+    geométrica contra el polígono del término municipal.
     """
     levels = build_query_levels(punto, municipio, provincia)
     if not levels:
         return {"lat": centroid[0], "lon": centroid[1], "source": "centroide"}
 
-    result = geocode_multi(geolocator, levels, centroid)
+    result = geocode_multi(geolocator, levels, centroid,
+                           mun_code=mun_code, punto=punto)
     if result:
         return {
             "lat": round(result[0], 7),
@@ -1057,6 +1102,7 @@ def main() -> None:
                 entry["municipio"],
                 prov_name,
                 centroid_coords,
+                mun_code=str(entry["municipio_code"]).zfill(5),
             )
 
             entry["lat"] = result["lat"]
