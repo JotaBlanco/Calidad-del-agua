@@ -19,10 +19,30 @@ const MapController = {
     _onMarkerClick: null,
     _onClusterClick: null,
     _onNationalMarkerClick: null,
+    _highlightLayer: null,
+    _highlightKey: null,
+
+    /**
+     * Estilos del resaltado administrativo. El nivel más profundo se dibuja
+     * algo más marcado, pero todos se quedan en tono azul apagado: los
+     * marcadores usan verde/ámbar/rojo y el resaltado no debe competir con
+     * ellos ni leerse como un estado de calidad.
+     */
+    HIGHLIGHT_STYLES: {
+        provincia: { color: "#3d5f94", weight: 1.8, opacity: 0.65, fillOpacity: 0.07 },
+        municipio: { color: "#2f4b7c", weight: 2.5, opacity: 0.85, fillOpacity: 0.14 },
+    },
 
     /** Initialize the Leaflet map centered on Spain with greyscale tiles. */
     init() {
         this.map = L.map("map", { zoomControl: true }).setView([40.0, -3.7], 6);
+
+        // Pane propio para el resaltado: por encima de las teselas base (200)
+        // y por debajo de las etiquetas y los marcadores, para que el relleno
+        // no tape los topónimos.
+        this.map.createPane("geofencePane");
+        this.map.getPane("geofencePane").style.zIndex = 350;
+        this.map.getPane("geofencePane").style.pointerEvents = "none";
 
         // CartoDB Positron — minimal greyscale basemap
         L.tileLayer(
@@ -236,9 +256,55 @@ const MapController = {
         }
     },
 
+    // ── Resaltado administrativo ───────────────────────────────────
+
+    /**
+     * Dibuja el contorno de UNA unidad administrativa. Sustituye cualquier
+     * resaltado previo: solo hay un nivel resaltado a la vez, el más profundo
+     * que esté seleccionado.
+     *
+     * @param {Object|null} feature — Feature GeoJSON, o null para limpiar
+     * @param {string} level — "provincia" | "municipio"
+     * @param {string} key — identificador para evitar redibujar lo mismo
+     */
+    setHighlight(feature, level, key) {
+        if (!feature) {
+            this.clearHighlight();
+            return;
+        }
+        if (this._highlightKey === key) return; // ya está pintado
+
+        this.clearHighlight();
+        this._highlightLayer = L.geoJSON(feature, {
+            pane: "geofencePane",
+            interactive: false, // nunca debe robar clics a los marcadores
+            style: this.HIGHLIGHT_STYLES[level] || this.HIGHLIGHT_STYLES.provincia,
+        }).addTo(this.map);
+        this._highlightKey = key;
+    },
+
+    /** Quita el resaltado, si hay alguno. */
+    clearHighlight() {
+        if (this._highlightLayer) {
+            this.map.removeLayer(this._highlightLayer);
+            this._highlightLayer = null;
+        }
+        this._highlightKey = null;
+    },
+
+    /** Encaja la vista en el resaltado actual. Devuelve false si no hay. */
+    fitHighlight(padding = 0.05) {
+        if (!this._highlightLayer) return false;
+        const bounds = this._highlightLayer.getBounds();
+        if (!bounds.isValid()) return false;
+        this.map.fitBounds(bounds.pad(padding));
+        return true;
+    },
+
     /** Reset the map to the default Spain view. */
     resetView() {
         this.clearMarkers();
+        this.clearHighlight();
         this.map.setView([40.0, -3.7], 6);
     },
 };

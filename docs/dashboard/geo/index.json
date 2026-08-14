@@ -1,0 +1,390 @@
+{
+ "source": "Opendatasoft georef-spain-* (derivado de las Líneas Límite Municipales del IGN / Registro Central de Cartografía). Reutilización libre con atribución.",
+ "comunidades": [
+  {
+   "code": "01",
+   "name": "Andalucía",
+   "provincias": [
+    {
+     "code": "04",
+     "name": "Almería",
+     "municipios": 103
+    },
+    {
+     "code": "11",
+     "name": "Cádiz",
+     "municipios": 45
+    },
+    {
+     "code": "14",
+     "name": "Córdoba",
+     "municipios": 77
+    },
+    {
+     "code": "18",
+     "name": "Granada",
+     "municipios": 174
+    },
+    {
+     "code": "21",
+     "name": "Huelva",
+     "municipios": 80
+    },
+    {
+     "code": "23",
+     "name": "Jaén",
+     "municipios": 98
+    },
+    {
+     "code": "29",
+     "name": "Málaga",
+     "municipios": 103
+    },
+    {
+     "code": "41",
+     "name": "Sevilla",
+     "municipios": 106
+    }
+   ]
+  },
+  {
+   "code": "02",
+   "name": "Aragón",
+   "provincias": [
+    {
+     "code": "22",
+     "name": "Huesca",
+     "municipios": 203
+    },
+    {
+     "code": "44",
+     "name": "Teruel",
+     "municipios": 238
+    },
+    {
+     "code": "50",
+     "name": "Zaragoza",
+     "municipios": 293
+    }
+   ]
+  },
+  {
+   "code": "05",
+   "name": "Canarias",
+   "provincias": [
+    {
+     "code": "35",
+     "name": "Las Palmas",
+     "municipios": 34
+    },
+    {
+     "code": "38",
+     "name": "Santa Cruz de Tenerife",
+     "municipios": 54
+    }
+   ]
+  },
+  {
+   "code": "06",
+   "name": "Cantabria",
+   "provincias": [
+    {
+     "code": "39",
+     "name": "Cantabria",
+     "municipios": 103
+    }
+   ]
+  },
+  {
+   "code": "07",
+   "name": "Castilla y León",
+   "provincias": [
+    {
+     "code": "09",
+     "name": "Burgos",
+     "municipios": 414
+    },
+    {
+     "code": "24",
+     "name": "León",
+     "municipios": 215
+    },
+    {
+     "code": "34",
+     "name": "Palencia",
+     "municipios": 191
+    },
+    {
+     "code": "37",
+     "name": "Salamanca",
+     "municipios": 363
+    },
+    {
+     "code": "40",
+     "name": "Segovia",
+     "municipios": 210
+    },
+    {
+     "code": "42",
+     "name": "Soria",
+     "municipios": 184
+    },
+    {
+     "code": "47",
+     "name": "Valladolid",
+     "municipios": 225
+    },
+    {
+     "code": "49",
+     "name": "Zamora",
+     "municipios": 248
+    },
+    {
+     "code": "05",
+     "name": "Ávila",
+     "municipios": 248
+    }
+   ]
+  },
+  {
+   "code": "08",
+   "name": "Castilla-La Mancha",
+   "provincias": [
+    {
+     "code": "02",
+     "name": "Albacete",
+     "municipios": 88
+    },
+    {
+     "code": "13",
+     "name": "Ciudad Real",
+     "municipios": 102
+    },
+    {
+     "code": "16",
+     "name": "Cuenca",
+     "municipios": 238
+    },
+    {
+     "code": "19",
+     "name": "Guadalajara",
+     "municipios": 289
+    },
+    {
+     "code": "45",
+     "name": "Toledo",
+     "municipios": 204
+    }
+   ]
+  },
+  {
+   "code": "09",
+   "name": "Cataluña",
+   "provincias": [
+    {
+     "code": "08",
+     "name": "Barcelona",
+     "municipios": 311
+    },
+    {
+     "code": "17",
+     "name": "Girona",
+     "municipios": 221
+    },
+    {
+     "code": "25",
+     "name": "Lleida",
+     "municipios": 232
+    },
+    {
+     "code": "43",
+     "name": "Tarragona",
+     "municipios": 184
+    }
+   ]
+  },
+  {
+   "code": "18",
+   "name": "Ciudad Autónoma de Ceuta",
+   "provincias": [
+    {
+     "code": "51",
+     "name": "Ceuta",
+     "municipios": 1
+    }
+   ]
+  },
+  {
+   "code": "19",
+   "name": "Ciudad Autónoma de Melilla",
+   "provincias": [
+    {
+     "code": "52",
+     "name": "Melilla",
+     "municipios": 1
+    }
+   ]
+  },
+  {
+   "code": "15",
+   "name": "Comunidad Foral de Navarra",
+   "provincias": [
+    {
+     "code": "31",
+     "name": "Navarra",
+     "municipios": 288
+    }
+   ]
+  },
+  {
+   "code": "13",
+   "name": "Comunidad de Madrid",
+   "provincias": [
+    {
+     "code": "28",
+     "name": "Madrid",
+     "municipios": 181
+    }
+   ]
+  },
+  {
+   "code": "10",
+   "name": "Comunitat Valenciana",
+   "provincias": [
+    {
+     "code": "03",
+     "name": "Alacant",
+     "municipios": 142
+    },
+    {
+     "code": "12",
+     "name": "Castelló",
+     "municipios": 135
+    },
+    {
+     "code": "46",
+     "name": "València",
+     "municipios": 267
+    }
+   ]
+  },
+  {
+   "code": "11",
+   "name": "Extremadura",
+   "provincias": [
+    {
+     "code": "06",
+     "name": "Badajoz",
+     "municipios": 165
+    },
+    {
+     "code": "10",
+     "name": "Cáceres",
+     "municipios": 223
+    }
+   ]
+  },
+  {
+   "code": "12",
+   "name": "Galicia",
+   "provincias": [
+    {
+     "code": "15",
+     "name": "A Coruña",
+     "municipios": 93
+    },
+    {
+     "code": "27",
+     "name": "Lugo",
+     "municipios": 67
+    },
+    {
+     "code": "32",
+     "name": "Ourense",
+     "municipios": 92
+    },
+    {
+     "code": "36",
+     "name": "Pontevedra",
+     "municipios": 61
+    }
+   ]
+  },
+  {
+   "code": "04",
+   "name": "Illes Balears",
+   "provincias": [
+    {
+     "code": "07",
+     "name": "Illes Balears",
+     "municipios": 68
+    }
+   ]
+  },
+  {
+   "code": "17",
+   "name": "La Rioja",
+   "provincias": [
+    {
+     "code": "26",
+     "name": "La Rioja",
+     "municipios": 175
+    }
+   ]
+  },
+  {
+   "code": "16",
+   "name": "País Vasco",
+   "provincias": [
+    {
+     "code": "01",
+     "name": "Araba",
+     "municipios": 53
+    },
+    {
+     "code": "48",
+     "name": "Bizkaia",
+     "municipios": 112
+    },
+    {
+     "code": "20",
+     "name": "Gipuzkoa",
+     "municipios": 90
+    }
+   ]
+  },
+  {
+   "code": "03",
+   "name": "Principado de Asturias",
+   "provincias": [
+    {
+     "code": "33",
+     "name": "Asturias",
+     "municipios": 81
+    }
+   ]
+  },
+  {
+   "code": "14",
+   "name": "Región de Murcia",
+   "provincias": [
+    {
+     "code": "30",
+     "name": "Murcia",
+     "municipios": 45
+    }
+   ]
+  },
+  {
+   "code": "20",
+   "name": "Territorio no asociado a ninguna autonomía",
+   "provincias": [
+    {
+     "code": "54",
+     "name": "Territorio no asociado a ninguna provincia",
+     "municipios": 5
+    }
+   ]
+  }
+ ]
+}

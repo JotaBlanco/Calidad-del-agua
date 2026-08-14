@@ -11,7 +11,7 @@
  *   5. Tag deselect: zoom out to appropriate level
  */
 
-/* global MapController, Filters, PuntoList, DetailPanel */
+/* global MapController, Filters, PuntoList, DetailPanel, Geofences */
 
 const App = {
     state: {
@@ -24,6 +24,10 @@ const App = {
         currentMuniCode: null,
         currentPuntoNombre: null,
     },
+
+    // Descarta resaltados obsoletos si el usuario cambia de selección
+    // mientras un geofence anterior sigue descargándose.
+    _highlightToken: 0,
 
     async init() {
         MapController.init();
@@ -120,6 +124,7 @@ const App = {
             DetailPanel.showPlaceholder();
             Filters.clearTags();
             this.renderStats(this.state.index.summary);
+            await this._refreshHighlight();
             return;
         }
 
@@ -130,6 +135,8 @@ const App = {
         if (!code) {
             this.state.currentMuniCode = null;
             this.state.currentPuntoNombre = null;
+            // Vuelve al contorno de la provincia.
+            this._refreshHighlight();
             const data = this.state.currentProvData;
             if (!data) return;
 
@@ -228,6 +235,7 @@ const App = {
         // Auto-update municipio if changed
         if (this.state.currentMuniCode !== muni.code) {
             this.state.currentMuniCode = muni.code;
+            this._refreshHighlight();
             Filters.populateMunicipios(data.municipios);
             Filters.setMunicipioValue(muni.code);
             Filters.populatePuntos(muni.puntos);
@@ -264,6 +272,7 @@ const App = {
             const muniCode = muniCodes.values().next().value;
             if (this.state.currentMuniCode !== muniCode) {
                 this.state.currentMuniCode = muniCode;
+                this._refreshHighlight();
                 Filters.setMunicipioValue(muniCode);
                 const muni = data.municipios.find(
                     (m) => m.code === muniCode
@@ -300,6 +309,7 @@ const App = {
                 (punto, muni) => this.onMarkerClick(punto, muni),
                 (markers) => this.onClusterClick(markers)
             );
+            await this._refreshHighlight();
             PuntoList.showPlaceholder(
                 "Selecciona un municipio para ver los puntos."
             );
@@ -326,6 +336,7 @@ const App = {
         const muni = data.municipios.find((m) => m.code === code);
         if (!muni) return;
 
+        this._refreshHighlight();
         Filters.setMunicipioValue(code);
         Filters.populatePuntos(muni.puntos);
         MapController.zoomToMunicipio(code);
@@ -374,6 +385,47 @@ const App = {
     },
 
     // ── Selection tags ────────────────────────────────────────────
+
+    // ── Resaltado administrativo ──────────────────────────────────
+
+    /**
+     * Pinta el contorno del nivel más profundo que esté seleccionado:
+     * municipio si hay municipio, si no la provincia, si no nada.
+     * Al elegir municipio se apaga el contorno de la provincia, y al
+     * deseleccionarlo vuelve a aparecer.
+     *
+     * Es tolerante a fallos a propósito: si los geofences no están
+     * descargados, el dashboard funciona igual, solo sin contorno.
+     */
+    async _refreshHighlight() {
+        const token = ++this._highlightToken;
+        const { currentProvCode: prov, currentMuniCode: muni } = this.state;
+
+        try {
+            let feature = null;
+            let level = null;
+            let key = null;
+
+            if (prov && muni) {
+                feature = await Geofences.municipio(prov, muni);
+                level = "municipio";
+                key = `m:${prov}:${muni}`;
+            } else if (prov) {
+                feature = await Geofences.provincia(prov);
+                level = "provincia";
+                key = `p:${prov}`;
+            }
+
+            // El usuario cambió de selección mientras descargábamos.
+            if (token !== this._highlightToken) return;
+
+            MapController.setHighlight(feature, level, key);
+        } catch (err) {
+            if (token !== this._highlightToken) return;
+            console.warn("No se pudo cargar el contorno administrativo:", err);
+            MapController.clearHighlight();
+        }
+    },
 
     _updateTags() {
         const provName = this.state.currentProvCode
