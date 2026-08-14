@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-08-13T08:19:06Z",
-  "municipios_completados": 8060,
+  "actualizado": "2026-08-14T08:15:57Z",
+  "municipios_completados": 8095,
   "municipios_totales": 8131,
   "csvs": 13062,
   "provincias": {
@@ -146,7 +146,7 @@
     },
     "29": {
       "nombre": "Málaga",
-      "completados": 78,
+      "completados": 103,
       "total": 103
     },
     "30": {
@@ -166,7 +166,7 @@
     },
     "33": {
       "nombre": "Asturias",
-      "completados": 32,
+      "completados": 42,
       "total": 78
     },
     "34": {
