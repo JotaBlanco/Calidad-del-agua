@@ -1,8 +1,9 @@
 {
-  "actualizado": "2026-08-14T08:15:57Z",
+  "actualizado": "2026-08-14T10:53:42Z",
   "municipios_completados": 8095,
   "municipios_totales": 8131,
   "csvs": 13062,
+  "csvs_vacios": 0,
   "provincias": {
     "1": {
       "nombre": "Alava",
