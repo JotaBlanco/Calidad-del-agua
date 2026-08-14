@@ -217,6 +217,19 @@ def compute_bounds(lats: list[float], lons: list[float]) -> list[list[float]] | 
 # ── Provincia JSON building ─────────────────────────────────────────
 
 
+def count_tomas_por_punto(df: pd.DataFrame) -> dict[tuple[str, str], int]:
+    """Distinct sampling dates per punto, keyed by (municipio_code, nombre).
+
+    Counted over *every* row, not only the current-state ones: the question is
+    how often the point has been sampled at all, so a date whose parameters
+    have since been re-measured still counts.  Rows with no parseable date
+    contribute nothing.
+    """
+    sub = df[df["fecha"].notna()]
+    counts = sub.groupby(["municipio_code", "punto_muestreo"])["fecha"].nunique()
+    return {(str(muni), str(punto)): int(n) for (muni, punto), n in counts.items()}
+
+
 def build_provincia_json(
     prov_code: str,
     prov_name: str,
@@ -228,6 +241,7 @@ def build_provincia_json(
     punto_coords: dict,
     muni_centroids: dict,
     muni_names: dict,
+    tomas_por_punto: dict[tuple[str, str], int] | None = None,
 ) -> dict:
     """Build the main JSON structure for a provincia with dictionary encoding."""
     municipios_out = []
@@ -310,6 +324,15 @@ def build_provincia_json(
                 "status": status,
                 "m": measurements,
             }
+
+            # "nt": how many distinct dates this point has been sampled on.
+            # Absent when the caller did not supply the counts, so an older
+            # published JSON simply has no field and the UI omits the figure.
+            if tomas_por_punto is not None:
+                n_tomas = tomas_por_punto.get((muni_code_str, str(punto_nombre)))
+                if n_tomas:
+                    punto_data["nt"] = n_tomas
+
             puntos_out.append(punto_data)
 
         statuses = [p["status"] for p in puntos_out]
@@ -471,6 +494,10 @@ def main() -> None:
     # Cache param_to_idx per provincia for history step
     prov_param_idx: dict[str, dict[str, int]] = {}
 
+    # Counted on the whole frame, not on `latest`: how often a point has been
+    # sampled is a question about its history.
+    tomas_por_punto = count_tomas_por_punto(df)
+
     for prov_code, prov_group in latest.groupby("provincia_code", sort=True):
         prov_code_str = str(int(prov_code)) if pd.notna(prov_code) else str(prov_code)
         prov_name = prov_names.get(prov_code_str, f"Provincia {prov_code_str}")
@@ -485,6 +512,7 @@ def main() -> None:
             prov_code_str, prov_name, prov_group,
             param_to_idx, date_pool, date_to_idx, dict_entries,
             punto_coords, muni_centroids, muni_names,
+            tomas_por_punto,
         )
 
         n_ok = sum(m["ok"] for m in prov_json["municipios"])

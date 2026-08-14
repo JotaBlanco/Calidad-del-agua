@@ -104,9 +104,11 @@ Tanto los agregados como el dashboard pasan por esa función, de modo que sus ci
 coinciden por construcción.
 
 Las dos banderas que la sostienen son `es_ultima_toma_del_tipo` (punto × tipo de análisis)
-y `es_ultimo_valor_del_parametro` (× parámetro). El dataset publicado sigue incluyendo sus
-nombres anteriores, `es_ultimo_analisis` y `es_ultima_medicion`, como copias en desuso; se
-eliminarán en una versión futura.
+y `es_ultimo_valor_del_parametro` (punto × parámetro, **sin** tipo de análisis: incluirlo
+devolvía el mismo parámetro una vez por tipo de análisis, duplicaba las tablas del
+dashboard y dejaba puntos marcados por un incumplimiento ya superado). El dataset publicado
+sigue incluyendo sus nombres anteriores, `es_ultimo_analisis` y `es_ultima_medicion`, como
+copias en desuso; se eliminarán en una versión futura.
 
 ### La geolocalización
 

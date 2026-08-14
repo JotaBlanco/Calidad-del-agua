@@ -52,6 +52,7 @@ from scripts.build_dashboard_data import (
     build_param_dict,
     build_provincia_history,
     build_provincia_json,
+    count_tomas_por_punto,
     load_location_names,
     load_muni_centroids,
     load_punto_coords,
@@ -148,6 +149,7 @@ def build_province(code: int, coords: dict, centroids: dict,
         str(code), name, latest,
         param_to_idx, date_pool, date_to_idx, dict_entries,
         coords, centroids, muni_names,
+        count_tomas_por_punto(df),
     )
     write_json(prov_json, PROV_DIR / f"{padded}.json")
 

@@ -33,6 +33,9 @@ const PuntoList = {
         for (const { punto, muni } of items) {
             const nTotal = (punto.m || []).length;
             const nFail = (punto.m || []).filter((m) => m[2] > 0).length;
+            // punto.nt — distinct dates sampled at this point, over its whole
+            // history. Absent in JSONs built before the field existed.
+            const nTomas = punto.nt;
             html +=
                 '<div class="punto-card" data-punto="' +
                 escapeHtml(punto.nombre) +
@@ -59,6 +62,9 @@ const PuntoList = {
                 '<div class="punto-card-meta">' +
                 nTotal +
                 " params" +
+                (nTomas
+                    ? ", " + nTomas + (nTomas === 1 ? " toma" : " tomas")
+                    : "") +
                 (nFail > 0 ? ", " + nFail + " incumplimiento(s)" : "") +
                 "</div>";
             html += "</div>";
