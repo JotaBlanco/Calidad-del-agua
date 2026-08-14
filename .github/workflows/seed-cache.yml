@@ -1,35 +1,51 @@
-name: Seed Scraper Cache
+name: Restore Scraper Cache
 
-# Run once to bootstrap the cache with local data uploaded as a GitHub Release.
-# After running successfully, this workflow can be deleted.
+# Disaster recovery for the scraper's raw data.
 #
-# Steps:
-#   1. Create a release: gh release create seed-data --title "Scraper seed data"
-#   2. Upload the tarball: gh release upload seed-data /tmp/scraper-seed.tar.gz
-#   3. Trigger this workflow manually from Actions tab
+# `data/raw/csvs/` is gitignored, so between runs it lives in the Actions cache
+# — and GitHub evicts a cache after 7 days without a hit.  Seven failed nights
+# in a row would therefore wipe every measurement scraped since February.
+#
+# The nightly workflow guards against that by uploading a tarball to the
+# `raw-data` release after each run.  This workflow puts that tarball back into
+# the Actions cache, which is all the nightly run needs to carry on where it
+# left off.
+#
+# Run it manually from the Actions tab when `gh cache list` shows no
+# `scraper-data-*` entry.
 
 on:
   workflow_dispatch:
+    inputs:
+      release_tag:
+        description: 'Release to restore from (raw-data = nightly backup, seed-data = original February snapshot)'
+        type: choice
+        options:
+          - raw-data
+          - seed-data
+        default: raw-data
 
 permissions:
   contents: read
 
 jobs:
-  seed:
+  restore:
     runs-on: ubuntu-latest
     steps:
-      - name: Download seed tarball from release
+      - name: Download tarball from release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.release_tag }}
         run: |
-          curl -L -o seed.tar.gz \
-            "https://github.com/${{ github.repository }}/releases/download/seed-data/scraper-seed.tar.gz"
-          ls -lh seed.tar.gz
+          # The two releases carry differently named assets.
+          if [ "$TAG" = "raw-data" ]; then ASSET=scraper-raw.tar.gz; else ASSET=scraper-seed.tar.gz; fi
+          gh release download "$TAG" --repo "${{ github.repository }}" --pattern "$ASSET" --output data.tar.gz
+          ls -lh data.tar.gz
 
-      - name: Extract seed data
+      - name: Extract
         run: |
           mkdir -p data
-          tar xzf seed.tar.gz -C data/
-          echo "Files extracted:"
-          ls -la data/raw/csvs/ | tail -5
+          tar xzf data.tar.gz -C data/
           echo "Total CSVs: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)"
           echo "Progress files: $(ls data/progress/ 2>/dev/null | wc -l)"
 
@@ -39,4 +55,4 @@ jobs:
           path: |
             data/raw/csvs/
             data/progress/
-          key: scraper-data-seed
+          key: scraper-data-restored-${{ github.run_id }}

@@ -1,15 +1,23 @@
 name: Update Water Quality Data
 
-# Two provinces per night, scraped concurrently — never more.  SINAC has
-# fallen over under heavier parallelism before, so the concurrency is capped
-# in three independent places: MAX_PARALLEL below, the `concurrency` group
-# (which queues overlapping runs instead of running them side by side), and
-# the per-request sleeps already built into the scraper.
+# Nightly refresh, in two jobs:
 #
-# Hard constraint: GitHub-hosted runners kill any job at 6h, regardless of
-# `timeout-minutes`.  The previous version asked for 7h and every single run
-# was cancelled at 6h05m before reaching the data pipeline.  The three limits
-# below are staggered: 4h scrape < 5h30 job < 6h runner.
+#   scrape  — up to MAX_PARALLEL provinces for SCRAPE_TIMEOUT_SECONDS, saving
+#             the raw CSVs and the per-province progress to the Actions cache.
+#   publish — rebuilds the dashboard JSON for exactly those provinces, commits
+#             it (which is what updates GitHub Pages) and backs the raw data up
+#             to a release.
+#
+# Two jobs and not one because GitHub-hosted runners kill any *job* at 6h no
+# matter what `timeout-minutes` says.  Every run before 2026-08-06 died that
+# way.  Splitting means the 5h scrape and the publishing each get their own 6h
+# budget, and a scrape that overruns can no longer take the publishing down
+# with it.
+#
+# The source of truth for measurements is `data/raw/csvs/` — the scraper's own
+# output.  It is gitignored, so it lives in the Actions cache (evicted after 7
+# days without a hit) and, since this workflow was rewritten, in the `raw-data`
+# release, which is what makes it survivable.
 
 on:
   schedule:
@@ -21,11 +29,11 @@ on:
         type: string
         required: false
       skip_scrape:
-        description: 'Skip scraping entirely'
+        description: 'Skip scraping, just rebuild and publish'
         type: boolean
         default: false
-      rebuild:
-        description: 'Run merge + ETL + dashboard build (see note in the scrape step)'
+      rebuild_all:
+        description: 'Rebuild the dashboard for every province (~20 min) instead of just tonight’s'
         type: boolean
         default: false
 
@@ -33,22 +41,29 @@ permissions:
   contents: write
 
 # Never let two runs scrape at the same time — a manual dispatch during the
-# nightly run would otherwise put four scrapers on SINAC at once.
+# nightly run would otherwise put six scrapers on SINAC at once.
 concurrency:
   group: scrape-sinac
   cancel-in-progress: false
 
 env:
-  # 4h for scraping, leaving ~1.5h of headroom under the 6h runner cap.
-  SCRAPE_TIMEOUT_SECONDS: 14400
-  # Hard ceiling on concurrent scrapers. Do not raise without testing:
-  # SINAC has gone down under heavier load.
-  MAX_PARALLEL: 2
+  # 5h of scraping, leaving ~1h of headroom under the 6h runner cap.
+  SCRAPE_TIMEOUT_SECONDS: 18000
+  # Concurrent scrapers.  Two ran for nine nights with zero failed
+  # municipalities; three is a deliberate step up and has NOT been proven
+  # against SINAC, which has gone down under heavy load before.  If the nightly
+  # report starts showing FAILED municipalities, put this back to 2.
+  MAX_PARALLEL: 3
 
 jobs:
-  update:
+  # ── 1. Scrape ───────────────────────────────────────────────────────
+  scrape:
     runs-on: ubuntu-latest
-    timeout-minutes: 330   # 5h30 — must stay below the 6h hard cap
+    timeout-minutes: 330   # 5h30 — 5h of scraping plus cache handling
+
+    outputs:
+      codes: ${{ steps.prov.outputs.codes }}
+      described: ${{ steps.prov.outputs.described }}
 
     steps:
       - name: Checkout repository
@@ -62,7 +77,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # ── Restore cached scraper data from previous runs ──
       - name: Restore scraper cache
         uses: actions/cache/restore@v4
         with:
@@ -73,90 +87,23 @@ jobs:
           restore-keys: |
             scraper-data-
 
-      # ── Pick tonight's provinces and decide resume-vs-refresh ──
-      #
-      # This is a work queue, not a calendar rotation.  A median province has
-      # 153 municipalities and does not fit in one 4h window, so provinces
-      # already under way are picked first — otherwise a half-scraped province
-      # would wait a full cycle for its next turn.  Only once everything is
-      # complete do we take the next calendar slots and reset them, starting a
-      # fresh refresh pass.
-      #
-      # The reset matters: scrape_province() skips anything already in
-      # `completed`, so re-running a finished province without --reset is a
-      # no-op and the data would never refresh.
-      #
-      # Emits `plan` as "CODE:RESET CODE:RESET", e.g. "36:false 15:true".
+      # Order and resume rules live in the script, not here — see its docstring.
       - name: Determine provinces
         id: prov
         run: |
           mkdir -p data/progress
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json, os, pathlib, datetime, csv, collections, re
-
-          with open("data/locations_catalog.csv", newline="", encoding="utf-8") as f:
-              catalog = list(csv.DictReader(f))
-
-          total_by_prov = collections.Counter(int(r["provincia_code"]) for r in catalog)
-          name_by_prov = {int(r["provincia_code"]): r["provincia_name"] for r in catalog}
-
-          def completed(p):
-              pf = pathlib.Path(f"data/progress/progress_{p}.json")
-              if not pf.exists():
-                  return 0
-              try:
-                  return len(json.loads(pf.read_text())["completed"])
-              except (ValueError, KeyError):
-                  return 0
-
-          n_slots = int(os.environ["MAX_PARALLEL"])
-          override = os.environ.get("INPUT_PROVINCIA", "").strip()
-
-          if override:
-              selected = [int(x) for x in re.split(r"[,\s]+", override) if x][:n_slots]
-          else:
-              # Finish what is already under way first, closest-to-done first.
-              selected = sorted(
-                  (p for p, total in total_by_prov.items() if completed(p) < total),
-                  key=completed,
-                  reverse=True,
-              )[:n_slots]
-
-              # Top up from the calendar rotation with fully-scraped provinces.
-              if len(selected) < n_slots:
-                  doy = datetime.datetime.now(datetime.timezone.utc).timetuple().tm_yday
-                  for i in range(52):
-                      if len(selected) >= n_slots:
-                          break
-                      p = ((doy * n_slots + i) % 52) + 1
-                      if p not in selected and p in total_by_prov:
-                          selected.append(p)
-
-          plan, described = [], []
-          for p in selected:
-              total, done = total_by_prov.get(p, 0), completed(p)
-              reset = total and done >= total
-              plan.append(f"{p}:{'true' if reset else 'false'}")
-              described.append(
-                  f"{p} {name_by_prov.get(p, p)} ({done}/{total}"
-                  f"{', fresh pass' if reset else ', resuming'})"
-              )
-
-          print("plan=" + " ".join(plan))
-          print("described=" + " | ".join(described))
-          PY
+          python -m scripts.select_provinces --slots "$MAX_PARALLEL" | tee -a "$GITHUB_OUTPUT"
         env:
           INPUT_PROVINCIA: ${{ inputs.provincia }}
 
-      # Exactly MAX_PARALLEL scrapers, launched as background jobs and waited
-      # on.  Each gets its own `timeout`, so one province stalling does not
-      # eat the other's budget.  Output is prefixed per province because the
-      # two logs interleave.
+      # One scraper per province, each with its own `timeout` so a province
+      # that stalls does not eat the others' budget.  Output is prefixed per
+      # province because the logs interleave.
       - name: Scrape SINAC
         if: ${{ !inputs.skip_scrape }}
         # `shell: bash` gives -eo pipefail.  pipefail is load-bearing: without
-        # it the pipeline's status is sed's, so a scraper cut off at 4h would
-        # look like a clean finish in the log.
+        # it the pipeline's status is sed's, so a scraper cut off at the
+        # timeout would look like a clean finish in the log.
         shell: bash
         run: |
           mkdir -p data/raw/csvs data/progress data/logs
@@ -183,7 +130,7 @@ jobs:
               || echo "A scraper stopped (timeout or error) — progress is saved, next run resumes."
           done
 
-      # Must run even when the scrape is interrupted, or the work is lost.
+      # Must run even when the scrape is interrupted, or the night is lost.
       - name: Save scraper cache
         uses: actions/cache/save@v4
         if: always()
@@ -223,21 +170,84 @@ jobs:
           print(f"| **All Spain** | **{grand}** | **{sum(total.values())}** |")
           PY
 
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "CSVs in cache: $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)" >> "$GITHUB_STEP_SUMMARY"
+          # The CSV count reported here has read 13062 every night since the
+          # cache was seeded, while the seed tarball holds exactly 6531 files
+          # and the scraper only ever appends to existing ones.  These three
+          # lines are here to identify the extra entries; drop them once the
+          # count is explained.
+          {
+            echo ""
+            echo "CSVs (shell glob): $(ls data/raw/csvs/*.csv 2>/dev/null | wc -l)"
+            echo "CSVs (find):       $(find data/raw/csvs -maxdepth 1 -name '*.csv' | wc -l)"
+            echo "Empty CSVs:        $(find data/raw/csvs -maxdepth 1 -name '*.csv' -size -1c | wc -l)"
+            echo "Non-CSV entries:   $(find data/raw/csvs -maxdepth 1 ! -name '*.csv' | wc -l)"
+            echo ""
+            echo "First 5 by name:"
+            ls data/raw/csvs | head -5 | sed 's/^/  /'
+            echo "Last 5 by name:"
+            ls data/raw/csvs | tail -5 | sed 's/^/  /'
+          } >> "$GITHUB_STEP_SUMMARY"
 
-      # ── Keep the schedule alive ──
-      #
-      # GitHub disables cron workflows after 60 days without *repository*
-      # activity, and workflow runs do not count — only commits do.  That is
-      # exactly what killed this workflow before (last commit 2026-02-28, last
-      # run 2026-04-29).  Since the nightly job commits nothing on its own,
-      # this step writes a small progress summary and commits it, which both
-      # resets the 60-day clock and gives a readable history of coverage.
-      #
-      # The timestamp guarantees the file always changes, so there is always a
-      # commit even on a night where no new municipality was completed.
-      - name: Commit progress summary
+  # ── 2. Publish ──────────────────────────────────────────────────────
+  #
+  # Runs even when the scrape job failed or was cancelled: the cache is saved
+  # with `if: always()`, so there is normally still a night's work to publish.
+  # With no cache at all the province builds find no CSVs, leave the existing
+  # JSON untouched and nothing gets committed.
+  publish:
+    needs: scrape
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 120   # ~2 min for a night's provinces, ~20 for --all
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Restore scraper cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            data/raw/csvs/
+            data/progress/
+          key: scraper-data-${{ github.run_id }}
+          restore-keys: |
+            scraper-data-
+
+      # Records the date of every pass that finished tonight, which is what
+      # keeps the rotation moving to the next province.  Skipped when nothing
+      # was scraped, or a province would be marked as refreshed for a night it
+      # never ran and lose its turn.
+      - name: Record completed passes
+        if: ${{ needs.scrape.outputs.codes != '' && !inputs.skip_scrape }}
+        run: python -m scripts.select_provinces --stamp $CODES
+        env:
+          CODES: ${{ needs.scrape.outputs.codes }}
+
+      # This is the step that was missing: without it the scraper filled a
+      # cache nobody read and the dashboard stayed on whatever was last built
+      # by hand (19 February).
+      - name: Rebuild dashboard JSON
+        run: |
+          if [ "${{ inputs.rebuild_all }}" = "true" ]; then
+            python -m scripts.build_province_data --all
+          elif [ -n "$CODES" ]; then
+            python -m scripts.build_province_data $CODES
+          else
+            python -m scripts.build_province_data --index-only
+          fi
+        env:
+          CODES: ${{ needs.scrape.outputs.codes }}
+
+      - name: Write progress summary
         if: always()
         run: |
           python - <<'PY'
@@ -257,82 +267,84 @@ jobs:
                   "nombre": names[p], "completados": done, "total": total[p],
               }
 
+          csvs = sorted(pathlib.Path("data/raw/csvs").glob("*.csv"))
           summary = {
               "actualizado": datetime.datetime.now(datetime.timezone.utc)
                                      .strftime("%Y-%m-%dT%H:%M:%SZ"),
               "municipios_completados": grand,
               "municipios_totales": sum(total.values()),
-              "csvs": len(list(pathlib.Path("data/raw/csvs").glob("*.csv"))),
+              "csvs": len(csvs),
+              "csvs_vacios": sum(1 for f in csvs if f.stat().st_size == 0),
               "provincias": provincias,
           }
           pathlib.Path("data/progress_summary.json").write_text(
               json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
           )
-          print(f"{grand}/{sum(total.values())} municipios, {summary['csvs']} CSVs")
+          print(f"{grand}/{sum(total.values())} municipios, {summary['csvs']} CSVs "
+                f"({summary['csvs_vacios']} vacíos)")
           PY
 
+      # Committing docs/dashboard/data/ is what publishes: a push to main with
+      # changes under docs/ triggers the Pages build.  The commit also resets
+      # the 60-day clock GitHub uses to disable cron workflows on quiet repos,
+      # which is what silently killed this schedule in April.
+      - name: Commit and push
+        if: always()
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/progress_summary.json
+          # Any of these can be absent when an earlier step was skipped.
+          for path in docs/dashboard/data data/progress_summary.json data/refresh_state.json; do
+            if [ -e "$path" ]; then git add "$path"; fi
+          done
+
           if git diff --staged --quiet; then
-            echo "No change to commit"
-          else
-            git commit -m "chore: scrape progress $(date -u +%Y-%m-%d)"
-            for i in 1 2 3; do
-              git pull --rebase --quiet && git push && break
-              echo "Push attempt $i failed, retrying…"
-              sleep 5
-            done
-          fi
-
-      # ── Data pipeline ──
-      #
-      # Opt-in only.  These steps load the full ~2.4 GB all_data.csv into a
-      # pandas DataFrame and write a ~4 GB enriched copy; with 2.5 GB of cached
-      # CSVs on top, that does not fit a standard runner (16 GB RAM / 14 GB SSD).
-      # Until the ETL is chunked, run these locally:
-      #     python scripts/merge_csvs.py
-      #     python -m scripts.run_etl
-      #     python -m scripts.build_dashboard_data
-      - name: Merge raw CSVs
-        if: ${{ inputs.rebuild }}
-        run: python scripts/merge_csvs.py
-
-      - name: Run ETL pipeline
-        if: ${{ inputs.rebuild }}
-        run: python -m scripts.run_etl
-
-      - name: Build dashboard JSON files
-        if: ${{ inputs.rebuild }}
-        run: python -m scripts.build_dashboard_data
-
-      - name: Upload to Kaggle
-        if: ${{ inputs.rebuild }}
-        env:
-          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
-          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
-        run: |
-          if [ -z "$KAGGLE_USERNAME" ]; then
-            echo "Kaggle secrets not configured, skipping upload"
+            echo "Nothing to publish"
             exit 0
           fi
-          pip install kaggle
-          mkdir -p data/kaggle/files
-          gzip -c data/processed/all_data_enriched.csv > data/kaggle/files/all_data_enriched.csv.gz
-          cp data/kaggle/dataset-metadata.json data/kaggle/files/dataset-metadata.json
-          kaggle datasets version -p data/kaggle/files/ -m "Update $(date +%Y-%m-%d)" \
-            || kaggle datasets create -p data/kaggle/files/
 
-      - name: Commit and push dashboard data
-        if: ${{ inputs.rebuild }}
+          git commit -m "chore: datos $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            git pull --rebase --quiet && git push && exit 0
+            echo "Push attempt $i failed, retrying…"
+            sleep 5
+          done
+          echo "::error::could not push after 3 attempts"
+          exit 1
+
+      # The raw CSVs only otherwise exist in the Actions cache, which GitHub
+      # evicts after 7 days without a hit — the seed cache was already purged
+      # that way.  Seven consecutive failed nights would therefore destroy
+      # every measurement scraped since the February seed.  Release assets have
+      # no expiry and do not count towards the repository size.
+      - name: Back up raw data to release
+        if: ${{ !inputs.skip_scrape }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/dashboard/data/
-          if git diff --staged --quiet; then
-            echo "No changes to dashboard data"
-          else
-            git commit -m "chore: update dashboard data $(date +%Y-%m-%d)"
-            git pull --rebase
-            git push
+          if [ ! -d data/raw/csvs ] || [ -z "$(ls -A data/raw/csvs 2>/dev/null)" ]; then
+            echo "No raw data to back up"
+            exit 0
           fi
+
+          tar czf scraper-raw.tar.gz -C data raw/csvs progress
+          echo "Tarball: $(du -h scraper-raw.tar.gz | cut -f1)"
+
+          gh release view raw-data >/dev/null 2>&1 \
+            || gh release create raw-data \
+                 --title "Raw scraper data" \
+                 --notes "Nightly snapshot of data/raw/csvs and data/progress. Overwritten by the update-data workflow."
+
+          gh release upload raw-data scraper-raw.tar.gz --clobber
+          gh release edit raw-data --notes "Última actualización: $(date -u +'%Y-%m-%d %H:%M UTC') — $(ls data/raw/csvs/*.csv | wc -l) CSVs"
+
+      # ── Kaggle ──
+      #
+      # Still manual.  The Kaggle dataset publishes all_data_enriched.csv, which
+      # is built from the 2.3 GB all_data.csv by an ETL that does not fit a
+      # runner.  The dashboard no longer needs that file (see
+      # scripts/build_province_data.py), but Kaggle does, so refreshing it means
+      # running locally:
+      #     python scripts/merge_csvs.py
+      #     python -m scripts.run_etl
+      #     kaggle datasets version -p data/kaggle/files/ -m "Update $(date +%F)"

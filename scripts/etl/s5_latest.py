@@ -1,17 +1,27 @@
 """
 Step 5: Tag the rows that represent the current state of each sampling point.
 
-Two "latest" flags, differing only in how finely they group:
+Two "latest" flags, grouping along different axes:
 
 - ``es_ultima_toma_del_tipo``       — grouped by point × ``tipo_analisis``.
   True for rows belonging to the most recent bulletin of each analysis type.
-- ``es_ultimo_valor_del_parametro`` — grouped by point × ``tipo_analisis`` ×
-  ``parametro``.  True for the most recent value of each individual parameter,
-  even when that value comes from an older bulletin.
+- ``es_ultimo_valor_del_parametro`` — grouped by point × ``parametro``.
+  True for the most recent value of each individual parameter, whichever
+  bulletin it came from, even when that bulletin is not the point's latest.
 
-The second is a strict superset of the first: grouping more finely can only
-lower each group's maximum date, so any row that is the latest for its whole
-bulletin is necessarily the latest for its own parameter too.
+``tipo_analisis`` is deliberately absent from the second grouping.  A control
+analysis measures a handful of parameters and a complete one measures
+everything, so keeping the analysis type in the key returns *one row per
+parameter per analysis type* — the same parameter twice or three times over,
+each with its own date.  That double-counted the dashboard's parameter tables
+and let a superseded incumplimiento keep a point flagged even after a newer,
+compliant reading of the same parameter arrived under a different analysis
+type.  Grouping by parameter alone still preserves parameters that only the
+complete analysis covers: they are simply the latest value of their own group.
+
+Consequence of dropping it: the flags are no longer nested.  A row can be the
+latest of its bulletin type without being the latest value of its parameter
+(a later bulletin of another type re-measured it).
 
 ``mediciones_vigentes()`` below is the single source of truth for "what counts
 as the current state of the water", and every consumer should go through it
@@ -28,18 +38,21 @@ from __future__ import annotations
 
 import pandas as pd
 
-# Point identity + analysis type: the coarse grouping.
-ANALYSIS_GROUP_COLS: list[str] = [
+# What identifies a sampling point.
+POINT_ID_COLS: list[str] = [
     "ccaa_code",
     "provincia_code",
     "municipio_code",
     "red",
     "punto_muestreo",
-    "tipo_analisis",
 ]
 
-# ...plus the parameter itself: the fine grouping.
-PARAMETER_GROUP_COLS: list[str] = ANALYSIS_GROUP_COLS + ["parametro"]
+# Point + analysis type: the bulletin-level grouping.
+ANALYSIS_GROUP_COLS: list[str] = POINT_ID_COLS + ["tipo_analisis"]
+
+# Point + parameter: the parameter-level grouping.  No ``tipo_analisis`` —
+# see the module docstring.
+PARAMETER_GROUP_COLS: list[str] = POINT_ID_COLS + ["parametro"]
 
 # Backwards-compatible alias for the original constant name.
 LATEST_GROUP_COLS = ANALYSIS_GROUP_COLS
