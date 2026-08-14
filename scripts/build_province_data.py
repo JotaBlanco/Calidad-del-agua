@@ -26,10 +26,13 @@ depends on the frame it is given, ``antiguedad_dias`` (``tag_latest`` measures
 against the newest date *in the data*), never reaches the dashboard: it only
 gates ``mediciones_vigentes``, and ``MAX_ANTIGUEDAD_DIAS`` is ``None``.
 
+``docs/dashboard/data/`` belongs to the nightly workflow, which commits it, so
+writing there needs an explicit ``--publish`` — see ``require_publish``.
+
 Usage:
-    python -m scripts.build_province_data 15 27      # rebuild two provinces
-    python -m scripts.build_province_data --all      # every province with CSVs
-    python -m scripts.build_province_data --index-only
+    python -m scripts.build_province_data 15 27 --publish   # two provinces
+    python -m scripts.build_province_data --all --publish   # every province
+    python -m scripts.build_province_data --index-only --publish
 """
 
 from __future__ import annotations
@@ -52,6 +55,7 @@ from scripts.build_dashboard_data import (
     load_location_names,
     load_muni_centroids,
     load_punto_coords,
+    require_publish,
     write_json,
 )
 from scripts.etl import (
@@ -208,8 +212,11 @@ def main(argv: list[str] | None = None) -> int:
                         help="Rebuild every province that has raw CSVs")
     parser.add_argument("--index-only", action="store_true",
                         help="Only refresh index.json and national.json")
+    parser.add_argument("--publish", action="store_true",
+                        help="Write into docs/dashboard/data/ (CI passes this)")
     args = parser.parse_args(argv)
 
+    require_publish(args.publish)
     PROV_DIR.mkdir(parents=True, exist_ok=True)
 
     codes = args.provincias

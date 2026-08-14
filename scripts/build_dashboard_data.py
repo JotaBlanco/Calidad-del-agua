@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -38,6 +39,35 @@ DASHBOARD_DATA_DIR = ROOT / "docs" / "dashboard" / "data"
 LOCATIONS_CATALOG = DATA_DIR / "locations_catalog.csv"
 PUNTOS_COORDS_YAML = PROCESSED_DIR / "puntos_coordenadas.yaml"
 GEOCODED_MUNIS = PROCESSED_DIR / "geocoded_municipalities.csv"
+
+# ── Ownership guard ─────────────────────────────────────────────────
+#
+# docs/dashboard/data/ is generated *and committed* by the nightly workflow, so
+# whatever is on main is by definition the freshest build.  A local run rebuilds
+# it from the raw CSVs on this machine, which are normally behind the ones in
+# the Actions cache — and committing that quietly republishes older data over
+# newer.  Writing there is therefore opt-in: CI passes --publish, a person has
+# to mean it.
+PUBLISH_GUARD = """\
+docs/dashboard/data/ lo genera y commitea CI cada noche
+(.github/workflows/update-data.yml, job «publish»). Es suyo, no del árbol local.
+
+Este script no escribe ahí por defecto: los CSVs de esta máquina suelen ir por
+detrás de los de la caché de Actions, y publicar un build local sobrescribiría
+datos más recientes con otros más viejos.
+
+  · Para republicar todo el país:  lanza el workflow a mano con rebuild_all=true
+    (~20 min, commitea el resultado él mismo).
+  · Para escribir aquí igualmente: repite el comando con --publish.
+"""
+
+
+def require_publish(publish: bool) -> None:
+    """Refuse to write into the published tree unless the caller opted in."""
+    if not publish:
+        print(PUBLISH_GUARD, file=sys.stderr)
+        raise SystemExit(1)
+
 
 # Aptitud encoding: 0 = apta, 1 = incumple_vp, 2 = no_apta
 APTITUD_CODE = {"apta": 0, "incumple_vp": 1, "no_apta": 2}
@@ -534,4 +564,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Rebuild the whole dashboard")
+    parser.add_argument("--publish", action="store_true",
+                        help="Write into docs/dashboard/data/ (CI passes this)")
+    require_publish(parser.parse_args().publish)
     main()

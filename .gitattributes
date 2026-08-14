@@ -1,0 +1,5 @@
+# El dashboard publicado lo genera y commitea el workflow nocturno
+# (.github/workflows/update-data.yml). Marcarlo como generado hace que GitHub
+# colapse sus diffs y lo excluya de las estadísticas de lenguaje del repo, y
+# deja claro de un vistazo que ninguna de estas líneas se escribe a mano.
+docs/dashboard/data/** linguist-generated=true

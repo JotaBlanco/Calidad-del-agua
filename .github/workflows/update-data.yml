@@ -237,12 +237,15 @@ jobs:
       # by hand (19 February).
       - name: Rebuild dashboard JSON
         run: |
+          # --publish is what lets these scripts write into docs/dashboard/data/.
+          # Local runs refuse by default so a stale laptop build cannot
+          # overwrite what CI published — see require_publish().
           if [ "${{ inputs.rebuild_all }}" = "true" ]; then
-            python -m scripts.build_province_data --all
+            python -m scripts.build_province_data --all --publish
           elif [ -n "$CODES" ]; then
-            python -m scripts.build_province_data $CODES
+            python -m scripts.build_province_data $CODES --publish
           else
-            python -m scripts.build_province_data --index-only
+            python -m scripts.build_province_data --index-only --publish
           fi
         env:
           CODES: ${{ needs.scrape.outputs.codes }}
