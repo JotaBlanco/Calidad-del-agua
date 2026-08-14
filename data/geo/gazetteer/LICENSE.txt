@@ -1,0 +1,15 @@
+Datos de GeoNames (https://www.geonames.org/).
+Licencia: Creative Commons Attribution 4.0 (CC-BY 4.0).
+Atribución requerida: GeoNames.org
+Descargado de https://download.geonames.org/export/dump/ES.zip
+
+Nota sobre el NGBE/NGMEP del IGN:
+
+Intentos con el CNIG (todos fallidos, documentados para no repetirlos):
+  - https://centrodedescargas.cnig.es/CentroDescargas/documentos/NGBE.zip        -> 404
+  - https://centrodedescargas.cnig.es/CentroDescargas/documentos/NGMEP.zip       -> 404
+  - .../CentroDescargas/descargaDir (POST del formulario)                        -> requiere
+    secuencia de sesión + token CSRF obtenidos navegando el buscador; no es una
+    URL estable y rompería en CI.
+El NGBE sería más autoritativo (incluye punto de capital municipal oficial y tipo
+de entidad EATIM/parroquia/lugar), pero no es scriptable de forma fiable.

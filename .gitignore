@@ -5,5 +5,20 @@ data/raw/
 data/processed/*
 !data/processed/geocoded_municipalities.csv
 !data/processed/puntos_coordenadas.yaml
+# Lo necesita en ejecución el filtro de colapso de scripts/geo_validate.py;
+# lo regenera scripts/audit_centroids.py --apply
+!data/processed/municipal_reference_points.csv
 data/logs/
 data/progress/
+
+# Nomenclátor (GeoNames): los dumps crudos se re-descargan con
+# scripts/download_gazetteer.py, así que no se versionan. Sí se versionan los
+# CSV derivados, que son los que se leen en ejecución.
+data/geo/gazetteer/ES.txt
+data/geo/gazetteer/alternateNamesES.txt
+data/geo/gazetteer/admin1CodesASCII.txt
+data/geo/gazetteer/admin2Codes.txt
+data/geo/gazetteer/featureCodes_en.txt
+
+# Copias de seguridad con marca de tiempo que dejan los scripts al aplicar
+*.bak_*
