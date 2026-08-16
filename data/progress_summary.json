@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-15T08:04:33Z",
-  "municipios_completados": 8065,
+  "actualizado": "2026-08-16T08:14:09Z",
+  "municipios_completados": 8115,
   "municipios_totales": 8131,
-  "csvs": 6531,
+  "csvs": 6538,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -77,7 +77,7 @@
     },
     "15": {
       "nombre": "Coruña (A)",
-      "completados": 39,
+      "completados": 77,
       "total": 93
     },
     "16": {
@@ -137,7 +137,7 @@
     },
     "27": {
       "nombre": "Lugo",
-      "completados": 61,
+      "completados": 67,
       "total": 67
     },
     "28": {
@@ -167,7 +167,7 @@
     },
     "33": {
       "nombre": "Asturias",
-      "completados": 72,
+      "completados": 78,
       "total": 78
     },
     "34": {
