@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-16T08:14:09Z",
-  "municipios_completados": 8115,
+  "actualizado": "2026-08-17T08:13:28Z",
+  "municipios_completados": 8072,
   "municipios_totales": 8131,
-  "csvs": 6538,
+  "csvs": 6546,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -77,7 +77,7 @@
     },
     "15": {
       "nombre": "Coruña (A)",
-      "completados": 77,
+      "completados": 93,
       "total": 93
     },
     "16": {
@@ -162,7 +162,7 @@
     },
     "32": {
       "nombre": "Ourense",
-      "completados": 92,
+      "completados": 52,
       "total": 92
     },
     "33": {
@@ -182,7 +182,7 @@
     },
     "36": {
       "nombre": "Pontevedra",
-      "completados": 61,
+      "completados": 42,
       "total": 61
     },
     "37": {
