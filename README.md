@@ -83,6 +83,19 @@ Casos que no son una simple comparación:
   tienen límite individual. Sus componentes se suman por medición y se comparan contra el
   límite del parámetro suma (`aptitud_suma`).
 
+- **Parámetros sin resultado**: un boletín lista todo lo que cubre, lo haya medido el
+  laboratorio o no, así que el 10,4 % de las filas llega con `valor` vacío. Esas filas
+  **no se clasifican**. Antes se les aplicaba `fillna(0)`, que las hacía `apta` por ser
+  0 ≤ VP (870.465 filas), y en el pH —que se juzga por rango, y donde un valor ausente no
+  cae ni dentro ni fuera— salían `incumple_vp` (4.344 filas): 272 puntos aparecían en ámbar
+  por un pH que nadie tomó. Un parámetro sin resultado es un problema de frecuencia de
+  control, no un veredicto sobre el agua, y así se puede contar como lo primero.
+
+  Caso aparte del mismo problema: las filas cuyo nombre venía partido en `Suma` porque el
+  parser leyó el tamaño de la familia («Suma 20 PFAs») como si fuera la concentración. Se
+  reparan en `repair_sum_rows()` ([scripts/etl/s0_clean.py](scripts/etl/s0_clean.py)) y el
+  parser ya no las produce.
+
 ### Qué cuenta como "el estado actual"
 
 Un punto de muestreo no se analiza entero de una vez: hay varios tipos de análisis, con

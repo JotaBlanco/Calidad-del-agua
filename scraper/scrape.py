@@ -340,10 +340,27 @@ def parse_pdf(pdf_bytes):
                 i += 1
                 continue
 
+            valor = param_match.group(2)
+            unidad = param_match.group(3)
+
+            # "Suma 20 PFAs µg/L" — a sum parameter the lab left blank.  The
+            # family size is part of the name, so the regex above reads it as
+            # the measurement and swallows the family into the unit.  Undo that
+            # rather than publish a concentration of 20 µg/L for PFAS: the size
+            # goes back into the name and the value stays empty, which is how
+            # every other unreported parameter comes out of the bulletin.
+            # scripts/etl/s0_clean.py repairs the rows scraped before this.
+            if name == "Suma":
+                familia, _, ultimo = unidad.rpartition(" ")
+                if familia and not re.search(r"[\d.,]$", familia):
+                    name = f"Suma {valor} {familia}"
+                    valor = ""
+                    unidad = ultimo
+
             parameters.append({
                 "parametro": name,
-                "valor": param_match.group(2),
-                "unidad": param_match.group(3),
+                "valor": valor,
+                "unidad": unidad,
             })
 
         i += 1

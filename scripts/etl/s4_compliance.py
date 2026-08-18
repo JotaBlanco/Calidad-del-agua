@@ -74,7 +74,9 @@ def _check_ph(value: pd.Series, vp_str: str, vna_str: str) -> pd.Series:
 
     apta = (val >= 6.5) & (val <= 9.5)
     no_apta = (val < 4.5) | (val > 10.0)
-    incumple = ~apta & ~no_apta
+    # A row with no reported pH is neither in range nor out of it; without
+    # ``val.notna()`` it would fall through to incumple_vp.
+    incumple = ~apta & ~no_apta & val.notna()
 
     result[apta] = "apta"
     result[no_apta] = "no_apta"
@@ -118,10 +120,18 @@ def classify_individual(df: pd.DataFrame) -> pd.Series:
         aptitud[is_lang] = _check_langelier(df.loc[is_lang, "valor"])
 
     # ── General case (all other parameters) ───────────────────────
-    general = ~is_ph & ~is_lang & df["valor_parametrico"].notna()
+    #
+    # ``valor`` has to be there.  A bulletin lists every parameter it covers
+    # whether or not the lab returned a result, so ~10 % of rows arrive with an
+    # empty one; the ``fillna(0)`` below would read those as zero and call them
+    # "apta", inventing a clean result for a measurement nobody took.  Leaving
+    # them unclassified keeps them out of the compliance counts and lets the
+    # monitoring gap show up as what it is.
+    reportado = _parse_valor(df["valor"]).notna()
+    general = ~is_ph & ~is_lang & df["valor_parametrico"].notna() & reportado
     idx = df.index[general]
 
-    val = _parse_valor(df.loc[idx, "valor"]).fillna(0)
+    val = _parse_valor(df.loc[idx, "valor"])
     vp = _parse_valor(df.loc[idx, "valor_parametrico"])
     vna = _parse_valor(df.loc[idx, "valor_no_aptitud"])
 
