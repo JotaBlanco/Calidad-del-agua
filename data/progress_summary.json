@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-08-17T08:13:28Z",
-  "municipios_completados": 8072,
+  "actualizado": "2026-08-18T08:07:38Z",
+  "municipios_completados": 8120,
   "municipios_totales": 8131,
-  "csvs": 6546,
+  "csvs": 6578,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
       "nombre": "Alava",
-      "completados": 51,
+      "completados": 43,
       "total": 51
     },
     "2": {
@@ -162,7 +162,7 @@
     },
     "32": {
       "nombre": "Ourense",
-      "completados": 52,
+      "completados": 89,
       "total": 92
     },
     "33": {
@@ -182,7 +182,7 @@
     },
     "36": {
       "nombre": "Pontevedra",
-      "completados": 42,
+      "completados": 61,
       "total": 61
     },
     "37": {
