@@ -2,6 +2,7 @@
   "_comentario": "Fecha de la última pasada completa por provincia. Lo escribe scripts/select_provinces.py --stamp y se commitea cada noche, para que la rotación sobreviva al borrado de la caché de Actions.",
   "ultima_pasada": {
     "1": "2026-08-19",
+    "2": "2026-08-20",
     "15": "2026-08-17",
     "21": "2026-08-07",
     "22": "2026-08-09",

@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-19T08:11:22Z",
-  "municipios_completados": 8098,
+  "actualizado": "2026-08-20T08:09:48Z",
+  "municipios_completados": 7955,
   "municipios_totales": 8131,
-  "csvs": 6611,
+  "csvs": 6672,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -12,17 +12,17 @@
     },
     "2": {
       "nombre": "Albacete",
-      "completados": 54,
+      "completados": 87,
       "total": 87
     },
     "3": {
       "nombre": "Alicante/Alacant",
-      "completados": 141,
+      "completados": 50,
       "total": 141
     },
     "4": {
       "nombre": "Almería",
-      "completados": 103,
+      "completados": 18,
       "total": 103
     },
     "5": {
