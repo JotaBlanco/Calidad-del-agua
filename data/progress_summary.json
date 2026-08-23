@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-22T08:08:23Z",
-  "municipios_completados": 8051,
+  "actualizado": "2026-08-23T08:16:26Z",
+  "municipios_completados": 8041,
   "municipios_totales": 8131,
-  "csvs": 6957,
+  "csvs": 7094,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -22,17 +22,17 @@
     },
     "4": {
       "nombre": "Almería",
-      "completados": 70,
+      "completados": 98,
       "total": 103
     },
     "5": {
       "nombre": "Avila",
-      "completados": 201,
+      "completados": 248,
       "total": 248
     },
     "6": {
       "nombre": "Badajoz",
-      "completados": 165,
+      "completados": 80,
       "total": 165
     },
     "7": {
