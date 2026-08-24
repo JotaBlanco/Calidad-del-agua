@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-23T08:16:26Z",
-  "municipios_completados": 8041,
+  "actualizado": "2026-08-24T08:17:39Z",
+  "municipios_completados": 8088,
   "municipios_totales": 8131,
-  "csvs": 7094,
+  "csvs": 7199,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -22,7 +22,7 @@
     },
     "4": {
       "nombre": "Almería",
-      "completados": 98,
+      "completados": 103,
       "total": 103
     },
     "5": {
@@ -32,12 +32,12 @@
     },
     "6": {
       "nombre": "Badajoz",
-      "completados": 80,
+      "completados": 163,
       "total": 165
     },
     "7": {
       "nombre": "Balears (Illes)",
-      "completados": 67,
+      "completados": 26,
       "total": 67
     },
     "8": {
