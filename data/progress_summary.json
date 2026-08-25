@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-24T08:17:39Z",
-  "municipios_completados": 8088,
+  "actualizado": "2026-08-25T08:12:17Z",
+  "municipios_completados": 7865,
   "municipios_totales": 8131,
-  "csvs": 7199,
+  "csvs": 7275,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -32,17 +32,17 @@
     },
     "6": {
       "nombre": "Badajoz",
-      "completados": 163,
+      "completados": 165,
       "total": 165
     },
     "7": {
       "nombre": "Balears (Illes)",
-      "completados": 26,
+      "completados": 45,
       "total": 67
     },
     "8": {
       "nombre": "Barcelona",
-      "completados": 311,
+      "completados": 67,
       "total": 311
     },
     "9": {
