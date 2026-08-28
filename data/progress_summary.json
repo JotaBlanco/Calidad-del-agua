@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-27T17:50:54Z",
-  "municipios_completados": 7813,
+  "actualizado": "2026-08-28T19:22:38Z",
+  "municipios_completados": 7969,
   "municipios_totales": 8131,
-  "csvs": 7419,
+  "csvs": 7481,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -42,12 +42,12 @@
     },
     "8": {
       "nombre": "Barcelona",
-      "completados": 198,
+      "completados": 262,
       "total": 311
     },
     "9": {
       "nombre": "Burgos",
-      "completados": 166,
+      "completados": 258,
       "total": 371
     },
     "10": {
