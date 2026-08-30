@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-08-29T14:03:23Z",
-  "municipios_completados": 8059,
+  "actualizado": "2026-08-30T13:20:23Z",
+  "municipios_completados": 8069,
   "municipios_totales": 8131,
   "csvs": 7530,
   "csvs_vacios": 0,
@@ -47,7 +47,7 @@
     },
     "9": {
       "nombre": "Burgos",
-      "completados": 316,
+      "completados": 371,
       "total": 371
     },
     "10": {
@@ -57,7 +57,7 @@
     },
     "11": {
       "nombre": "Cádiz",
-      "completados": 28,
+      "completados": 45,
       "total": 45
     },
     "12": {
@@ -197,7 +197,7 @@
     },
     "39": {
       "nombre": "Cantabria",
-      "completados": 102,
+      "completados": 40,
       "total": 102
     },
     "40": {
