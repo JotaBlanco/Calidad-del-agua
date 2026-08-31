@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-30T13:20:23Z",
-  "municipios_completados": 8069,
+  "actualizado": "2026-08-31T13:39:34Z",
+  "municipios_completados": 8032,
   "municipios_totales": 8131,
-  "csvs": 7530,
+  "csvs": 7531,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -62,7 +62,7 @@
     },
     "12": {
       "nombre": "Castellón/Castelló",
-      "completados": 135,
+      "completados": 63,
       "total": 135
     },
     "13": {
@@ -197,7 +197,7 @@
     },
     "39": {
       "nombre": "Cantabria",
-      "completados": 40,
+      "completados": 75,
       "total": 102
     },
     "40": {
