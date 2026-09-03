@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-02T12:09:21Z",
-  "municipios_completados": 7974,
+  "actualizado": "2026-09-03T12:14:39Z",
+  "municipios_completados": 8102,
   "municipios_totales": 8131,
   "csvs": 7532,
   "csvs_vacios": 0,
@@ -67,12 +67,12 @@
     },
     "13": {
       "nombre": "Ciudad Real",
-      "completados": 101,
+      "completados": 102,
       "total": 102
     },
     "14": {
       "nombre": "Córdoba",
-      "completados": 23,
+      "completados": 48,
       "total": 77
     },
     "15": {
@@ -82,7 +82,7 @@
     },
     "16": {
       "nombre": "Cuenca",
-      "completados": 136,
+      "completados": 238,
       "total": 238
     },
     "17": {
