@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-09-05T11:59:01Z",
-  "municipios_completados": 7972,
+  "actualizado": "2026-09-06T12:11:12Z",
+  "municipios_completados": 8083,
   "municipios_totales": 8131,
-  "csvs": 7536,
+  "csvs": 7541,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -87,12 +87,12 @@
     },
     "17": {
       "nombre": "Girona",
-      "completados": 151,
+      "completados": 221,
       "total": 221
     },
     "18": {
       "nombre": "Granada",
-      "completados": 85,
+      "completados": 126,
       "total": 174
     },
     "19": {
