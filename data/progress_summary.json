@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-09-06T12:11:12Z",
-  "municipios_completados": 8083,
+  "actualizado": "2026-09-07T12:22:25Z",
+  "municipios_completados": 8041,
   "municipios_totales": 8131,
-  "csvs": 7541,
+  "csvs": 7542,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -92,7 +92,7 @@
     },
     "18": {
       "nombre": "Granada",
-      "completados": 126,
+      "completados": 174,
       "total": 174
     },
     "19": {
@@ -102,7 +102,7 @@
     },
     "20": {
       "nombre": "Guipúzcoa",
-      "completados": 88,
+      "completados": 48,
       "total": 88
     },
     "21": {
@@ -117,7 +117,7 @@
     },
     "23": {
       "nombre": "Jaén",
-      "completados": 97,
+      "completados": 47,
       "total": 97
     },
     "24": {
