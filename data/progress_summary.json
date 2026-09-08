@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-09-07T12:22:25Z",
-  "municipios_completados": 8041,
+  "actualizado": "2026-09-08T12:17:39Z",
+  "municipios_completados": 7952,
   "municipios_totales": 8131,
-  "csvs": 7542,
+  "csvs": 7543,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -102,7 +102,7 @@
     },
     "20": {
       "nombre": "Guipúzcoa",
-      "completados": 48,
+      "completados": 88,
       "total": 88
     },
     "21": {
@@ -117,12 +117,12 @@
     },
     "23": {
       "nombre": "Jaén",
-      "completados": 47,
+      "completados": 91,
       "total": 97
     },
     "24": {
       "nombre": "León",
-      "completados": 211,
+      "completados": 38,
       "total": 211
     },
     "25": {
