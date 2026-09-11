@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-10T12:21:20Z",
-  "municipios_completados": 7910,
+  "actualizado": "2026-09-11T12:22:48Z",
+  "municipios_completados": 7989,
   "municipios_totales": 8131,
   "csvs": 7544,
   "csvs_vacios": 0,
@@ -122,7 +122,7 @@
     },
     "24": {
       "nombre": "León",
-      "completados": 87,
+      "completados": 131,
       "total": 211
     },
     "25": {
@@ -142,7 +142,7 @@
     },
     "28": {
       "nombre": "Madrid",
-      "completados": 82,
+      "completados": 147,
       "total": 179
     },
     "29": {
@@ -152,7 +152,7 @@
     },
     "30": {
       "nombre": "Murcia",
-      "completados": 45,
+      "completados": 15,
       "total": 45
     },
     "31": {
