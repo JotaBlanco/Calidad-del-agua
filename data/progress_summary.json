@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-17T12:38:08Z",
-  "municipios_completados": 7817,
+  "actualizado": "2026-09-18T12:26:34Z",
+  "municipios_completados": 7908,
   "municipios_totales": 8131,
   "csvs": 7544,
   "csvs_vacios": 0,
@@ -132,7 +132,7 @@
     },
     "26": {
       "nombre": "Rioja (La)",
-      "completados": 158,
+      "completados": 174,
       "total": 174
     },
     "27": {
@@ -177,7 +177,7 @@
     },
     "35": {
       "nombre": "Palmas (Las)",
-      "completados": 16,
+      "completados": 20,
       "total": 34
     },
     "36": {
@@ -187,7 +187,7 @@
     },
     "37": {
       "nombre": "Salamanca",
-      "completados": 82,
+      "completados": 153,
       "total": 362
     },
     "38": {
