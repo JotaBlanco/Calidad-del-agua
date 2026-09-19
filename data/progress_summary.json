@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-18T12:26:34Z",
-  "municipios_completados": 7908,
+  "actualizado": "2026-09-19T12:25:39Z",
+  "municipios_completados": 7961,
   "municipios_totales": 8131,
   "csvs": 7544,
   "csvs_vacios": 0,
@@ -177,7 +177,7 @@
     },
     "35": {
       "nombre": "Palmas (Las)",
-      "completados": 20,
+      "completados": 27,
       "total": 34
     },
     "36": {
@@ -187,12 +187,12 @@
     },
     "37": {
       "nombre": "Salamanca",
-      "completados": 153,
+      "completados": 248,
       "total": 362
     },
     "38": {
       "nombre": "Santa Cruz de Tenerife",
-      "completados": 54,
+      "completados": 5,
       "total": 54
     },
     "39": {
