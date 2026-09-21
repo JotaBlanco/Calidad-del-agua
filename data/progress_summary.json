@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-20T12:48:32Z",
-  "municipios_completados": 8078,
+  "actualizado": "2026-09-21T13:02:10Z",
+  "municipios_completados": 7954,
   "municipios_totales": 8131,
   "csvs": 7544,
   "csvs_vacios": 0,
@@ -187,12 +187,12 @@
     },
     "37": {
       "nombre": "Salamanca",
-      "completados": 344,
+      "completados": 362,
       "total": 362
     },
     "38": {
       "nombre": "Santa Cruz de Tenerife",
-      "completados": 19,
+      "completados": 27,
       "total": 54
     },
     "39": {
@@ -202,7 +202,7 @@
     },
     "40": {
       "nombre": "Segovia",
-      "completados": 209,
+      "completados": 59,
       "total": 209
     },
     "41": {
