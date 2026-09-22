@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-21T13:02:10Z",
-  "municipios_completados": 7954,
+  "actualizado": "2026-09-22T12:46:22Z",
+  "municipios_completados": 7963,
   "municipios_totales": 8131,
   "csvs": 7544,
   "csvs_vacios": 0,
@@ -192,7 +192,7 @@
     },
     "38": {
       "nombre": "Santa Cruz de Tenerife",
-      "completados": 27,
+      "completados": 33,
       "total": 54
     },
     "39": {
@@ -202,12 +202,12 @@
     },
     "40": {
       "nombre": "Segovia",
-      "completados": 59,
+      "completados": 118,
       "total": 209
     },
     "41": {
       "nombre": "Sevilla",
-      "completados": 106,
+      "completados": 50,
       "total": 106
     },
     "42": {
