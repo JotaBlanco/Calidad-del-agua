@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-09-24T12:37:47Z",
-  "municipios_completados": 8121,
+  "actualizado": "2026-09-25T12:44:52Z",
+  "municipios_completados": 7931,
   "municipios_totales": 8131,
-  "csvs": 7545,
+  "csvs": 7546,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -192,7 +192,7 @@
     },
     "38": {
       "nombre": "Santa Cruz de Tenerife",
-      "completados": 44,
+      "completados": 54,
       "total": 54
     },
     "39": {
@@ -212,12 +212,12 @@
     },
     "42": {
       "nombre": "Soria",
-      "completados": 183,
+      "completados": 92,
       "total": 183
     },
     "43": {
       "nombre": "Tarragona",
-      "completados": 184,
+      "completados": 75,
       "total": 184
     },
     "44": {
