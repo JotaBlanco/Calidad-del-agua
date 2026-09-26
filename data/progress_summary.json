@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-25T12:44:52Z",
-  "municipios_completados": 7931,
+  "actualizado": "2026-09-26T12:34:26Z",
+  "municipios_completados": 7921,
   "municipios_totales": 8131,
   "csvs": 7546,
   "csvs_vacios": 0,
@@ -212,17 +212,17 @@
     },
     "42": {
       "nombre": "Soria",
-      "completados": 92,
+      "completados": 183,
       "total": 183
     },
     "43": {
       "nombre": "Tarragona",
-      "completados": 75,
+      "completados": 160,
       "total": 184
     },
     "44": {
       "nombre": "Teruel",
-      "completados": 236,
+      "completados": 50,
       "total": 236
     },
     "45": {
