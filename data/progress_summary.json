@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-27T13:06:18Z",
-  "municipios_completados": 7958,
+  "actualizado": "2026-09-28T10:27:54Z",
+  "municipios_completados": 7971,
   "municipios_totales": 8131,
   "csvs": 7552,
   "csvs_vacios": 0,
@@ -222,12 +222,12 @@
     },
     "44": {
       "nombre": "Teruel",
-      "completados": 133,
+      "completados": 137,
       "total": 236
     },
     "45": {
       "nombre": "Toledo",
-      "completados": 134,
+      "completados": 143,
       "total": 204
     },
     "46": {
