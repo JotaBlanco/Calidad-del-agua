@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-09-29T13:25:47Z",
-  "municipios_completados": 7976,
+  "actualizado": "2026-09-30T13:26:44Z",
+  "municipios_completados": 8042,
   "municipios_totales": 8131,
-  "csvs": 7553,
+  "csvs": 7554,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -222,7 +222,7 @@
     },
     "44": {
       "nombre": "Teruel",
-      "completados": 200,
+      "completados": 236,
       "total": 236
     },
     "45": {
@@ -237,12 +237,12 @@
     },
     "47": {
       "nombre": "Valladolid",
-      "completados": 106,
+      "completados": 219,
       "total": 225
     },
     "48": {
       "nombre": "Vizcaya",
-      "completados": 112,
+      "completados": 29,
       "total": 112
     },
     "49": {
