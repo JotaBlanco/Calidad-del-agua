@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-09-30T13:26:44Z",
-  "municipios_completados": 8042,
+  "actualizado": "2026-10-01T13:49:55Z",
+  "municipios_completados": 7876,
   "municipios_totales": 8131,
   "csvs": 7554,
   "csvs_vacios": 0,
@@ -237,17 +237,17 @@
     },
     "47": {
       "nombre": "Valladolid",
-      "completados": 219,
+      "completados": 225,
       "total": 225
     },
     "48": {
       "nombre": "Vizcaya",
-      "completados": 29,
+      "completados": 42,
       "total": 112
     },
     "49": {
       "nombre": "Zamora",
-      "completados": 248,
+      "completados": 63,
       "total": 248
     },
     "50": {
