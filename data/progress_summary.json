@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-02T13:27:47Z",
-  "municipios_completados": 7748,
+  "actualizado": "2026-10-03T13:04:09Z",
+  "municipios_completados": 7892,
   "municipios_totales": 8131,
   "csvs": 7554,
   "csvs_vacios": 0,
@@ -242,17 +242,17 @@
     },
     "48": {
       "nombre": "Vizcaya",
-      "completados": 80,
+      "completados": 112,
       "total": 112
     },
     "49": {
       "nombre": "Zamora",
-      "completados": 125,
+      "completados": 198,
       "total": 248
     },
     "50": {
       "nombre": "Zaragoza",
-      "completados": 65,
+      "completados": 104,
       "total": 293
     },
     "51": {
