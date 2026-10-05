@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-04T13:26:06Z",
-  "municipios_completados": 7991,
+  "actualizado": "2026-10-05T13:57:38Z",
+  "municipios_completados": 7929,
   "municipios_totales": 8131,
   "csvs": 7554,
   "csvs_vacios": 0,
@@ -107,12 +107,12 @@
     },
     "21": {
       "nombre": "Huelva",
-      "completados": 49,
+      "completados": 80,
       "total": 80
     },
     "22": {
       "nombre": "Huesca",
-      "completados": 202,
+      "completados": 57,
       "total": 202
     },
     "23": {
@@ -252,7 +252,7 @@
     },
     "50": {
       "nombre": "Zaragoza",
-      "completados": 184,
+      "completados": 236,
       "total": 293
     },
     "51": {
