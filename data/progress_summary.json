@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-05T13:57:38Z",
-  "municipios_completados": 7929,
+  "actualizado": "2026-10-06T13:59:37Z",
+  "municipios_completados": 7899,
   "municipios_totales": 8131,
   "csvs": 7554,
   "csvs_vacios": 0,
@@ -112,7 +112,7 @@
     },
     "22": {
       "nombre": "Huesca",
-      "completados": 57,
+      "completados": 111,
       "total": 202
     },
     "23": {
@@ -127,7 +127,7 @@
     },
     "25": {
       "nombre": "Lleida",
-      "completados": 231,
+      "completados": 92,
       "total": 231
     },
     "26": {
@@ -252,7 +252,7 @@
     },
     "50": {
       "nombre": "Zaragoza",
-      "completados": 236,
+      "completados": 291,
       "total": 293
     },
     "51": {
