@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-09T13:57:57Z",
-  "municipios_completados": 7998,
+  "actualizado": "2026-10-10T13:29:49Z",
+  "municipios_completados": 8060,
   "municipios_totales": 8131,
   "csvs": 7554,
   "csvs_vacios": 0,
@@ -137,7 +137,7 @@
     },
     "27": {
       "nombre": "Lugo",
-      "completados": 44,
+      "completados": 67,
       "total": 67
     },
     "28": {
@@ -147,7 +147,7 @@
     },
     "29": {
       "nombre": "Málaga",
-      "completados": 47,
+      "completados": 68,
       "total": 103
     },
     "30": {
@@ -167,7 +167,7 @@
     },
     "33": {
       "nombre": "Asturias",
-      "completados": 24,
+      "completados": 42,
       "total": 78
     },
     "34": {
