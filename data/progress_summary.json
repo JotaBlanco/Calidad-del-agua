@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-16T12:07:44Z",
-  "municipios_completados": 7863,
+  "actualizado": "2026-10-17T11:57:17Z",
+  "municipios_completados": 8068,
   "municipios_totales": 8131,
   "csvs": 7555,
   "csvs_vacios": 0,
@@ -12,12 +12,12 @@
     },
     "2": {
       "nombre": "Albacete",
-      "completados": 54,
+      "completados": 87,
       "total": 87
     },
     "3": {
       "nombre": "Alicante/Alacant",
-      "completados": 34,
+      "completados": 78,
       "total": 141
     },
     "4": {
@@ -27,7 +27,7 @@
     },
     "5": {
       "nombre": "Avila",
-      "completados": 120,
+      "completados": 248,
       "total": 248
     },
     "6": {
