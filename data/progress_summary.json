@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-17T11:57:17Z",
-  "municipios_completados": 8068,
+  "actualizado": "2026-10-18T12:17:41Z",
+  "municipios_completados": 7969,
   "municipios_totales": 8131,
   "csvs": 7555,
   "csvs_vacios": 0,
@@ -17,12 +17,12 @@
     },
     "3": {
       "nombre": "Alicante/Alacant",
-      "completados": 78,
+      "completados": 128,
       "total": 141
     },
     "4": {
       "nombre": "Almería",
-      "completados": 103,
+      "completados": 24,
       "total": 103
     },
     "5": {
@@ -32,7 +32,7 @@
     },
     "6": {
       "nombre": "Badajoz",
-      "completados": 165,
+      "completados": 95,
       "total": 165
     },
     "7": {
