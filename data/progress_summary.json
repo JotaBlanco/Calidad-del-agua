@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-10-19T12:47:16Z",
-  "municipios_completados": 8071,
+  "actualizado": "2026-10-20T12:31:41Z",
+  "municipios_completados": 8044,
   "municipios_totales": 8131,
-  "csvs": 7556,
+  "csvs": 7561,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -22,7 +22,7 @@
     },
     "4": {
       "nombre": "Almería",
-      "completados": 43,
+      "completados": 63,
       "total": 103
     },
     "5": {
@@ -37,7 +37,7 @@
     },
     "7": {
       "nombre": "Balears (Illes)",
-      "completados": 67,
+      "completados": 31,
       "total": 67
     },
     "8": {
@@ -52,7 +52,7 @@
     },
     "10": {
       "nombre": "Cáceres",
-      "completados": 223,
+      "completados": 212,
       "total": 223
     },
     "11": {
