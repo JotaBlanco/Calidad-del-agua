@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-21T12:33:24Z",
-  "municipios_completados": 8094,
+  "actualizado": "2026-10-22T12:35:33Z",
+  "municipios_completados": 7890,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -22,7 +22,7 @@
     },
     "4": {
       "nombre": "Almería",
-      "completados": 82,
+      "completados": 102,
       "total": 103
     },
     "5": {
@@ -37,12 +37,12 @@
     },
     "7": {
       "nombre": "Balears (Illes)",
-      "completados": 51,
+      "completados": 67,
       "total": 67
     },
     "8": {
       "nombre": "Barcelona",
-      "completados": 311,
+      "completados": 71,
       "total": 311
     },
     "9": {
