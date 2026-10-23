@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-22T12:35:33Z",
-  "municipios_completados": 7890,
+  "actualizado": "2026-10-23T12:29:37Z",
+  "municipios_completados": 7677,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -22,7 +22,7 @@
     },
     "4": {
       "nombre": "Almería",
-      "completados": 102,
+      "completados": 103,
       "total": 103
     },
     "5": {
@@ -42,12 +42,12 @@
     },
     "8": {
       "nombre": "Barcelona",
-      "completados": 71,
+      "completados": 144,
       "total": 311
     },
     "9": {
       "nombre": "Burgos",
-      "completados": 371,
+      "completados": 84,
       "total": 371
     },
     "10": {
