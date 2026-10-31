@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-10-30T14:04:47Z",
-  "municipios_completados": 7886,
+  "actualizado": "2026-10-31T13:54:10Z",
+  "municipios_completados": 8006,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -82,12 +82,12 @@
     },
     "16": {
       "nombre": "Cuenca",
-      "completados": 197,
+      "completados": 238,
       "total": 238
     },
     "17": {
       "nombre": "Girona",
-      "completados": 74,
+      "completados": 153,
       "total": 221
     },
     "18": {
