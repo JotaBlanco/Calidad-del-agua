@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-02T14:55:09Z",
-  "municipios_completados": 7993,
+  "actualizado": "2026-11-03T14:59:09Z",
+  "municipios_completados": 8016,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -72,7 +72,7 @@
     },
     "14": {
       "nombre": "Córdoba",
-      "completados": 68,
+      "completados": 77,
       "total": 77
     },
     "15": {
@@ -92,7 +92,7 @@
     },
     "18": {
       "nombre": "Granada",
-      "completados": 45,
+      "completados": 90,
       "total": 174
     },
     "19": {
@@ -102,7 +102,7 @@
     },
     "20": {
       "nombre": "Guipúzcoa",
-      "completados": 88,
+      "completados": 57,
       "total": 88
     },
     "21": {
