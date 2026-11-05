@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-04T14:32:58Z",
-  "municipios_completados": 8047,
+  "actualizado": "2026-11-05T14:54:07Z",
+  "municipios_completados": 8123,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -92,7 +92,7 @@
     },
     "18": {
       "nombre": "Granada",
-      "completados": 135,
+      "completados": 174,
       "total": 174
     },
     "19": {
@@ -117,7 +117,7 @@
     },
     "23": {
       "nombre": "Jaén",
-      "completados": 52,
+      "completados": 89,
       "total": 97
     },
     "24": {
