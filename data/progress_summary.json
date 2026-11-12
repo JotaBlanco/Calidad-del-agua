@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-11T14:46:21Z",
-  "municipios_completados": 8092,
+  "actualizado": "2026-11-12T15:16:13Z",
+  "municipios_completados": 8094,
   "municipios_totales": 8131,
   "csvs": 7562,
   "csvs_vacios": 0,
@@ -152,7 +152,7 @@
     },
     "30": {
       "nombre": "Murcia",
-      "completados": 27,
+      "completados": 30,
       "total": 45
     },
     "31": {
@@ -172,12 +172,12 @@
     },
     "34": {
       "nombre": "Palencia",
-      "completados": 170,
+      "completados": 191,
       "total": 191
     },
     "35": {
       "nombre": "Palmas (Las)",
-      "completados": 34,
+      "completados": 12,
       "total": 34
     },
     "36": {
