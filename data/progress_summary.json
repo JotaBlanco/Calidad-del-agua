@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-11-13T15:00:30Z",
-  "municipios_completados": 7829,
+  "actualizado": "2026-11-14T14:29:56Z",
+  "municipios_completados": 7948,
   "municipios_totales": 8131,
-  "csvs": 7562,
+  "csvs": 7563,
   "csvs_vacios": 0,
   "provincias": {
     "1": {
@@ -152,7 +152,7 @@
     },
     "30": {
       "nombre": "Murcia",
-      "completados": 40,
+      "completados": 45,
       "total": 45
     },
     "31": {
@@ -177,7 +177,7 @@
     },
     "35": {
       "nombre": "Palmas (Las)",
-      "completados": 16,
+      "completados": 20,
       "total": 34
     },
     "36": {
@@ -187,7 +187,7 @@
     },
     "37": {
       "nombre": "Salamanca",
-      "completados": 83,
+      "completados": 193,
       "total": 362
     },
     "38": {
