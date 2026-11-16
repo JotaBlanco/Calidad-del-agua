@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-15T14:43:31Z",
-  "municipios_completados": 7952,
+  "actualizado": "2026-11-16T15:00:31Z",
+  "municipios_completados": 8066,
   "municipios_totales": 8131,
   "csvs": 7563,
   "csvs_vacios": 0,
@@ -177,7 +177,7 @@
     },
     "35": {
       "nombre": "Palmas (Las)",
-      "completados": 27,
+      "completados": 33,
       "total": 34
     },
     "36": {
@@ -187,7 +187,7 @@
     },
     "37": {
       "nombre": "Salamanca",
-      "completados": 325,
+      "completados": 362,
       "total": 362
     },
     "38": {
@@ -202,7 +202,7 @@
     },
     "40": {
       "nombre": "Segovia",
-      "completados": 74,
+      "completados": 145,
       "total": 209
     },
     "41": {
