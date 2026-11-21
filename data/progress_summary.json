@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-20T15:30:57Z",
-  "municipios_completados": 7695,
+  "actualizado": "2026-11-21T15:10:33Z",
+  "municipios_completados": 7951,
   "municipios_totales": 8131,
   "csvs": 7566,
   "csvs_vacios": 0,
@@ -217,7 +217,7 @@
     },
     "43": {
       "nombre": "Tarragona",
-      "completados": 57,
+      "completados": 159,
       "total": 184
     },
     "44": {
@@ -227,12 +227,12 @@
     },
     "45": {
       "nombre": "Toledo",
-      "completados": 87,
+      "completados": 186,
       "total": 204
     },
     "46": {
       "nombre": "Valencia/València",
-      "completados": 74,
+      "completados": 129,
       "total": 266
     },
     "47": {
