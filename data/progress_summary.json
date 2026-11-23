@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-22T15:14:00Z",
-  "municipios_completados": 8043,
+  "actualizado": "2026-11-23T16:15:18Z",
+  "municipios_completados": 7780,
   "municipios_totales": 8131,
   "csvs": 7569,
   "csvs_vacios": 0,
@@ -222,7 +222,7 @@
     },
     "44": {
       "nombre": "Teruel",
-      "completados": 236,
+      "completados": 53,
       "total": 236
     },
     "45": {
@@ -232,12 +232,12 @@
     },
     "46": {
       "nombre": "Valencia/València",
-      "completados": 178,
+      "completados": 211,
       "total": 266
     },
     "47": {
       "nombre": "Valladolid",
-      "completados": 225,
+      "completados": 112,
       "total": 225
     },
     "48": {
