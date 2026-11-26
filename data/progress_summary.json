@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-25T16:43:04Z",
-  "municipios_completados": 8090,
+  "actualizado": "2026-11-26T16:18:40Z",
+  "municipios_completados": 7863,
   "municipios_totales": 8131,
   "csvs": 7569,
   "csvs_vacios": 0,
@@ -222,7 +222,7 @@
     },
     "44": {
       "nombre": "Teruel",
-      "completados": 195,
+      "completados": 236,
       "total": 236
     },
     "45": {
@@ -242,12 +242,12 @@
     },
     "48": {
       "nombre": "Vizcaya",
-      "completados": 112,
+      "completados": 29,
       "total": 112
     },
     "49": {
       "nombre": "Zamora",
-      "completados": 248,
+      "completados": 63,
       "total": 248
     },
     "50": {
