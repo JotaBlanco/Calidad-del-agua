@@ -1,6 +1,6 @@
 {
-  "actualizado": "2026-11-26T16:18:40Z",
-  "municipios_completados": 7863,
+  "actualizado": "2026-11-27T16:18:51Z",
+  "municipios_completados": 7940,
   "municipios_totales": 8131,
   "csvs": 7569,
   "csvs_vacios": 0,
@@ -107,7 +107,7 @@
     },
     "21": {
       "nombre": "Huelva",
-      "completados": 80,
+      "completados": 41,
       "total": 80
     },
     "22": {
@@ -242,12 +242,12 @@
     },
     "48": {
       "nombre": "Vizcaya",
-      "completados": 29,
+      "completados": 65,
       "total": 112
     },
     "49": {
       "nombre": "Zamora",
-      "completados": 63,
+      "completados": 143,
       "total": 248
     },
     "50": {
